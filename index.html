@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Mapbox API test</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="css/default.css">
+        <script type="text/javascript" src="build/jquery-2.1.1.min.js"></script>
+        <script src="https://api.tiles.mapbox.com/mapbox.js/v1.6.4/mapbox.js"></script>
+        <link href="https://api.tiles.mapbox.com/mapbox.js/v1.6.4/mapbox.css" rel="stylesheet" />
+        <script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.2.0/leaflet-omnivore.min.js'></script>
+    </head>
+    <body>
+        <div id="map"></div>
+        <script>
+            $("#map").height($(window).innerHeight());
+            // Create a map in the div #map
+            var map = L.mapbox.map('map', 'clementp.ipg3giee').setView([42.2, -71.7], 9);
+            
+            var nbMarkers = 0;
+            var totalLatitude = 0;
+            var totalLongitude = 0;
+            
+            omnivore.csv('data/hospitals.csv')
+                    .on('ready', function(layer) {
+                        this.eachLayer(function(marker) {
+                            marker.bindPopup(marker.toGeoJSON().properties.name);
+                            
+                            nbMarkers++;
+                            totalLatitude += marker._latlng.lat;
+                            totalLongitude += marker._latlng.lng;
+                        });
+                        console.log(nbMarkers);
+                        console.log(totalLatitude / nbMarkers);
+                        console.log(totalLongitude / nbMarkers);
+                        map.setView([totalLatitude / nbMarkers, totalLongitude / nbMarkers]);
+                    })
+                    .addTo(map);
+        </script>
+    </body>
+</html>
