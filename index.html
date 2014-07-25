@@ -11,6 +11,7 @@
     </head>
     <body>
         <div id="map"></div>
+        <script src="data/urban_areas.js"></script>
         <script>
             function updateData() {
                 $("#map").height($(window).innerHeight());
@@ -59,7 +60,7 @@
 
                         markers.push(
                             marker.setIcon(hospitalIcon)
-                                .on("mouseover", function() {
+                                .on('mouseover', function() {
                                     this.openPopup();
                                 })
                         );
@@ -73,18 +74,44 @@
                 .addTo(map);
             
             //We display the urban areas
-            var featureLayer = L.mapbox.featureLayer()
-                .loadURL('data/urban_areas.geojson')
-                .on('ready', function() {
-                    this.setStyle({
-                        fill: false,
-                        stroke: true,
-                        weight: 1,
-                        color: '#000',
-                        opacity: .1
-                    });
-                })
-                .addTo(map);
+            var urbanAreaFeature = L.geoJson(urbanAreaData, {
+                style: {
+                    fill: true,
+                    fillColor: '#fff',
+                    fillOpacity: 0,
+                    stroke: true,
+                    weight: 1,
+                    color: '#000',
+                    opacity: .1
+                },
+                onEachFeature: onEachFeature
+            })
+            .addTo(map);
+
+            function onEachFeature(feature, layer) {
+                layer.on({
+                    mousemove: mousemove,
+                    mouseout: mouseout
+                });
+            }
+            
+            function mousemove(e) {
+                var layer = e.target;
+
+                layer.setStyle({
+                    fill: true,
+                    fillColor: '#000',
+                    fillOpacity: .1
+                });
+
+                if(!L.Browser.ie && !L.Browser.opera)
+                    layer.bringToFront();
+            }
+            
+            function mouseout(e) {
+                urbanAreaFeature.resetStyle(e.target);
+            }
+
 
             $(document).ready(function() { 
                 window.onresize = function(event) {
