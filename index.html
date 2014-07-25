@@ -12,29 +12,85 @@
     <body>
         <div id="map"></div>
         <script>
+            function updateData() {
+                $("#map").height($(window).innerHeight());
+                
+                //We resize the markers depending on the zoom
+                var iconSize = Math.round(map.getZoom() * 20 / 14);
+                var iconAnchor = ((iconSize / 2) % 2 == 0) ? iconSize / 2 : iconSize / 2 + 1;
+                hospitalIcon = L.icon({
+                    iconUrl: 'icons/hospital.svg',
+                    iconRetinaUrl: 'icons/hospital.svg',
+                    iconSize: [iconSize, iconSize],
+                    iconAnchor: [iconAnchor, iconAnchor],
+                    popupAnchor: [0, 0]
+                });
+                for(var i = 0; i < markers.length; i++)
+                    markers[i].setIcon(hospitalIcon);
+            }
+            
             $("#map").height($(window).innerHeight());
+            
             // Create a map in the div #map
-            var map = L.mapbox.map('map', 'clementp.ipg3giee').setView([42.2, -71.7], 9);
+            var map = L.mapbox.map('map', 'clementp.ipg3giee')
+                       .setView([42.2, -71.7], 9)
+                       .on("zoomend", updateData);
             
             var nbMarkers = 0;
             var totalLatitude = 0;
             var totalLongitude = 0;
             
+            var markers = [];
+            
+            //We display the hospitals
             omnivore.csv('data/hospitals.csv')
-                    .on('ready', function(layer) {
-                        this.eachLayer(function(marker) {
-                            marker.bindPopup(marker.toGeoJSON().properties.name);
-                            
-                            nbMarkers++;
-                            totalLatitude += marker._latlng.lat;
-                            totalLongitude += marker._latlng.lng;
+                .on('ready', function(layer) {
+                    this.eachLayer(function(marker) {
+                        var label = marker.toGeoJSON().properties.name;
+                        marker.bindPopup(label.trim());
+
+                        var hospitalIcon = L.icon({
+                            iconUrl: 'icons/hospital.svg',
+                            iconRetinaUrl: 'icons/hospital.svg',
+                            iconSize: [13, 13],
+                            iconAnchor: [5, 5],
+                            popupAnchor: [0, 0]
                         });
-                        console.log(nbMarkers);
-                        console.log(totalLatitude / nbMarkers);
-                        console.log(totalLongitude / nbMarkers);
-                        map.setView([totalLatitude / nbMarkers, totalLongitude / nbMarkers]);
-                    })
-                    .addTo(map);
+
+                        markers.push(
+                            marker.setIcon(hospitalIcon)
+                                .on("mouseover", function() {
+                                    this.openPopup();
+                                })
+                        );
+
+                        nbMarkers++;
+                        totalLatitude += marker._latlng.lat;
+                        totalLongitude += marker._latlng.lng;
+                    });
+                    map.setView([totalLatitude / nbMarkers, totalLongitude / nbMarkers]);
+                })
+                .addTo(map);
+            
+            //We display the urban areas
+            var featureLayer = L.mapbox.featureLayer()
+                .loadURL('data/urban_areas.geojson')
+                .on('ready', function() {
+                    this.setStyle({
+                        fill: false,
+                        stroke: true,
+                        weight: 1,
+                        color: '#000',
+                        opacity: .1
+                    });
+                })
+                .addTo(map);
+
+            $(document).ready(function() { 
+                window.onresize = function(event) {
+                    updateData();
+                };
+            });
         </script>
     </body>
 </html>
