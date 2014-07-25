@@ -4,80 +4,20 @@
         <title>Mapbox API test</title>
         <meta charset="utf-8">
         <link rel="stylesheet" type="text/css" href="css/default.css">
-        <script type="text/javascript" src="build/jquery-2.1.1.min.js"></script>
         <script src="https://api.tiles.mapbox.com/mapbox.js/v1.6.4/mapbox.js"></script>
         <link href="https://api.tiles.mapbox.com/mapbox.js/v1.6.4/mapbox.css" rel="stylesheet" />
-        <script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.2.0/leaflet-omnivore.min.js'></script>
+        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     </head>
     <body>
         <div id="map"></div>
+        <script src="data/hospitals.js"></script>
         <script src="data/urban_areas.js"></script>
+        <script src="js/functions.js"></script>
         <script>
-            function updateData() {
-                $("#map").height($(window).innerHeight());
-                
-                //We resize the markers depending on the zoom
-                var iconSize = Math.round(map.getZoom() * 20 / 14);
-                var iconAnchor = ((iconSize / 2) % 2 == 0) ? iconSize / 2 : iconSize / 2 + 1;
-                hospitalIcon = L.icon({
-                    iconUrl: 'icons/hospital.svg',
-                    iconRetinaUrl: 'icons/hospital.svg',
-                    iconSize: [iconSize, iconSize],
-                    iconAnchor: [iconAnchor, iconAnchor],
-                    popupAnchor: [0, 0]
-                });
-                for(var i = 0; i < markers.length; i++)
-                    markers[i].setIcon(hospitalIcon);
-            }
-            
-            $("#map").height($(window).innerHeight());
-            
-            // Create a map in the div #map
+            d3.select("#map")
+              .style("height", window.innerHeight+"px");
             var map = L.mapbox.map('map', 'clementp.ipg3giee')
-                       .setView([42.2, -71.7], 9)
-                       .on("zoomend", updateData);
-            
-            var nbMarkers = 0;
-            var totalLatitude = 0;
-            var totalLongitude = 0;
-            
-            var markers = [];
-            
-            //We display the hospitals
-            omnivore.csv('data/hospitals.csv')
-                .on('ready', function(layer) {
-                    this.eachLayer(function(marker) {
-                        var label = marker.toGeoJSON().properties.name;
-                        marker.bindPopup(label.trim());
-
-                        var hospitalIcon = L.icon({
-                            iconUrl: 'icons/hospital.svg',
-                            iconRetinaUrl: 'icons/hospital.svg',
-                            iconSize: [13, 13],
-                            iconAnchor: [5, 5],
-                            popupAnchor: [0, 0]
-                        });
-
-                        markers.push(
-                            marker.setIcon(hospitalIcon)
-                                .on('mouseover', function() {
-                                    this.openPopup();
-                                })
-                                .on('mouseout', function() {
-                                    var popup = this;
-                                    setTimeout(function() {
-                                        popup.closePopup();
-                                    }, 1500)
-                                })
-                        );
-
-                        nbMarkers++;
-                        totalLatitude += marker._latlng.lat;
-                        totalLongitude += marker._latlng.lng;
-                    });
-                    map.setView([totalLatitude / nbMarkers, totalLongitude / nbMarkers]);
-                })
-                .addTo(map);
+                              .setView([42.2, -71.7], 9);
             
             //We display the urban areas
             var urbanAreaFeature = L.geoJson(urbanAreaData, {
@@ -93,35 +33,33 @@
                 onEachFeature: onEachFeature
             })
             .addTo(map);
-
-            function onEachFeature(feature, layer) {
-                layer.on({
-                    mousemove: mousemove,
-                    mouseout: mouseout
-                });
-            }
             
-            function mousemove(e) {
-                var layer = e.target;
-
-                layer.setStyle({
-                    fill: true,
-                    fillColor: '#000',
-                    fillOpacity: .1
-                });
-
-                if(!L.Browser.ie && !L.Browser.opera)
-                    layer.bringToFront();
-            }
+            //We display the hospitals' markers
+            map._initPathRoot();
+            var markers = d3.select("#map svg")
+              .append("g")
+              .attr("class", "markers")
+              .selectAll("image")
+              .data(hospitalsData)
+              .enter()
+              .append("image")
+              .attr("class", "marker")
+              .attr("xlink:href", "icons/hospital.svg")
+              .on("mouseover", function(d) {
+                  displayPopup(d);
+              });
+//              .on("click", function(d) {
+//                  topCommunityFromHospital(d);
+//              });
             
-            function mouseout(e) {
-                urbanAreaFeature.resetStyle(e.target);
-            }
 
-
-            $(document).ready(function() { 
+            map.on("viewreset", updateMarkers);
+            updateMarkers();
+            
+            d3.select(document)
+              .on("ready", function() { 
                 window.onresize = function(event) {
-                    updateData();
+                    update();
                 };
             });
         </script>

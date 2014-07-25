@@ -15,3 +15,7 @@ div.leaflet-popup-content {
 a.leaflet-popup-close-button {
     display: none;
 }
+
+image.marker {
+    cursor: pointer;
+}
