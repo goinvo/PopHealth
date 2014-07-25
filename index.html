@@ -63,6 +63,12 @@
                                 .on('mouseover', function() {
                                     this.openPopup();
                                 })
+                                .on('mouseout', function() {
+                                    var popup = this;
+                                    setTimeout(function() {
+                                        popup.closePopup();
+                                    }, 1500)
+                                })
                         );
 
                         nbMarkers++;
