@@ -19,26 +19,26 @@ function updateMarkers() {
 
 //Detects when an urban area is hovered
 function onEachFeature(feature, layer) {
-    layer.on({
-        mousemove: mousemove,
-        mouseout: mouseout
-    });
+//    layer.on({
+//        mousemove: mousemove,
+//        mouseout: mouseout
+//    });
 }
 
-//Handler for the urban area
-function mousemove(e) {
-    var layer = e.target;
-    layer.setStyle({
-        fill: true,
-        fillColor: '#000',
-        fillOpacity: .1
-    });
-}
-
-//Handler for the urban area
-function mouseout(e) {
-    urbanAreaFeature.resetStyle(e.target);
-}
+////Handler for the urban area
+//function mousemove(e) {
+//    var layer = e.target;
+//    layer.setStyle({
+//        fill: true,
+//        fillColor: '#000',
+//        fillOpacity: .1
+//    });
+//}
+//
+////Handler for the urban area
+//function mouseout(e) {
+//    urbanAreaFeature.resetStyle(e.target);
+//}
 
 //Display the name of the hospital hovered
 function displayPopup(d) {
@@ -82,14 +82,54 @@ function displayUrbanArea(nb, total) {
 
 //Display the top communities for an hospital
 function topCommunityFromHospital(d) {
-    //We display a panel
-    var popup = L.popup({closeOnClick: false, closeButton: true})
-      .setLatLng([d.latitude, d.longitude])
-      .setContent(d.name)
-      .openOn(map);
-    
     //We get the urban areas where the people come from
     var hospital = hospitalsData[d.id - 1];
+    
+    //We display a panel
+    if(d3.select(".panel").length > 0) {
+        d3.select(".panel")
+          .remove();
+    }
+        
+    var panel = d3.select("body")
+      .append("div")
+      .attr("class", "panel")
+      .style("height", window.innerHeight+"px");
+    
+    var quitButton = panel.append("div")
+         .attr("class", "quit");
+    
+    quitButton.on("click", function() {
+        panel.remove();
+        d3.select("#map")
+          .style("width", window.innerWidth+"px");
+        map.eachLayer(function(layer) {
+            urbanAreaFeature.resetStyle(layer);
+        });
+    });
+    
+    d3.select("#map")
+      .style("width", (window.innerWidth - 400)+"px");
+    
+    panel.append("h1")
+         .text(d.name);
+    
+    for(var i = 0; i < 10; i++) {
+        if(hospital["nameTopCommunity"+(i + 1)] == null)
+            continue;
+        
+        panel.append("h2")
+             .text(hospital["nameTopCommunity"+(i + 1)]+", "+hospital["stateTopCommunity"+(i + 1)]);
+        panel.append("h3")
+             .text(hospital["nbTopCommunity"+(i + 1)]+" pacients");
+    }
+    
+//    var popup = L.popup({closeOnClick: false, closeButton: true})
+//      .setLatLng([d.latitude, d.longitude])
+//      .setContent(d.name)
+//      .openOn(map);
+//    
+    
     
     //We calculate the number of patients of that hospital
     var totalHospital = 0;
