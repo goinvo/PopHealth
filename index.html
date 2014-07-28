@@ -7,6 +7,7 @@
         <script src="https://api.tiles.mapbox.com/mapbox.js/v1.6.4/mapbox.js"></script>
         <link href="https://api.tiles.mapbox.com/mapbox.js/v1.6.4/mapbox.css" rel="stylesheet" />
         <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+        <script src="libs/chroma.min.js"></script>
     </head>
     <body>
         <div id="map"></div>
@@ -33,7 +34,7 @@
                 onEachFeature: onEachFeature
             })
             .addTo(map);
-            
+
             //We display the hospitals' markers
             map._initPathRoot();
             var markers = d3.select("#map svg")
@@ -47,10 +48,10 @@
               .attr("xlink:href", "icons/hospital.svg")
               .on("mouseover", function(d) {
                   displayPopup(d);
+              })
+              .on("click", function(d) {
+                  topCommunityFromHospital(d);
               });
-//              .on("click", function(d) {
-//                  topCommunityFromHospital(d);
-//              });
             
 
             map.on("viewreset", updateMarkers);

@@ -7,13 +7,9 @@
     width: 100%;
 }
 
-div.leaflet-popup-content {
+.noCloseButton .leaflet-popup-content {
     padding-top: 5px !important;
     padding: 5px 10px;
-}
-
-a.leaflet-popup-close-button {
-    display: none;
 }
 
 image.marker {
