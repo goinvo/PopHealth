@@ -89,6 +89,9 @@ function topCommunityFromHospital(d) {
     if(d3.select(".panel").length > 0) {
         d3.select(".panel")
           .remove();
+        map.eachLayer(function(layer) {
+            urbanAreaFeature.resetStyle(layer);
+        });
     }
         
     var panel = d3.select("body")
@@ -118,10 +121,12 @@ function topCommunityFromHospital(d) {
         if(hospital["nameTopCommunity"+(i + 1)] == null)
             continue;
         
-        panel.append("h2")
-             .text(hospital["nameTopCommunity"+(i + 1)]+", "+hospital["stateTopCommunity"+(i + 1)]);
-        panel.append("h3")
-             .text(hospital["nbTopCommunity"+(i + 1)]+" pacients");
+        var div = panel.append("div")
+            .attr("class", "hospital");
+        div.append("h2")
+           .text(hospital["nameTopCommunity"+(i + 1)]+", "+hospital["stateTopCommunity"+(i + 1)])
+        div.append("h3")
+           .text(hospital["nbTopCommunity"+(i + 1)]+" pacients");
     }
     
 //    var popup = L.popup({closeOnClick: false, closeButton: true})

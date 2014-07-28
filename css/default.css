@@ -38,6 +38,14 @@ image.marker {
     background: url(../icons/quit.svg) no-repeat;
 }
 
+.panel div.hospital {
+    border-bottom: 1px dotted #B5B5B5;
+}
+
+.panel div.hospital:hover {
+    background-color: #E8E8E8;
+}
+
 .panel h1 {
     margin-bottom: 20px;
     font-size: 35px;
