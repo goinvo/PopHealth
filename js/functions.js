@@ -97,18 +97,32 @@ function displayUrbanArea(communityName, nb, total) {
         setUrbanAreaLayerfillColor(urbanAreaLayerId, colorScale(nb), .8);
 }
 
+//Display a bubble next to the panel with the content of the string
+function displayHospitalInfo(string) {
+    if(d3.select(".bubble")[0][0])
+        d3.select(".bubble").remove();
+    
+    d3.select("body")
+      .append("div")
+      .attr("class", "bubble")
+      .text(string);
+}
+
 //Display the top communities for an hospital
 function topCommunityFromHospital(d) {
     //We get the urban areas where the people come from
     var hospital = hospitalsData[d.id - 1];
     
-    //We eventually remove the old panel
+    //We eventually remove the old panel and the old bubble
     if(d3.select(".panel")[0][0]) {
         d3.select(".panel")
           .remove();
         map.eachLayer(function(layer) {
             urbanAreaFeature.resetStyle(layer);
         });
+        
+        if(d3.select(".bubble")[0][0])
+            d3.select(".bubble").remove();
     }
     
 //    var popup = L.popup({closeOnClick: false, closeButton: true})
@@ -195,6 +209,8 @@ function topCommunityFromHospital(d) {
         map.eachLayer(function(layer) {
             urbanAreaFeature.resetStyle(layer);
         });
+        if(d3.select(".bubble")[0][0])
+            d3.select(".bubble").remove();
     });
     
     d3.select("#map")
@@ -222,5 +238,12 @@ function topCommunityFromHospital(d) {
          })
          .on("mouseout", function(d) {
             setUrbanAreaLayerstrokeColor(d, "#C71467", 0, 2);
+         })
+         .on("click", function(d, i) {
+             if(hospital.topCommunities[i].percentage != null)
+                var content = Math.round(hospital.topCommunities[i].percentage * 100)+"% of the people of that community came to this hospital";
+             else
+                 var content = "No data for that community";
+             displayHospitalInfo(content);
          });
 }

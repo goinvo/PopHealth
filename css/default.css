@@ -65,3 +65,13 @@ image.marker {
     font-weight: 100;
     font-style: italic;
 }
+
+.bubble {
+    width: 150px;
+    height: 80px;
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    right: 400px;
+    background: #fff;
+}
