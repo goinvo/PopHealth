@@ -117,16 +117,13 @@ function topCommunityFromHospital(d) {
     panel.append("h1")
          .text(d.name);
     
-    for(var i = 0; i < 10; i++) {
-        if(hospital["nameTopCommunity"+(i + 1)] == null)
-            continue;
-        
+    for(var i = 0; i < hospital.topCommunities.length; i++) {
         var div = panel.append("div")
             .attr("class", "hospital");
         div.append("h2")
-           .text(hospital["nameTopCommunity"+(i + 1)]+", "+hospital["stateTopCommunity"+(i + 1)])
+           .text(hospital.topCommunities[i].name+", "+hospital.topCommunities[i].state)
         div.append("h3")
-           .text(hospital["nbTopCommunity"+(i + 1)]+" pacients");
+           .text(hospital.topCommunities[i].patients+" patients");
     }
     
 //    var popup = L.popup({closeOnClick: false, closeButton: true})
@@ -138,15 +135,15 @@ function topCommunityFromHospital(d) {
     
     //We calculate the number of patients of that hospital
     var totalHospital = 0;
-    for(var i = 0; i < 10; i++)
-        totalHospital += hospital["nbTopCommunity"+(i + 1)];
+    for(var i = 0; i < hospital.topCommunities.length; i++)
+        totalHospital += hospital.topCommunities[i].patients;
     
-    for(var i = 0; i < 10; i++) {
+    for(var i = 0; i < hospital.topCommunities.length; i++) {
         
         //Only in the case the city in inside MA
-        if(hospital["nameTopCommunity"+(i + 1)] != null && hospital["stateTopCommunity"+(i + 1)] == "MA") {
-            var nbHospital =  hospital["nbTopCommunity"+(i + 1)];
-            communityName = hospital["nameTopCommunity"+(i + 1)].toLowerCase().trim();
+        if(hospital.topCommunities[i].state == "MA") {
+            var nbHospital =  hospital.topCommunities[i].patients;
+            communityName = hospital.topCommunities[i].name.toLowerCase().trim();
             
             //We retrieve the data from urbanAreaData
             urbanAreaObject = getUrbanAreaData(communityName);
