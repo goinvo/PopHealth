@@ -157,6 +157,7 @@ function topCommunityFromHospital(d) {
             //We couldn't find the urban area in the data, we use Nominatim to find it
             else {
                 var dataFound = false;
+                console.log(communityName);
                 d3.json("http://nominatim.openstreetmap.org/search?q="+communityName+"&state=ma&format=json&addressdetails=1", (function(communityName, nbHospital, totalHospital) {
                     return function(error, json) {
                         if(json.length > 0) {
