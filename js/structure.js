@@ -39,31 +39,44 @@ var markerModule = (function() {
                     var subtitle = topCommunity.patients+" patients";
                     var defaultStyle = urbanAreaModule.getDefaultStyle();
                     subtitle += (percentage == "") ? "" : " - "+percentage+"% of the community";
-                    menuModule
-                        .addItemContent({
-                            title: title,
-                            subtitle: subtitle,
-                            mouseover: urbanAreaModule.setAreaStyle,
-                            mouseoverArguments: [topCommunity.name.toLocaleLowerCase().trim(), {
-                                color: "#C71467",
-                                opacity: .8,
-                                weight: 2
-                            }],
-                            mouseout: urbanAreaModule.setAreaStyle,
-                            mouseoutArguments: [topCommunity.name.toLocaleLowerCase().trim(), {
-                                color: defaultStyle.color,
-                                opacity: defaultStyle.opacity,
-                                weight: defaultStyle.weight
-                            }]
-                        });
+                    
+                    //Case where the community is within MA
+                    if(topCommunity.state === "MA") {
+                        menuModule
+                            .addItemContent({
+                                title: title,
+                                subtitle: subtitle,
+                                mouseover: urbanAreaModule.setAreaStyle,
+                                mouseoverArguments: [topCommunity.name.toLocaleLowerCase().trim(), {
+                                    color: "#C71467",
+                                    opacity: .8,
+                                    weight: 2
+                                }],
+                                mouseout: urbanAreaModule.setAreaStyle,
+                                mouseoutArguments: [topCommunity.name.toLocaleLowerCase().trim(), {
+                                    color: defaultStyle.color,
+                                    opacity: defaultStyle.opacity,
+                                    weight: defaultStyle.weight
+                                }]
+                            });
 
-                    //We're displaying the heat map
-                    var colorScale = chroma.scale(["#61C280", "#C41212"]).domain([0, totalPatients]).out("hex");
-                    urbanAreaModule
-                        .setAreaStyle(topCommunity.name.toLocaleLowerCase().trim(), {
-                            fillColor: colorScale(topCommunity.patients),
-                            fillOpacity: .8
-                        });
+                        //We're displaying the heat map
+                        var colorScale = chroma.scale(["#61C280", "#C41212"]).domain([0, totalPatients]).out("hex");
+                        urbanAreaModule
+                            .setAreaStyle(topCommunity.name.toLocaleLowerCase().trim(), {
+                                fillColor: colorScale(topCommunity.patients),
+                                fillOpacity: .8
+                            });
+                    }
+                    
+                    //Case where the community is outside MA
+                    else {
+                        menuModule
+                            .addItemContent({
+                                title: title,
+                                subtitle: subtitle
+                            });
+                    }
                 })();
             });
 
