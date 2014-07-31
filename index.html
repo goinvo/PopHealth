@@ -17,60 +17,15 @@
         <script src="data/urban_areas.js"></script>
         <script src="js/structure.js"></script>
         <script>
-            d3.select("#map")
-                .style("height", window.innerHeight+"px");
-            var map = L.mapbox.map('map', 'clementp.ipg3giee')
-                .setView([42.2, -71.7], 9);
-            
-            urbanAreaModule.init(); //Should always ba called before markerModule init (cause: SVG's "z-index")
+            mapModule.init()
+            urbanAreaModule.init(); //Should always be called before markerModule init (cause: SVG's "z-index")
             menuModule.init();
             markerModule.init(hospitalsData);
             
-            map.on("viewreset", function() {markerModule.updateMarkers();});
-            
-            //We display the urban areas
-//            var urbanAreaFeature = L.geoJson(urbanAreaData, {
-//                style: {
-//                    fill: true,
-//                    fillColor: '#fff',
-//                    fillOpacity: 0,
-//                    stroke: true,
-//                    weight: 1,
-//                    color: '#000',
-//                    opacity: .1
-//                },
-//                onEachFeature: onEachFeature
-//            })
-//            .addTo(map);
-//
-//            //We display the hospitals' markers
-//            map._initPathRoot();
-//            var markers = d3.select("#map svg")
-//              .append("g")
-//              .attr("class", "markers")
-//              .selectAll("image")
-//              .data(hospitalsData)
-//              .enter()
-//              .append("image")
-//              .attr("class", "marker")
-//              .attr("xlink:href", "icons/hospital.svg")
-//              .on("mouseover", function(d) {
-//                  displayPopup(d);
-//              })
-//              .on("click", function(d) {
-//                  topCommunityFromHospital(d);
-//              });
-//            
-//
-            
-//            updateMarkers();
-//            
-//            d3.select(document)
-//              .on("ready", function() { 
-//                window.onresize = function(event) {
-//                    update();
-//                };
-//            });
+            d3.select(window).on("resize", function() {
+                mapModule.updateSize();
+                menuModule.updateSize();
+            });
         </script>
     </body>
 </html>

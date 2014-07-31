@@ -1,3 +1,53 @@
+var mapModule = (function() {
+    var _config = {
+        mapId: "map",
+        mapName: "clementp.ipg3giee",
+        defaultLatitude: 42.2,
+        defaultLongitude: -71.7,
+        defaultZoom: 9
+    };
+    
+    var _map;
+    
+    /*
+        init
+        Desc:   Initialize the map
+    */
+    var init = function() {
+        d3.select("#"+_config.mapId)
+            .style("height", window.innerHeight+"px");
+        
+        _map = L.mapbox
+            .map("map", _config.mapName)
+            .setView([_config.defaultLatitude, _config.defaultLongitude], _config.defaultZoom)
+            .on("viewreset", function() {markerModule.updateMarkers();});
+    };
+    
+    /*
+        updateSize
+        Desc:   Resize the map depending on the size of the window
+    */
+    var updateSize = function() {
+        d3.select("#"+_config.mapId)
+            .style("height", window.innerHeight+"px");  
+    };
+    
+    /*
+        getMap
+        Desc: Return the mapbox object for the map
+    */
+    var getMap = function() {
+        return _map;  
+    };
+    
+    return {
+        init: init,
+        updateSize: updateSize,
+        getMap: getMap
+    };
+})();
+
+
 var markerModule = (function() {
     var _config = {
         wrapper: "#map svg",
@@ -17,10 +67,10 @@ var markerModule = (function() {
         var popup = L.popup({closeButton: false, className: 'noCloseButton'})
             .setLatLng([data.latitude, data.longitude])
             .setContent(data.name)
-            .openOn(map);
+            .openOn(mapModule.getMap());
     
         setTimeout(function() {
-            map.closePopup(popup);
+            mapModule.getMap().closePopup(popup);
         }, 2000);
     };
     
@@ -128,7 +178,7 @@ var markerModule = (function() {
         Desc:   Display the hospitals' markers on the map from data
     */
     var init = function(data) {
-        map._initPathRoot();
+        mapModule.getMap()._initPathRoot();
         if(data === undefined) {
             console.log("markerModule: init should be called with an argument");
             return;
@@ -154,15 +204,15 @@ var markerModule = (function() {
         Desc:   Update the size and the position of each of the markers depending on the zoom of the map
     */
     var updateMarkers = function() {
-        var markerSize = Math.round(map.getZoom() * 20 / 14);
+        var markerSize = Math.round(mapModule.getMap().getZoom() * 20 / 14);
         _markers
             .attr("width", markerSize)
             .attr("height", markerSize)
             .attr("x", function(d) { 
-                return map.latLngToLayerPoint([d.latitude, d.longitude]).x - markerSize / 2;
+                return mapModule.getMap().latLngToLayerPoint([d.latitude, d.longitude]).x - markerSize / 2;
             })
             .attr("y", function(d) { 
-                return map.latLngToLayerPoint([d.latitude, d.longitude]).y - markerSize / 2;
+                return mapModule.getMap().latLngToLayerPoint([d.latitude, d.longitude]).y - markerSize / 2;
             });
     }
     
@@ -209,10 +259,11 @@ var urbanAreaModule = (function() {
         Desc:   Display the urban areas on the map
     */
     var init = function() {
+        mapModule.getMap()._initPathRoot();
         _feature = L.geoJson(urbanAreaData, {
             style: _config.style
         })
-        .addTo(map);
+        .addTo(mapModule.getMap());
     };
     
     
@@ -493,6 +544,15 @@ var menuModule = (function() {
         return this;
     };
     
+    /*
+        updateSize
+        Desc:   Resize the menu depending on the size of the window
+    */
+    var updateSize = function() {
+        d3.select("."+_config.menuClass)
+            .style("height", window.innerHeight+"px");  
+    };
+    
     
     /*
         init
@@ -515,6 +575,7 @@ var menuModule = (function() {
         addItemContent: addItemContent,
         resetItemContent: resetItemContent,
         highlightItem: highlightItem,
+        updateSize: updateSize,
         resetItem: resetItem,
         init: init
     };
