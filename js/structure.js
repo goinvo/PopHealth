@@ -1,6 +1,6 @@
 var mapModule = (function() {
     var _config = {
-        mapId: "map",
+        mapElement: "#map",
         mapName: "clementp.ipg3giee",
         defaultLatitude: 42.2,
         defaultLongitude: -71.7,
@@ -14,7 +14,7 @@ var mapModule = (function() {
         Desc:   Initialize the map
     */
     var init = function() {
-        d3.select("#"+_config.mapId)
+        d3.select(_config.mapElement)
             .style("height", window.innerHeight+"px");
         
         _map = L.mapbox
@@ -28,7 +28,7 @@ var mapModule = (function() {
         Desc:   Resize the map depending on the size of the window
     */
     var updateSize = function() {
-        d3.select("#"+_config.mapId)
+        d3.select(_config.mapElement)
             .style("height", window.innerHeight+"px");  
     };
     
@@ -83,14 +83,16 @@ var markerModule = (function() {
             menuModule
                 .setTitle(data.name)
                 .resetItemContent();
+            
+            urbanAreaModule
+                .reset();
         
             var totalPatients = 0;
             data.topCommunities.forEach(function(topCommunity) {
                 totalPatients += topCommunity.patients;
             });
             
-            urbanAreaModule.reset();
-
+            var counter = 0;
             data.topCommunities.forEach(function(topCommunity) {
                 (function() {
                     var title = topCommunity.name+", "+topCommunity.state;
@@ -101,18 +103,23 @@ var markerModule = (function() {
                     
                     //Case where the community is within MA
                     if(topCommunity.state === "MA") {
+                        
+                        //We set an id to the urban area
+                        urbanAreaModule.setId(topCommunity.name.toLocaleLowerCase().trim(), counter);
+                        
                         menuModule
                             .addItemContent({
+                                id: counter,
                                 title: title,
                                 subtitle: subtitle,
                                 mouseover: urbanAreaModule.setAreaStyle,
-                                mouseoverArguments: [topCommunity.name.toLocaleLowerCase().trim(), {
+                                mouseoverArguments: [counter, {
                                     color: "#C71467",
                                     opacity: .8,
                                     weight: 2
                                 }],
                                 mouseout: urbanAreaModule.setAreaStyle,
-                                mouseoutArguments: [topCommunity.name.toLocaleLowerCase().trim(), {
+                                mouseoutArguments: [counter, {
                                     color: defaultStyle.color,
                                     opacity: defaultStyle.opacity,
                                     weight: defaultStyle.weight
@@ -120,36 +127,36 @@ var markerModule = (function() {
                             });
                         
                         //The community in the menu is hovered if the layer is hovered
-                        urbanAreaModule.setAreaMouseover(topCommunity.name.toLocaleLowerCase().trim(), menuModule.highlightItem, [function(e) {
+                        urbanAreaModule.setAreaMouseover(counter, menuModule.highlightItem, [function(e) {
                             return (function() {
                                 //We highlight the urban area on the map too
-                                urbanAreaModule.setAreaStyle(topCommunity.name.toLocaleLowerCase().trim(), {
+                                urbanAreaModule.setAreaStyle(urbanAreaModule.getId(e.target), {
                                     color: "#C71467",
                                     opacity: .8,
                                     weight: 2
                                 });
                                 
-                                return urbanAreaModule.getAreaData(e.target).TOWN.toLowerCase().trim();
+                                return urbanAreaModule.getId(e.target);
                             })();
                         }]);
                         
-                        urbanAreaModule.setAreaMouseout(topCommunity.name.toLocaleLowerCase().trim(), menuModule.resetItem, [function(e) {
+                        urbanAreaModule.setAreaMouseout(counter, menuModule.resetItem, [function(e) {
                             return (function() {
                                 //We highlight the urban area on the map too
-                                urbanAreaModule.setAreaStyle(topCommunity.name.toLocaleLowerCase().trim(), {
+                                urbanAreaModule.setAreaStyle(urbanAreaModule.getId(e.target), {
                                     color: defaultStyle.color,
                                     opacity: defaultStyle.opacity,
                                     weight: defaultStyle.weight
                                 });
                                 
-                                return urbanAreaModule.getAreaData(e.target).TOWN.toLowerCase().trim();
+                                return urbanAreaModule.getId(e.target);
                             })();
                         }]);
 
                         //We're displaying the heat map
                         var colorScale = chroma.scale(["#61C280", "#C41212"]).domain([0, totalPatients]).out("hex");
                         urbanAreaModule
-                            .setAreaStyle(topCommunity.name.toLocaleLowerCase().trim(), {
+                            .setAreaStyle(counter, {
                                 fillColor: colorScale(topCommunity.patients),
                                 fillOpacity: .8
                             });
@@ -163,6 +170,8 @@ var markerModule = (function() {
                                 subtitle: subtitle
                             });
                     }
+                    
+                    counter++;
                 })();
             });
 
@@ -255,6 +264,23 @@ var urbanAreaModule = (function() {
     };
     
     /*
+        _getAreaById(id)
+        Desc:   Return the layer whose id is id
+    */
+    var _getAreaById = function(id) {
+        return (function() {
+            var layers = _feature.getLayers();
+            var result = null;
+            layers.forEach(function(layer) {
+                if(layer.dataId !== null && layer.dataId !== undefined && layer.dataId === id) {
+                    result = layer;
+                }
+            });  
+            return result;
+        })();
+    };
+    
+    /*
         init
         Desc:   Display the urban areas on the map
     */
@@ -272,16 +298,20 @@ var urbanAreaModule = (function() {
         Desc:   Reset the style of the layers to _config.style
     */
     var reset = function() {
-        _feature.getLayers().forEach(function(layer) {layer.setStyle(_config.style);});
+        _feature.getLayers().forEach(function(layer) {
+            layer.setStyle(_config.style);
+            layer["dataId"] = null;
+            layer.removeEventListener();
+        });
     };
     
     /*
-        setAreaStyle(urbanAreaName, style)
-        Desc:   Set the style of the area named urbanAreaName to style
+        setAreaStyle(id, style)
+        Desc:   Set the style of the area whose id is id to style
     */
-    var setAreaStyle = function(urbanAreaName, style) {
+    var setAreaStyle = function(id, style) {
         (function() {
-            var layer = _getArea(urbanAreaName);
+            var layer = _getAreaById(id);
             if(layer === null || layer === undefined) {
                 console.log("urbanAreaModule.setAreaStyle: layer shouldn't be null or undefined");
                 return;
@@ -316,14 +346,18 @@ var urbanAreaModule = (function() {
     };
     
     /*
-        setAreaMouseover(urbanAreaName, callback, args)
-        Desc:   Set for the area named urbanAreaName the callback function "callback" when the event mouseover is caught
+        setAreaMouseover(id, callback, args)
+        Desc:   Set for the area whose id is id the callback function "callback" when the event mouseover is caught
                 args is the an array of the arguments that are passed to the callback function
                 If one of the arguments is actually a function, it is executed passing it as first and only parameter the event caught
     */
-    var setAreaMouseover = function(urbanAreaName, callback, args) {
+    var setAreaMouseover = function(id, callback, args) {
         (function() {
-            var layer = _getArea(urbanAreaName);
+            var layer = _getAreaById(id);
+            if(layer === null || layer === undefined) {
+                console.log("urbanAreaModule.setAreaMouseover: layer shouldn't be null or undefined");
+                return;
+            }
             
             layer.on("mouseover", function(e) {
                 //If args contains functions, we exexute them before
@@ -345,14 +379,18 @@ var urbanAreaModule = (function() {
     };
     
     /*
-        setAreaMouseout(urbanAreaName, callback, args)
-        Desc:   Set for the area named urbanAreaName the callback function "callback" when the event mouseout is caught
+        setAreaMouseout(id, callback, args)
+        Desc:   Set for the area whose id is id the callback function "callback" when the event mouseout is caught
                 args is the an array of the arguments that are passed to the callback function
                 If one of the arguments is actually a function, it is executed passing it as first and only parameter the event caught
     */
-    var setAreaMouseout = function(urbanAreaName, callback, args) {
+    var setAreaMouseout = function(id, callback, args) {
         (function() {
-            var layer = _getArea(urbanAreaName);
+            var layer = _getAreaById(id);
+            if(layer === null || layer === undefined) {
+                console.log("urbanAreaModule.setAreaMouseout: layer shouldn't be null or undefined");
+                return;
+            }
             
             layer.on("mouseout", function(e) {
                 //If args contains functions, we exexute them before
@@ -381,6 +419,39 @@ var urbanAreaModule = (function() {
         return urbanArea.feature.properties;
     };
     
+    /*
+        setId(urbanAreaName, id)
+        Desc:   Set the id to the layer named urbanAreaName
+    */
+    var setId = function(urbanAreaName, id) {
+        (function() {
+            var layer = _getArea(urbanAreaName);
+            if(layer === null || layer === undefined) {
+                console.log("urbanAreaModule.setId: layer shouldn't be null or undefined");
+                return;
+            }
+            
+            layer["dataId"] = id;
+        })();
+    };
+    
+    /*
+        getId(urbanAreaName)
+        Desc:   Return the id of the layer urbanArea
+    */
+    var getId = function(urbanArea) {
+        if(urbanArea === null || urbanArea === undefined) {
+            console.log("urbanAreaModule.getId: urbanArea shouldn't be null or undefined");
+            return;
+        }
+
+        if(urbanArea.dataId === null || urbanArea.dataId === undefined) {
+            console.log("urbanAreaModule.getId: returning a null or undefined value");
+        }
+        
+        return urbanArea.dataId;
+    };
+    
     return {
         init: init,
         reset: reset,
@@ -389,7 +460,9 @@ var urbanAreaModule = (function() {
         getDefaultStyle: getDefaultStyle,
         setAreaMouseover: setAreaMouseover,
         setAreaMouseout: setAreaMouseout,
-        getAreaData : getAreaData
+        getAreaData: getAreaData,
+        setId: setId,
+        getId: getId
     };
 })();
 
@@ -479,6 +552,11 @@ var menuModule = (function() {
     var addItemContent = function(content) {
         (function() {
             var item = _menu.append(_config.itemElement)
+                .data([{
+                    id: content.id,
+                    title: content.title,
+                    subtitle: content.subtitle
+                }])
                 .attr("class", _config.itemClass);
             item.append(_config.itemTitleElement)
                 .text(content.title)
@@ -516,13 +594,13 @@ var menuModule = (function() {
     
     /*
         highlightItem(itemName)
-        Desc:   Apply to the item whose title begins with itemName the class _config.activeClass
+        Desc:   Apply to the item whose id is id the class _config.activeClass
                 It returns the menu itself so it could be chained with other function of the menu
     */
-    var highlightItem = function(itemName) {
+    var highlightItem = function(id) {
         _menu.selectAll("."+_config.itemClass)
             .filter(function(d) {
-                return d3.select(this).select(_config.itemTitleElement).text().substring(0, itemName.length).toLowerCase() == itemName;
+                return d.id == id;
             })
             .classed(_config.activeItemClass, true);
         
@@ -531,13 +609,13 @@ var menuModule = (function() {
     
     /*
         resetItem(itemName)
-        Desc:   Remove the class _config.activeClass of the item whose title begins with itemName
+        Desc:   Remove the class _config.activeClass of the item whose id is id
                 It returns the menu itself so it could be chained with other function of the menu
     */
-    var resetItem = function(itemName) {
+    var resetItem = function(id) {
         _menu.selectAll("."+_config.itemClass)
             .filter(function(d) {
-                return d3.select(this).select(_config.itemTitleElement).text().substring(0, itemName.length).toLowerCase() == itemName;
+                return d.id == id;
             })
             .classed(_config.activeItemClass, false);
         
