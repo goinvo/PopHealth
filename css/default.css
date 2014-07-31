@@ -48,7 +48,7 @@ image.marker {
     cursor: default;
 }
 
-.panel div.hospital:hover {
+.panel div.hospital:hover, .panel div.hospital.active {
     background-color: #E8E8E8;
 }
 

@@ -59,6 +59,33 @@ var markerModule = (function() {
                                     weight: defaultStyle.weight
                                 }]
                             });
+                        
+                        //The community in the menu is hovered if the layer is hovered
+                        urbanAreaModule.setAreaMouseover(topCommunity.name.toLocaleLowerCase().trim(), menuModule.highlightItem, [function(e) {
+                            return (function() {
+                                //We highlight the urban area on the map too
+                                urbanAreaModule.setAreaStyle(topCommunity.name.toLocaleLowerCase().trim(), {
+                                    color: "#C71467",
+                                    opacity: .8,
+                                    weight: 2
+                                });
+                                
+                                return urbanAreaModule.getAreaData(e.target).TOWN.toLowerCase().trim();
+                            })();
+                        }]);
+                        
+                        urbanAreaModule.setAreaMouseout(topCommunity.name.toLocaleLowerCase().trim(), menuModule.resetItem, [function(e) {
+                            return (function() {
+                                //We highlight the urban area on the map too
+                                urbanAreaModule.setAreaStyle(topCommunity.name.toLocaleLowerCase().trim(), {
+                                    color: defaultStyle.color,
+                                    opacity: defaultStyle.opacity,
+                                    weight: defaultStyle.weight
+                                });
+                                
+                                return urbanAreaModule.getAreaData(e.target).TOWN.toLowerCase().trim();
+                            })();
+                        }]);
 
                         //We're displaying the heat map
                         var colorScale = chroma.scale(["#61C280", "#C41212"]).domain([0, totalPatients]).out("hex");
@@ -195,12 +222,65 @@ var urbanAreaModule = (function() {
         return _config.style;  
     };
     
+    var setAreaMouseover = function(urbanAreaName, callback, args) {
+        (function() {
+            var layer = _getArea(urbanAreaName);
+            
+            layer.on("mouseover", function(e) {
+                //If args contains functions, we exexute them before
+                var newArgs = [];
+                if(args !== null && args !== undefined) {
+                    args.forEach(function(arg) {
+                        if(typeof arg === "function") { 
+                            newArgs.push(arg.apply(null, [e]));
+                        }
+                        else {
+                            newArgs.push(arg);
+                        }
+                    });
+                }
+                
+                callback.apply(null, newArgs) ;
+            });
+        })();
+    };
+    
+    var setAreaMouseout = function(urbanAreaName, callback, args) {
+        (function() {
+            var layer = _getArea(urbanAreaName);
+            
+            layer.on("mouseout", function(e) {
+                //If args contains functions, we exexute them before
+                var newArgs = [];
+                if(args !== null && args !== undefined) {
+                    args.forEach(function(arg) {
+                        if(typeof arg === "function") { 
+                            newArgs.push(arg.apply(null, [e]));
+                        }
+                        else {
+                            newArgs.push(arg);
+                        }
+                    });
+                }
+                
+                callback.apply(null, newArgs) ;
+            });
+        })();
+    };
+    
+    var getAreaData = function(urbanArea) {
+        return urbanArea.feature.properties;
+    };
+    
     return {
         init: init,
         reset: reset,
         setAreaStyle: setAreaStyle,
         resetArea: resetArea,
-        getDefaultStyle: getDefaultStyle
+        getDefaultStyle: getDefaultStyle,
+        setAreaMouseover: setAreaMouseover,
+        setAreaMouseout: setAreaMouseout,
+        getAreaData : getAreaData
     };
 })();
 
@@ -213,7 +293,8 @@ var menuModule = (function() {
         itemClass: "hospital",
         itemTitleElement: "h2",
         itemSubtitleElement: "h3",
-        quitButtonClass: "quit"
+        quitButtonClass: "quit",
+        activeItemClass: "active"
     };
     
     var _menu;
@@ -260,10 +341,11 @@ var menuModule = (function() {
     
     var addItemContent = function(content) {
         (function() {
-            var item = _menu.append(_config.itemElement);
+            var item = _menu.append(_config.itemElement)
+                .attr("class", _config.itemClass);
             item.append(_config.itemTitleElement)
                 .text(content.title)
-                .append(_config.itemSubtitleElement)
+            item.append(_config.itemSubtitleElement)
                 .text(content.subtitle);
             
             if(content.mouseover !== null && content.mouseover !== undefined) {
@@ -290,6 +372,22 @@ var menuModule = (function() {
         return this;  
     };
     
+    var highlightItem = function(itemName) {
+        _menu.selectAll("."+_config.itemClass)
+            .filter(function(d) {
+                return d3.select(this).select(_config.itemTitleElement).text().substring(0, itemName.length).toLowerCase() == itemName;
+            })
+            .classed(_config.activeItemClass, true);
+    };
+    
+    var resetItem = function(itemName) {
+        _menu.selectAll("."+_config.itemClass)
+            .filter(function(d) {
+                return d3.select(this).select(_config.itemTitleElement).text().substring(0, itemName.length).toLowerCase() == itemName;
+            })
+            .classed(_config.activeItemClass, false);
+    };
+    
     var init = function() {
         _menu = d3.select(_config.wrapper)
             .append("div")
@@ -306,6 +404,8 @@ var menuModule = (function() {
         setTitle: setTitle,
         addItemContent: addItemContent,
         resetItemContent: resetItemContent,
+        highlightItem: highlightItem,
+        resetItem: resetItem,
         init: init
     };
 })();
