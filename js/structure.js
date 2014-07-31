@@ -8,6 +8,11 @@ var markerModule = (function() {
     
     var _markers;
     
+    /*
+        _displayBuble(data)
+        Desc:   Display a bubble at the position data.latitude and data.longitude, with the content data.name
+                The bubble disappears after 2000ms
+    */
     var _displayBubble = function(data) {
         var popup = L.popup({closeButton: false, className: 'noCloseButton'})
             .setLatLng([data.latitude, data.longitude])
@@ -19,6 +24,10 @@ var markerModule = (function() {
         }, 2000);
     };
     
+    /*
+        _displayTopCommunities(data)
+        Desc:   Main algorithm which manage the user's interaction
+    */
     var _displayTopCommunities = function(data) {
         (function() {
             menuModule
@@ -114,6 +123,10 @@ var markerModule = (function() {
         })();
     }
     
+    /*
+        init(data)
+        Desc:   Display the hospitals' markers on the map from data
+    */
     var init = function(data) {
         map._initPathRoot();
         if(data === undefined) {
@@ -136,6 +149,10 @@ var markerModule = (function() {
         updateMarkers();
     };
     
+    /*
+        updateMarkers
+        Desc:   Update the size and the position of each of the markers depending on the zoom of the map
+    */
     var updateMarkers = function() {
         var markerSize = Math.round(map.getZoom() * 20 / 14);
         _markers
@@ -168,8 +185,12 @@ var urbanAreaModule = (function() {
         }
     };
     
-    var _feature;
+    var _feature; //Contains the mapbox object for the urban areas
     
+    /*
+        _getArea(urbanAreaName)
+        Desc:   Return the layer whose name is urbanAreaName
+    */
     var _getArea = function(urbanAreaName) {
         return (function() {
             var layers = _feature.getLayers();
@@ -183,6 +204,10 @@ var urbanAreaModule = (function() {
         })();
     };
     
+    /*
+        init
+        Desc:   Display the urban areas on the map
+    */
     var init = function() {
         _feature = L.geoJson(urbanAreaData, {
             style: _config.style
@@ -190,15 +215,24 @@ var urbanAreaModule = (function() {
         .addTo(map);
     };
     
+    
+    /*
+        reset
+        Desc:   Reset the style of the layers to _config.style
+    */
     var reset = function() {
         _feature.getLayers().forEach(function(layer) {layer.setStyle(_config.style);});
     };
     
+    /*
+        setAreaStyle(urbanAreaName, style)
+        Desc:   Set the style of the area named urbanAreaName to style
+    */
     var setAreaStyle = function(urbanAreaName, style) {
         (function() {
             var layer = _getArea(urbanAreaName);
             if(layer === null || layer === undefined) {
-                console.log("urbanAreaModule: layer shouldn't be null or undefined");
+                console.log("urbanAreaModule.setAreaStyle: layer shouldn't be null or undefined");
                 return;
             }
             
@@ -206,11 +240,15 @@ var urbanAreaModule = (function() {
         })();
     };
     
+    /*
+        resetArea(urbanAreaName)
+        Desc:   Reset the style of the area named urbanAreaName to _config.style
+    */
     var resetArea = function(urbanAreaName) {
         (function() {
             var layer = _getArea(urbanAreaName);
             if(layer === null || layer === undefined) {
-                console.log("urbanAreaModule: layer shouldn't be null or undefined");
+                console.log("urbanAreaModule.resetArea: layer shouldn't be null or undefined");
                 return;
             }
             
@@ -218,10 +256,20 @@ var urbanAreaModule = (function() {
         })();
     };
     
+    /*
+        getDefaultStyle
+        Desc:   Return the default style of the layers (ie areas)
+    */
     var getDefaultStyle = function() {
         return _config.style;  
     };
     
+    /*
+        setAreaMouseover(urbanAreaName, callback, args)
+        Desc:   Set for the area named urbanAreaName the callback function "callback" when the event mouseover is caught
+                args is the an array of the arguments that are passed to the callback function
+                If one of the arguments is actually a function, it is executed passing it as first and only parameter the event caught
+    */
     var setAreaMouseover = function(urbanAreaName, callback, args) {
         (function() {
             var layer = _getArea(urbanAreaName);
@@ -245,6 +293,12 @@ var urbanAreaModule = (function() {
         })();
     };
     
+    /*
+        setAreaMouseout(urbanAreaName, callback, args)
+        Desc:   Set for the area named urbanAreaName the callback function "callback" when the event mouseout is caught
+                args is the an array of the arguments that are passed to the callback function
+                If one of the arguments is actually a function, it is executed passing it as first and only parameter the event caught
+    */
     var setAreaMouseout = function(urbanAreaName, callback, args) {
         (function() {
             var layer = _getArea(urbanAreaName);
@@ -268,6 +322,10 @@ var urbanAreaModule = (function() {
         })();
     };
     
+    /*
+        getAreaData(urbanArea)
+        Desc:   Return the data binded to the layer getAreaData
+    */
     var getAreaData = function(urbanArea) {
         return urbanArea.feature.properties;
     };
@@ -299,6 +357,12 @@ var menuModule = (function() {
     
     var _menu;
     
+    /*
+        open(options)
+        Desc:   Display the menu
+                options is an object that can contain the onQuit and onQuitArguments properties
+                If so, when the menu is closed, it calls the callback function onQuit with the array of arguments onQuitArguments
+    */
     var open = function(options) {
         _menu
             .style("height", window.innerHeight+"px")
@@ -315,17 +379,32 @@ var menuModule = (function() {
             });
     };
     
+    /*
+        close
+        Desc:   Close the menu and clean (remove) its content
+    */
     var close = function () {
         _menu.style("display", "none");
         _reset();
     };
     
+    
+    /*
+        _reset
+        Desc:   Remove the content of the menu
+    */
     var _reset = function() {
         _menu.selectAll("*")
             .filter(function() {return !d3.select(this).classed(_config.quitButtonClass);})
             .remove();
     };
     
+    /*
+        setTitle(title)
+        Desc:   Append the title "title" to the menu using the element _config.titleElement
+                If it already existed, it is just replaced
+                It returns the menu itself so it could be chained with other function of the menu
+    */
     var setTitle = function(title) {
         if(!_menu.select(_config.titleElement).empty()) { //In case a title already exists
             _menu.select(_config.titleElement)
@@ -339,6 +418,13 @@ var menuModule = (function() {
         return this;
     };
     
+    /*
+        addItemContent(content)
+        Desc:   Append an item _config.itemElement formed of a _config.itemTitleElement and a _config.itemSubtitleElement with their associated classes
+                content is made of content.title, content.subtitle, content.mousover, content.mouseoverArguments, content.mouseover, and content.mouseoverArguments
+                The four last properties are two callback functions associated with their respective arrays of arguments that are called when the event they designate is caught
+                It returns the menu itself so it could be chained with other function of the menu
+    */
     var addItemContent = function(content) {
         (function() {
             var item = _menu.append(_config.itemElement)
@@ -364,6 +450,11 @@ var menuModule = (function() {
         })();
     };
     
+    /*
+        resetItemContent
+        Desc:   Remove all the _config.itemElement from the menu
+                It returns the menu itself so it could be chained with other function of the menu
+    */
     var resetItemContent = function() {
         _menu.selectAll(_config.itemElement)
             .filter(function() {return !d3.select(this).classed(_config.quitButtonClass);})
@@ -372,22 +463,41 @@ var menuModule = (function() {
         return this;  
     };
     
+    /*
+        highlightItem(itemName)
+        Desc:   Apply to the item whose title begins with itemName the class _config.activeClass
+                It returns the menu itself so it could be chained with other function of the menu
+    */
     var highlightItem = function(itemName) {
         _menu.selectAll("."+_config.itemClass)
             .filter(function(d) {
                 return d3.select(this).select(_config.itemTitleElement).text().substring(0, itemName.length).toLowerCase() == itemName;
             })
             .classed(_config.activeItemClass, true);
+        
+        return this;
     };
     
+    /*
+        resetItem(itemName)
+        Desc:   Remove the class _config.activeClass of the item whose title begins with itemName
+                It returns the menu itself so it could be chained with other function of the menu
+    */
     var resetItem = function(itemName) {
         _menu.selectAll("."+_config.itemClass)
             .filter(function(d) {
                 return d3.select(this).select(_config.itemTitleElement).text().substring(0, itemName.length).toLowerCase() == itemName;
             })
             .classed(_config.activeItemClass, false);
+        
+        return this;
     };
     
+    
+    /*
+        init
+        Desc:   Append the menu to the DOM as of its quitButton
+    */
     var init = function() {
         _menu = d3.select(_config.wrapper)
             .append("div")
