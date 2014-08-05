@@ -1,82 +1,69 @@
-* {
+svg {
+    position: absolute;
+    z-index: 100;
+}
+
+svg path {
+    stroke: #b0b0b0;
+    fill: #fff;
+}
+
+#bubble {
+    position: absolute;
+    z-index: 200;
+    background-color: #fff;
+    border-radius: 5px;
+    -webkit-box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, .4);
+    -moz-box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, .4);
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, .4);
+}
+
+#bubble div {
+    display: table;
+}
+
+#bubble div p {
+    display: table-cell;
     margin: 0;
     padding: 0;
+    vertical-align: middle;
+    text-align: center;
 }
 
-body {
-    width: 100%;
-    overflow: hidden;
+/* ---------- First screen ---------- */
+section:first-of-type {
+    position: relative;
+    background-color: #292929;
 }
 
-#map {
-    width: 100%;
-    z-index: 1;
-}
-
-.noCloseButton .leaflet-popup-content {
-    padding-top: 5px !important;
-    padding: 5px 10px;
-}
-
-image.marker {
-    cursor: pointer;
-}
-
-.panel {
+#intro {
+    width: 62%;
+    height: 85%;
+    overflow: auto;
+    margin: auto;
+    padding: 20px; /* Needed so the text won't be cut on the edges */
     position: absolute;
     top: 0;
+    left: 0;
+    bottom: 0;
     right: 0;
-    z-index: 2;
-    width: 360px;
-    padding: 10px 20px;
-    background-color: #fff;
-    -webkit-box-shadow: -5px 0px 5px 0px rgba(0,0,0,0.2);
-    -moz-box-shadow: -5px 0px 5px 0px rgba(0,0,0,0.2);
-    box-shadow: -5px 0px 5px 0px rgba(0,0,0,0.2);
-}
-.panel .quit {
-    height: 30px;
-    width: 30px;
-    top: 10px;
-    right: 20px;
-    position: absolute;
-    background: url(../icons/quit.svg) no-repeat;
 }
 
-.panel div.hospital {
-    border-bottom: 1px dotted #B5B5B5;
-    cursor: default;
+#intro p {
+    font-family: "Open Sans", sans-serif;
+    font-weight: 700;
+    font-size: 53px;
+    text-transform: uppercase;
+    color: #b90a0a;
 }
 
-.panel div.hospital:hover, .panel div.hospital.active {
-    background-color: #E8E8E8;
+#intro p:last-of-type {
+    font-size: 45px;
+    color: #fff;
+    text-align: center;
+    text-transform: none;
 }
 
-.panel h1 {
-    margin-bottom: 20px;
-    font-size: 35px;
-    font-family: "Raleway", sans-serif;
-}
-
-.panel h2 {
-    font-family: "PT Sans", sans-serif;
-    font-size: 25px;
-}
-
-.panel h3 {
-    margin-bottom: 10px;
-    font-family: "PT Sans", sans-serif;
-    font-size: 17px;
-    font-weight: 100;
-    font-style: italic;
-}
-
-.bubble {
-    width: 150px;
-    height: 80px;
-    position: absolute;
-    z-index: 2;
-    top: 0;
-    right: 400px;
-    background: #fff;
+section:nth-of-type(2) {
+    background-color: #b0b0b0;
 }
