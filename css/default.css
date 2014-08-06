@@ -36,7 +36,7 @@ section:first-of-type {
     background-color: #1C1C1C;
 }
 
-#intro {
+#intro, #recipient {
     overflow: auto;
     margin: auto;
     position: absolute;
@@ -49,8 +49,6 @@ section:first-of-type {
 #intro p {
     color: #999;
     font-family: "u.s._101regular", sans-serif;
-    font-weight: 700;
-    font-size: 52px;
 }
 
 #intro p:first-of-type {
@@ -69,11 +67,18 @@ section:first-of-type {
     padding-left: 9ch;
 }
 
-#intro p:last-of-type {
-    font-size: 45px;
-    color: #cc0000;
+#recipient {
+    z-index: 200;
+    overflow: none;
+}
+
+#recipient p {
+    display: block;
+    position: absolute;
+    bottom: 17px; /* Due to the two lines text that changes the height */
     text-align: center;
-    text-transform: none;
+    font-family: "u.s._101regular", sans-serif;
+    color: #cc0000;
 }
 
 section:nth-of-type(2) {

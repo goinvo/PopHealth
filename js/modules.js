@@ -129,12 +129,21 @@ var app = (function() {
         return _hospitalData; 
     };
     
+    /*
+        isTouchDevice
+        Returns true if the device is a touch one
+    */
+    var isTouchDevice = function() {
+        return (('ontouchstart' in window) || (navigator.MaxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0));
+    };
+    
     return {
         init: init,
         resize: resize,
         width: getWidth,
         height: getHeight,
         urbanAreaData: getUrbanAreaData,
-        hospitalData: getHospitalData
+        hospitalData: getHospitalData,
+        touchDevice: isTouchDevice
     };
 })();
