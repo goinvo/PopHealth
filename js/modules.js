@@ -25,26 +25,16 @@ var app = (function() {
         
         //We initialize onepagescroll
         onePageScroll(".main", {
-           sectionContainer: "section",
-           easing: "ease",
-           animationTime: 1000,
-           pagination: true,
-           updateURL: false,
-           beforeMove: function(index) {},
-           afterMove: function(index) {},
-           loop: false,
-           keyboard: true,
-           responsiveFallback: false
-        });
-        
-        //We retrieve the page index
-        onePageScroll(".main", {
-            beforeMove: function(index, next_el) {
-                _pageIndexUpdate(index, true);
-            },
-            afterMove: function(index, next_el) {
-                _pageIndexUpdate(index, false);
-            }
+            sectionContainer: "section",
+            easing: "ease",
+            animationTime: 1000,
+            pagination: true,
+            updateURL: false,
+            beforeMove: function(index, next_el) {_pageIndexUpdate(index, true);},
+            afterMove: function(index, next_el) {_pageIndexUpdate(index, false);},
+            loop: false,
+            keyboard: true,
+            responsiveFallback: false
         });
     };
     
