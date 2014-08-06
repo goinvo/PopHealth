@@ -1,16 +1,41 @@
 var firstSectionModule = (function() {
-    var _wrapper = ".main section:first-of-type";
+    var _wrapper = ".main section:first-of-type",
+        _textContainer = "#intro",
+        _textContainerWidth = 812,
+        _textContainerPadding = 20;
     
     var init = function() {
         d3.select("body").on("mousemove", function() {_changeRecipient(d3.mouse(this));});
         mapModule.top(app.height() - 300, true);
+        
+        d3.select(_textContainer)
+            .style("width", _textContainerWidth+"px")
+            .style("padding", _textContainerPadding+"px");
+        
+        resize();
     };
     
     /*
         resize
-        Calls all the methods resize of the sub-modules
+        Rescales the text on the screen to fit it
     */
-    var resize = function() { 
+    var resize = function() {
+        if(app.width() < _textContainerWidth + 2 * _textContainerPadding) {
+            var scale = app.width() / (_textContainerWidth + 2 * _textContainerPadding);
+            var leftMargin = (_textContainerWidth + 2 * _textContainerPadding - app.width()) / (2 * scale);
+            d3.select(_textContainer)
+                .style("-webkit-transform", "scale("+scale+") translateX(-"+leftMargin+"px)")
+                .style("-moz-transform", "scale("+scale+") translateX(-"+leftMargin+"px)")
+                .style("-ms-transform", "scale("+scale+") translateX(-"+leftMargin+"px)")
+                .style("transform", "scale("+scale+") translateX(-"+leftMargin+"px)");
+        }
+        else {
+            d3.select(_textContainer)
+                .style("-webkit-transform", "scale(1) translateX(0px)")
+                .style("-moz-transform", "scale(1) translateX(0px)")
+                .style("-ms-transform", "scale(1) translateX(0px)")
+                .style("transform", "scale(1) translateX(0px)");
+        }
     };
         
     /*

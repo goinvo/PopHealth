@@ -4,7 +4,7 @@ svg {
 }
 
 svg path {
-    stroke: #b0b0b0;
+    stroke: #fff;
     fill: #fff;
 }
 
@@ -33,15 +33,13 @@ svg path {
 /* ---------- First screen ---------- */
 section:first-of-type {
     position: relative;
-    background-color: #292929;
+    background-color: #1C1C1C;
 }
 
 #intro {
-    width: 62%;
     height: 85%;
     overflow: auto;
     margin: auto;
-    padding: 20px; /* Needed so the text won't be cut on the edges */
     position: absolute;
     top: 0;
     left: 0;
@@ -50,16 +48,31 @@ section:first-of-type {
 }
 
 #intro p {
-    font-family: "Open Sans", sans-serif;
+    color: #999;
+    font-family: "u.s._101regular", sans-serif;
     font-weight: 700;
-    font-size: 53px;
-    text-transform: uppercase;
-    color: #b90a0a;
+    font-size: 52px;
+}
+
+#intro p:first-of-type {
+    color: #fff;
+}
+
+#intro p:nth-of-type(2) {
+    padding-left: 3ch;
+}
+
+#intro p:nth-of-type(3) {
+    padding-left: 6ch;
+}
+
+#intro p:nth-of-type(4) {
+    padding-left: 9ch;
 }
 
 #intro p:last-of-type {
     font-size: 45px;
-    color: #fff;
+    color: #cc0000;
     text-align: center;
     text-transform: none;
 }
