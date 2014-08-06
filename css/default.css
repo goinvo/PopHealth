@@ -37,7 +37,6 @@ section:first-of-type {
 }
 
 #intro {
-    height: 85%;
     overflow: auto;
     margin: auto;
     position: absolute;

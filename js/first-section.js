@@ -2,6 +2,7 @@ var firstSectionModule = (function() {
     var _wrapper = ".main section:first-of-type",
         _textContainer = "#intro",
         _textContainerWidth = 812,
+        _textContainerHeight = 613,
         _textContainerPadding = 20;
     
     var init = function() {
@@ -10,6 +11,7 @@ var firstSectionModule = (function() {
         
         d3.select(_textContainer)
             .style("width", _textContainerWidth+"px")
+            .style("height", _textContainerHeight+"px")
             .style("padding", _textContainerPadding+"px");
         
         resize();
@@ -20,21 +22,32 @@ var firstSectionModule = (function() {
         Rescales the text on the screen to fit it
     */
     var resize = function() {
-        if(app.width() < _textContainerWidth + 2 * _textContainerPadding) {
-            var scale = app.width() / (_textContainerWidth + 2 * _textContainerPadding);
-            var leftMargin = (_textContainerWidth + 2 * _textContainerPadding - app.width()) / (2 * scale);
+        var heightScale = 1;
+        var widthScale = 1;
+        
+        if(app.width() < _textContainerWidth + 2 * _textContainerPadding)
+            widthScale = app.width() / (_textContainerWidth + 2 * _textContainerPadding);
+        if(app.height() < _textContainerHeight + 2 * _textContainerPadding)
+            heightScale = app.height() / (_textContainerHeight + 2 * _textContainerPadding);
+        
+        //The text needs to be rescaled
+        if(widthScale !== 1 || heightScale !== 1) {
+            var scale = (widthScale < heightScale) ? widthScale : heightScale;
+            var leftMargin = (widthScale !== 1) ? (_textContainerWidth + 2 * _textContainerPadding - app.width()) / (2 * scale) : 0;
+            var topMargin = (heightScale !== 1) ? (_textContainerHeight + 2 * _textContainerPadding - app.height()) / (2 * scale) : 0;
+            
             d3.select(_textContainer)
-                .style("-webkit-transform", "scale("+scale+") translateX(-"+leftMargin+"px)")
-                .style("-moz-transform", "scale("+scale+") translateX(-"+leftMargin+"px)")
-                .style("-ms-transform", "scale("+scale+") translateX(-"+leftMargin+"px)")
-                .style("transform", "scale("+scale+") translateX(-"+leftMargin+"px)");
+                .style("-webkit-transform", "scale("+scale+") translate(-"+leftMargin+"px, -"+topMargin+"px)")
+                .style("-moz-transform", "scale("+scale+") translate(-"+leftMargin+"px, -"+topMargin+"px)")
+                .style("-ms-transform", "scale("+scale+") translate(-"+leftMargin+"px, -"+topMargin+"px)")
+                .style("transform", "scale("+scale+") translate(-"+leftMargin+"px, -"+topMargin+"px)");
         }
         else {
             d3.select(_textContainer)
-                .style("-webkit-transform", "scale(1) translateX(0px)")
-                .style("-moz-transform", "scale(1) translateX(0px)")
-                .style("-ms-transform", "scale(1) translateX(0px)")
-                .style("transform", "scale(1) translateX(0px)");
+                .style("-webkit-transform", "scale(1) translate(0, 0)")
+                .style("-moz-transform", "scale(1) translate(0, 0)")
+                .style("-ms-transform", "scale(1) translate(0, 0)")
+                .style("transform", "scale(1) translate(0, 0)");
         }
     };
         
