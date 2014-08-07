@@ -96,6 +96,22 @@ var mapModule = (function() {
     };
     
     /*
+        width
+        Returns the width of the map with the current scale
+    */
+    var width = function() {
+        return _mapWidth;
+    };
+    
+    /*
+        height
+        Returns the height of the map with the current scale
+    */
+    var height = function() {
+        return _mapHeight;
+    };
+    
+    /*
         _scale
         Returns the scale of the map depending on the minimum of the scales calculated from the width and the height
     */
@@ -228,6 +244,8 @@ var mapModule = (function() {
         resize: resize,
         center: center,
         move: move,
+        width: width,
+        height: height,
         displayMarkers: displayMarkers,
         hideMarkers: hideMarkers
     };
