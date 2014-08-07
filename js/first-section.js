@@ -97,11 +97,11 @@ var firstSectionModule = (function() {
     */
     var pageLeft = function() {
         d3.select(_recipientContainer)
-            .style("transform", "translateY(-"+app.width()+"px)")
-            .style("-webkit-transform", "translateY(-"+app.width()+"px)")
-            .style("-moz-transform", "translateY(-"+app.width()+"px)")
-            .style("-ms-transform", "translateY(-"+app.width()+"px)")
-            .style("transition", "1s ease")
+            .style("transform", "translateY(-"+app.height()+"px)")
+            .style("-webkit-transform", "translateY(-"+app.height()+"px)")
+            .style("-moz-transform", "translateY(-"+app.height()+"px)")
+            .style("-ms-transform", "translateY(-"+app.height()+"px)")
+            .style("transition", ".5s ease")
             .style("-webkit-transition", "1s ease")
             .style("-moz-transition", "1s ease")
             .style("-ms-transition", "1s ease");
