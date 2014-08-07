@@ -19,7 +19,7 @@ var firstSectionModule = (function() {
         else
             _changeRecipient();
         
-//        mapModule.top((app.height() - _textContainerHeight) / 2 + _textContainerHeight - 3 / 2 * _textContainerFontSize - _mapTopOffset, true);
+        mapModule.move("auto", app.height() * 2 / 3, true);
         
         d3.selectAll(_textContainer+", "+_recipientContainer)
             .style("width", _textContainerWidth+"px")
@@ -69,7 +69,7 @@ var firstSectionModule = (function() {
                 .style("transform", "scale(1) translate(0, 0)");
         }
         
-//        mapModule.top(app.height() - 300, true);
+        mapModule.move("auto", app.height() * 2 / 3, true);
     };
         
     /*
@@ -77,7 +77,7 @@ var firstSectionModule = (function() {
         Positions the map, hides its markers and display the name of the recipient
     */
     var pageEntered = function() {
-        mapModule.top(app.height() - 300, true);
+        mapModule.move("auto", app.height() * 2 / 3, true);
         mapModule.hideMarkers();
         
         d3.select(_recipientContainer)

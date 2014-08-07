@@ -7,6 +7,10 @@ var mapModule = (function() {
         _projection,
         _path,
         _svg,
+        _mapWidth,
+        _mapHeight,
+        _mapLeftOffset,
+        _mapTopOffset,
         _bubbleTimer;
     
     var init = function() {
@@ -14,14 +18,19 @@ var mapModule = (function() {
                 .center([-71.7, 42.08])
                 .scale(_scale())
                 .translate([app.width() / 2, app.height() / 2]);
-            
+
         _path = d3.geo.path().projection(_projection);
 
         _svg = d3.select(_svg)
             .attr("width", app.width())
             .attr("height", app.height());
         
-        top(app.height(), false);
+        _mapLeftOffset = _path.bounds(app.urbanAreaData())[0][0];
+        _mapTopOffset = _path.bounds(app.urbanAreaData())[0][1];
+        _mapWidth = _path.bounds(app.urbanAreaData())[1][0] - _mapLeftOffset;
+        _mapHeight = _path.bounds(app.urbanAreaData())[1][1] - _mapTopOffset;
+        
+        move(0, 0, false);
 
         _svg.selectAll("path")
             .data(app.urbanAreaData().features)
@@ -45,77 +54,44 @@ var mapModule = (function() {
         If animated, the transition lasts 1s
     */
     var center = function(animated) {
-        if(animated) {
-            _svg.style("transform", "translateY(0px)")
-                .style("-webkit-transform", "translateY(0px)")
-                .style("-moz-transform", "translateY(0px)")
-                .style("-ms-transform", "translateY(0px)")
-                .style("transform", "translateX(0px)")
-                .style("-webkit-transform", "translateX(0px)")
-                .style("-moz-transform", "translateX(0px)")
-                .style("-ms-transform", "translateX(0px)")
-                .style("transition", "1s ease")
-                .style("-webkit-transition", "1s ease")
-                .style("-moz-transition", "1s ease")
-                .style("-ms-transition", "1s ease");
-        }
-        else {
-            _svg.style("transform", "translateY(0px)")
-                .style("-webkit-transform", "translateY(0px)")
-                .style("-moz-transform", "translateY(0px)")
-                .style("-ms-transform", "translateY(0px)")
-                .style("transform", "translateX(0px)")
-                .style("-webkit-transform", "translateX(0px)")
-                .style("-moz-transform", "translateX(0px)")
-                .style("-ms-transform", "translateX(0px)");
-        }
+        move("auto", "auto", animated);
     };
     
     /*
-        top
-        Sets the absolute distance of the map from the top of the screen
+        move
+        Sets the absolute distance of the map from the left and the top of the screen
+        left and top are pixel values or the string "auto" in which case the map will be horizontally or vertically centered, or both
         If animated, the transition lasts 1s
     */
-    var top = function(top, animated) {
+    var move = function(left, top, animated) {
+        var x,
+            y;
+        
+        if(typeof left === "number")
+            x = left - _mapLeftOffset;
+        else if(left === "auto")
+            x = (app.width() - _mapWidth) / 2 - _mapLeftOffset;
+        
+        if(typeof top === "number")
+            y = top - _mapTopOffset;
+        else if(top === "auto")
+            y = (app.height() - _mapHeight) / 2 - _mapTopOffset;
+        
         if(animated) {
-            _svg.style("transform", "translateY("+top+"px)")
-                .style("-webkit-transform", "translateY("+top+"px)")
-                .style("-moz-transform", "translateY("+top+"px)")
-                .style("-ms-transform", "translateY("+top+"px)")
+            _svg.style("transform", "translate("+x+"px, "+y+"px)")
+                .style("-webkit-transform", "translate("+x+"px, "+y+"px)")
+                .style("-moz-transform", "translate("+x+"px, "+y+"px)")
+                .style("-ms-transform", "translate("+x+"px, "+y+"px)")
                 .style("transition", "1s ease")
                 .style("-webkit-transition", "1s ease")
                 .style("-moz-transition", "1s ease")
                 .style("-ms-transition", "1s ease");
         }
         else {
-            _svg.style("transform", "translateY("+top+"px)")
-                .style("-webkit-transform", "translateY("+top+"px)")
-                .style("-moz-transform", "translateY("+top+"px)")
-                .style("-ms-transform", "translateY("+top+"px)");
-        }
-    };
-    
-    /*
-        left
-        Sets the absolute distance of the map from the left of the screen
-        If animated, the transition lasts 1s
-    */
-    var left = function(left, animated) {
-        if(animated) {
-            _svg.style("transform", "translateX("+left+"px)")
-                .style("-webkit-transform", "translateX("+left+"px)")
-                .style("-moz-transform", "translateX("+left+"px)")
-                .style("-ms-transform", "translateX("+left+"px)")
-                .style("transition", "1s ease")
-                .style("-webkit-transition", "1s ease")
-                .style("-moz-transition", "1s ease")
-                .style("-ms-transition", "1s ease");
-        }
-        else {
-            _svg.style("transform", "translateX("+left+"px)")
-                .style("-webkit-transform", "translateX("+left+"px)")
-                .style("-moz-transform", "translateX("+left+"px)")
-                .style("-ms-transform", "translateX("+left+"px)");
+            _svg.style("transform", "translate("+x+"px, "+y+"px)")
+                .style("-webkit-transform", "translate("+x+"px, "+y+"px)")
+                .style("-moz-transform", "translate("+x+"px, "+y+"px)")
+                .style("-ms-transform", "translate("+x+"px, "+y+"px)");
         }
     };
     
@@ -232,22 +208,26 @@ var mapModule = (function() {
         Calls all the methods resize of the sub-modules
     */
     var resize = function() {
-        svg.attr("width", app.width())
+        _svg.attr("width", app.width())
             .attr("height", app.height());
 
         _projection.scale(_scale())
             .translate([app.width() / 2, app.height() / 2]);
         _path = d3.geo.path().projection(_projection);
-        svg.selectAll("path")
-            .attr("d", _path); 
+        _svg.selectAll("path")
+            .attr("d", _path);
+        
+        _mapLeftOffset = _path.bounds(app.urbanAreaData())[0][0];
+        _mapTopOffset = _path.bounds(app.urbanAreaData())[0][1];
+        _mapWidth = _path.bounds(app.urbanAreaData())[1][0] - _mapLeftOffset;
+        _mapHeight = _path.bounds(app.urbanAreaData())[1][1] - _mapTopOffset;
     };
     
     return {
         init: init,
         resize: resize,
         center: center,
-        top: top,
-        left: left,
+        move: move,
         displayMarkers: displayMarkers,
         hideMarkers: hideMarkers
     };

@@ -28,7 +28,7 @@ var app = (function() {
             sectionContainer: "section",
             easing: "ease",
             animationTime: 1000,
-            pagination: true,
+            pagination: false,
             updateURL: false,
             beforeMove: function(index, next_el) {_pageIndexUpdate(index, true);},
             afterMove: function(index, next_el) {_pageIndexUpdate(index, false);},
@@ -42,6 +42,7 @@ var app = (function() {
         _width = window.innerWidth;
         _height = window.innerHeight;
         
+        mapModule.resize();
         firstSectionModule.resize();
         secondSectionModule.resize();
     };
