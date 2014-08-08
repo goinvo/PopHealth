@@ -12,21 +12,20 @@
         <script src="js/modules.js"></script>
     </head>
     <body>
-        <div id="recipient"><p>you?</p></div>
         <svg></svg>
-        <div class="main">
-            <section>
-                <div id="intro">
-                    <p>Nearly 50% of Massachusetts residents will visit a hospital this year.</p>
-                    <p>Do you know</p>
-                    <p>which hospital</p>
-                    <p>is the best for</p>
-                </div>
-            </section>
-            <section>
-            </section>
-            <section>Massachusetts!</section>
-        </div>
+        <section>
+            <div id="intro">
+                <p>Nearly 50% of Massachusetts residents will visit a hospital this year.</p>
+                <p>Which one is the best for <span>you?</span></p>
+                <form>
+                    <input type="text" placeholder="ZIP code" pattern="\d{5}" title="Must be 5 numeric numbers" required />
+                    <button type="submit">Check out!</button>
+                </form>
+                <p class="loader"></p>
+            </div>
+        </section>
+        <section>
+        </section>
         <script type="text/javascript">
             app.init();
             d3.select(window).on("resize", app.resize);

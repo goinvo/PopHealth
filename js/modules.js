@@ -23,24 +23,30 @@ var app = (function() {
             });
         });
         
-        //We initialize onepagescroll
-        onePageScroll(".main", {
-            sectionContainer: "section",
-            easing: "ease",
-            animationTime: 1000,
-            pagination: false,
-            updateURL: false,
-            beforeMove: function(index, next_el) {_pageIndexUpdate(index, true);},
-            afterMove: function(index, next_el) {_pageIndexUpdate(index, false);},
-            loop: false,
-            keyboard: true,
-            responsiveFallback: false
-        });
+        d3.selectAll("section")
+            .style("height", _height+"px");
+        
+//        //We initialize onepagescroll
+//        onePageScroll(".main", {
+//            sectionContainer: "section",
+//            easing: "ease",
+//            animationTime: 1000,
+//            pagination: false,
+//            updateURL: false,
+//            beforeMove: function(index, next_el) {_pageIndexUpdate(index, true);},
+//            afterMove: function(index, next_el) {_pageIndexUpdate(index, false);},
+//            loop: false,
+//            keyboard: true,
+//            responsiveFallback: false
+//        });
     };
     
     var resize = function() {
         _width = window.innerWidth;
         _height = window.innerHeight;
+        
+        d3.selectAll("section")
+            .style("height", _height+"px");
         
         mapModule.resize();
         firstSectionModule.resize();

@@ -1,16 +1,18 @@
 var firstSectionModule = (function() {
-    var _wrapper = ".main section:first-of-type",
+    var _wrapper = "section:first-of-type",
         _textContainer = "#intro",
-        _recipientContainer = "#recipient",
+        _recipientContainer = "#intro p:nth-of-type(2)",
         _textContainerWidth = 761,
-        _textContainerFontSize = 52,
-        _textContainerHeight = 488 - 17 + 3 * _textContainerFontSize, //Space needed for the last line of text
-        _textContainerPadding = {                                     //17px due to the two lines text (the two lines height /= _textContainerFontSize)
+        _textContainerFontSize = 50,
+        _textContainerHeight = 488,
+        _textContainerPadding = {
             top: 20,
             right: 20,
             bottom: 20,
             left: 20
         },
+        _inputContainer = "#intro form",
+        _loaderContainer = "#intro p.loader",
         _mapTopOffset = 280;
     
     var init = function() {
@@ -32,9 +34,50 @@ var firstSectionModule = (function() {
             .style("-moz-transform-origin", "center center")
             .style("-ms-transform-origin", "center center");
         
-        mapModule.move(0.09, .6, false);
+        mapModule.move(0.06, .6, false);
+        
+        d3.selectAll(_inputContainer+" input, "+_inputContainer+" button")
+            .style("font-size", _textContainerFontSize+"px");
+        
+        d3.select(_inputContainer).on("submit", function() {
+            //HTML5 validation
+            if(d3.select(this).select("input").node().checkValidity() === true) {
+                if (this.checkValidity())
+                    _validateForm();
+            }
+            
+            //Old browser
+            else {
+                var input = d3.select(this).select("input");
+                var pattern = /^[1-9]{5}$/;
+                
+                if(pattern.test(input.attr("value")))
+                    _validateForm();
+            }
+        });
+        
+        //Geolocalization
+        if(navigator.geolocation && !_isFirefox()) {
+            d3.select(_textContainer+" form")
+                .style("display", "none");
+            
+            d3.select(_loaderContainer)
+                .style("display", "block")
+                .append("button")
+                .style("font-size", _textContainerFontSize+"px")
+                .text("Locate me!")
+                .on("click", _findPostalCode);
+        }
         
         resize();
+    };
+    
+    /*
+        _isFirefox
+        Returns true if the browser is Firefox
+    */
+    var _isFirefox = function() {
+        return false;
     };
     
     /*
@@ -56,7 +99,7 @@ var firstSectionModule = (function() {
         if(widthScale !== 1 || heightScale !== 1) {
             scale = (widthScale < heightScale) ? widthScale : heightScale;
             var leftMargin = (widthScale !== 1) ? (_textContainerWidth + _textContainerPadding.left + _textContainerPadding.right - app.width()) / (2 * scale) : 0;
-            //iPhone need a top margin of 0 (bug)
+            //iPhone needs a top margin of 0 (bug)
             if((navigator.userAgent.match(/(iPod|iPhone)/) !== null) && (navigator.userAgent.match(/AppleWebKit/) !== null))
                 var topMargin = 0;
             else
@@ -75,13 +118,71 @@ var firstSectionModule = (function() {
                 .style("-ms-transform", "scale(1) translate(0, 0)")
                 .style("transform", "scale(1) translate(0, 0)");
         }
+    };
+    
+    /*
+        _findPostalCode(position)
+    */
+    var _findPostalCode = function(position) {
+        _displayLoader();
+        navigator.geolocation.getCurrentPosition(function(position) {
+            d3.json("http://nominatim.openstreetmap.org/reverse?format=json&lat="+position.coords.latitude+"&lon="+position.coords.longitude+"&addressdetails=0", function(error, data) {
+                console.log(data);
+            });
+        }, function() { //In case of an error or if the user doesn't wan to share his location
+            console.log("eeee");
+            _hideLoader();
+        });
+    };
+    
+    /*
+        _validateForm
+    */
+    var _validateForm = function() {
+       _displayLoader();
+    };
+    
+    /*
+        _displayLoader
+        Displays the loader and hides the form
+    */
+    var _displayLoader = function() {
+        d3.select(_loaderContainer)
+            .selectAll("*")
+            .remove();
         
-        d3.select(_recipientContainer+" p")
-            .style("font-size", (_textContainerFontSize * scale)+"px");
+        var svg = d3.select(_loaderContainer)
+            .style("display", "block")
+            .append("svg")
+            .attr("width", _textContainerFontSize)
+            .attr("height", _textContainerFontSize);
         
-        d3.select(_recipientContainer)
-            .style("bottom", (1 / 6 * app.height() - _textContainerFontSize * scale / 2)+"px")
-            .style("width", app.width()+"px");
+        var circle = svg.append("circle")
+            .attr("cx", _textContainerFontSize / 2)
+            .attr("cy", _textContainerFontSize / 2)
+            .attr("r", _textContainerFontSize / 2);
+        
+        (function repeat() {
+            circle.transition()
+                .duration(900)
+                .attr("r", _textContainerFontSize / 4)
+                .transition()
+                .duration(900)
+                .attr("r", _textContainerFontSize / 2)
+                .each("end", repeat);
+        })();
+    };
+    
+    /*
+        _hideLoader
+        Hides the loader and displays the form
+    */
+    var _hideLoader = function() {
+        d3.select(_loaderContainer)
+            .style("display", "none");
+        
+        d3.select(_textContainer+" form")
+            .style("display", "block");
     };
         
     /*
@@ -89,35 +190,15 @@ var firstSectionModule = (function() {
         Positions the map, hides its markers and display the name of the recipient
     */
     var pageEntered = function() {
-        mapModule.move(0.09, .6, false);
+        mapModule.move(0.06, .6, false);
         
         mapModule.hideMarkers();
-        
-        d3.select(_recipientContainer)
-            .style("transform", "translateY(0)")
-            .style("-webkit-transform", "translateY(0)")
-            .style("-moz-transform", "translateY(0")
-            .style("-ms-transform", "translateY(0)")
-            .style("transition", "1s ease")
-            .style("-webkit-transition", "1s ease")
-            .style("-moz-transition", "1s ease")
-            .style("-ms-transition", "1s ease");
     };
     
     /*
         pageLeft
-        Hides the name of the recipients
     */
     var pageLeft = function() {
-        d3.select(_recipientContainer)
-            .style("transform", "translateY(-"+app.height()+"px)")
-            .style("-webkit-transform", "translateY(-"+app.height()+"px)")
-            .style("-moz-transform", "translateY(-"+app.height()+"px)")
-            .style("-ms-transform", "translateY(-"+app.height()+"px)")
-            .style("transition", ".5s ease")
-            .style("-webkit-transition", "1s ease")
-            .style("-moz-transition", "1s ease")
-            .style("-ms-transition", "1s ease");
     }
     
     /*
@@ -142,7 +223,7 @@ var firstSectionModule = (function() {
             var column = Math.round(coordinates[0] / app.width() * 4);
             var line = Math.round(coordinates[1] / app.height());
             
-            d3.select(_recipientContainer+" p")
+            d3.select(_recipientContainer+" span")
                 .text(recipients[line][column]+"?");
         }
         else {
@@ -153,7 +234,7 @@ var firstSectionModule = (function() {
             var line = ((index % 10) > 4) ? 1 : 0;
             var column = index % 5;
             
-            d3.select(_recipientContainer+" p")
+            d3.select(_recipientContainer+" span")
                 .text(recipients[line][column]+"?");
             
             setTimeout(function() {_changeRecipient(index + 1);}, 1500);

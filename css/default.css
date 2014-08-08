@@ -32,6 +32,11 @@ svg path {
     text-align: center;
 }
 
+section {
+    overflow: none;
+    width: 100%;
+}
+
 /* ---------- First screen ---------- */
 section:first-of-type {
     position: relative;
@@ -46,10 +51,10 @@ section:first-of-type {
     left: 0;
     bottom: 0;
     right: 0;
+    z-index: 200;
 }
 
 #intro p {
-    color: #999;
     font-family: "u.s._101regular", sans-serif;
 }
 
@@ -58,30 +63,74 @@ section:first-of-type {
 }
 
 #intro p:nth-of-type(2) {
-    padding-left: 3ch;
+    color: #999;
 }
 
-#intro p:nth-of-type(3) {
-    padding-left: 6ch;
-}
-
-#intro p:nth-of-type(4) {
-    padding-left: 9ch;
-}
-
-#recipient {
-    position: absolute;
-    z-index: 200;
-    overflow: none;
-}
-
-#recipient p {
-    display: block;
-    margin: 0;
-    text-align: center;
-    font-family: "u.s._101regular", sans-serif;
+#intro p:nth-of-type(2) span {
     color: #cc0000;
 }
+
+#intro form {
+    display: block;
+    text-align: center;
+}
+
+#intro input, #intro input:required:invalid {
+    display: inline-block;
+    margin: 0 20px 0 0;
+    width: 8ch;
+    appearance: none;
+    box-shadow: none;
+    border-radius: none;
+    font-family: "u.s._101regular", sans-serif;
+    text-align: center;
+    color: #999;
+    background-color: transparent;
+    border: 1px solid #999;
+}
+
+#intro input.invalid {
+    outline: none;
+    color: #cc0000;
+    border: 1px solid #cc0000;
+}
+
+#intro input:hover, #intro input:focus, #intro input:required:valid {
+    outline: none;
+    color: #fff;
+    border: 1px solid #fff;
+}
+
+#intro button {
+    width: 11ch;
+    appearance: none;
+    box-shadow: none;
+    border-radius: none;
+    font-family: "u.s._101regular", sans-serif;
+    text-align: center;
+    color: #1C1C1C;
+    background-color: #999;
+    border: 1px solid #999;
+}
+
+#intro button.active  {
+    outline: none;
+    background-color: #fff;
+    border: 1px solid #fff;
+}
+
+#intro p.loader {
+    display: none;
+    text-align: center;
+}
+
+#intro p.loader svg {
+    position: static;
+    fill: #fff;
+}
+
+
+
 
 section:nth-of-type(2) {
     background-color: #b0b0b0;
