@@ -1,16 +1,13 @@
 var mapModule = (function() {
     var _svg = "body svg",
+        _svgContainer = "#svg",
         _markers,
         _markersSize,
         _bubbleWidth = 200,
         _bubbleHeight = 50,
         _projection,
         _path,
-        _svg,
-        _mapWidth,
-        _mapHeight,
-        _mapLeftOffset,
-        _mapTopOffset,
+        _mapLastPosition = [0, 0],
         _bubbleTimer;
     
     var init = function() {
@@ -23,16 +20,19 @@ var mapModule = (function() {
 
         _svg = d3.select(_svg)
             .attr("width", app.width())
-            .attr("height", app.height());
+            .attr("height", app.height())
+            .attr("preserveAspectRatio", "xMidYMid meet")
+            .attr("viewBox", "0 0 "+app.width()+" "+app.height());
         
-        _mapLeftOffset = _path.bounds(app.urbanAreaData())[0][0];
-        _mapTopOffset = _path.bounds(app.urbanAreaData())[0][1];
-        _mapWidth = _path.bounds(app.urbanAreaData())[1][0] - _mapLeftOffset;
-        _mapHeight = _path.bounds(app.urbanAreaData())[1][1] - _mapTopOffset;
-        
-        move(0, 0, false);
+        _svg
+            .style("-webkit-transform-origin", "center center")
+            .style("-moz-transform-origin", "center center")
+            .style("-ms-transform-origin", "center center")
+            .style("transform-origin", "center center");
 
-        _svg.selectAll("path")
+        _svg.append("g")
+            .classed("features", true)
+            .selectAll("path")
             .data(app.urbanAreaData().features)
             .enter()
             .append("path")
@@ -54,28 +54,19 @@ var mapModule = (function() {
         If animated, the transition lasts 1s
     */
     var center = function(animated) {
-        move("auto", "auto", animated);
+        move(0, 0, animated);
     };
     
     /*
         move
-        Sets the absolute distance of the map from the left and the top of the screen
-        left and top are pixel values or the string "auto" in which case the map will be horizontally or vertically centered, or both
+        Sets the distance of the map from the top and left of the screen based on a percentage of its size
         If animated, the transition lasts 1s
     */
     var move = function(left, top, animated) {
-        var x,
-            y;
+        var x = left * app.width();
+        var y = top * app.height();
         
-        if(typeof left === "number")
-            x = left - _mapLeftOffset;
-        else if(left === "auto")
-            x = (app.width() - _mapWidth) / 2 - _mapLeftOffset;
-        
-        if(typeof top === "number")
-            y = top - _mapTopOffset;
-        else if(top === "auto")
-            y = (app.height() - _mapHeight) / 2 - _mapTopOffset;
+        _mapLastPosition = [left, top];
         
         if(animated) {
             _svg.style("transform", "translate("+x+"px, "+y+"px)")
@@ -96,22 +87,6 @@ var mapModule = (function() {
     };
     
     /*
-        width
-        Returns the width of the map with the current scale
-    */
-    var width = function() {
-        return _mapWidth;
-    };
-    
-    /*
-        height
-        Returns the height of the map with the current scale
-    */
-    var height = function() {
-        return _mapHeight;
-    };
-    
-    /*
         _scale
         Returns the scale of the map depending on the minimum of the scales calculated from the width and the height
     */
@@ -119,6 +94,7 @@ var mapModule = (function() {
         return (function() {
             var scaleFromWidth = app.width() / 1440 * 20000; //This is based on the render on a 1440x900 screen
             var scaleFromHeight = app.height() / 900 * 20000;
+            
             return (scaleFromHeight < scaleFromWidth) ? scaleFromHeight : scaleFromWidth;
         })();
     };
@@ -224,19 +200,11 @@ var mapModule = (function() {
         Calls all the methods resize of the sub-modules
     */
     var resize = function() {
-        _svg.attr("width", app.width())
-            .attr("height", app.height());
-
-        _projection.scale(_scale())
-            .translate([app.width() / 2, app.height() / 2]);
-        _path = d3.geo.path().projection(_projection);
-        _svg.selectAll("path")
-            .attr("d", _path);
+        _svg
+            .attr("width", app.width())
+            .attr("height", app.height())
         
-        _mapLeftOffset = _path.bounds(app.urbanAreaData())[0][0];
-        _mapTopOffset = _path.bounds(app.urbanAreaData())[0][1];
-        _mapWidth = _path.bounds(app.urbanAreaData())[1][0] - _mapLeftOffset;
-        _mapHeight = _path.bounds(app.urbanAreaData())[1][1] - _mapTopOffset;
+        move(_mapLastPosition[0], _mapLastPosition[1], false);
     };
     
     return {
@@ -244,8 +212,6 @@ var mapModule = (function() {
         resize: resize,
         center: center,
         move: move,
-        width: width,
-        height: height,
         displayMarkers: displayMarkers,
         hideMarkers: hideMarkers
     };

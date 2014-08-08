@@ -26,10 +26,13 @@ var firstSectionModule = (function() {
             .style("padding-right", _textContainerPadding.right+"px")
             .style("padding-bottom", _textContainerPadding.bottom+"px")
             .style("padding-left", _textContainerPadding.left+"px")
-            .style("font-size", _textContainerFontSize+"px");
+            .style("font-size", _textContainerFontSize+"px")
+            .style("transform-origin", "center center")
+            .style("-webkit-transform-origin", "center center")
+            .style("-moz-transform-origin", "center center")
+            .style("-ms-transform-origin", "center center");
         
-        d3.select(_recipientContainer+" p")
-            .style("font-size", _textContainerFontSize+"px");
+        mapModule.move(0.09, .6, false);
         
         resize();
     };
@@ -53,7 +56,11 @@ var firstSectionModule = (function() {
         if(widthScale !== 1 || heightScale !== 1) {
             scale = (widthScale < heightScale) ? widthScale : heightScale;
             var leftMargin = (widthScale !== 1) ? (_textContainerWidth + _textContainerPadding.left + _textContainerPadding.right - app.width()) / (2 * scale) : 0;
-            var topMargin = (heightScale !== 1) ? (_textContainerHeight + _textContainerPadding.top + _textContainerPadding.bottom - app.height()) / (2 * scale) : 0;
+            //iPhone need a top margin of 0 (bug)
+            if((navigator.userAgent.match(/(iPod|iPhone)/) !== null) && (navigator.userAgent.match(/AppleWebKit/) !== null))
+                var topMargin = 0;
+            else
+                var topMargin = (heightScale !== 1) ? (_textContainerHeight + _textContainerPadding.top + _textContainerPadding.bottom - app.height()) / (2 * scale) : 0;
             
             d3.selectAll(_textContainer)
                 .style("-webkit-transform", "scale("+scale+") translate(-"+leftMargin+"px, -"+topMargin+"px)")
@@ -69,16 +76,12 @@ var firstSectionModule = (function() {
                 .style("transform", "scale(1) translate(0, 0)");
         }
         
-        if(app.width() >= app.height()) {
-            mapModule.move((app.width() - mapModule.width() * .8) / 2, 2 / 3 * app.height(), true);
-            
-            d3.select(_recipientContainer+" p")
+        d3.select(_recipientContainer+" p")
             .style("font-size", (_textContainerFontSize * scale)+"px");
-            
-            d3.select(_recipientContainer)
-                .style("bottom", (1 / 6 * app.height() - _textContainerFontSize * scale / 2)+"px")
-                .style("width", app.width()+"px");
-        }
+        
+        d3.select(_recipientContainer)
+            .style("bottom", (1 / 6 * app.height() - _textContainerFontSize * scale / 2)+"px")
+            .style("width", app.width()+"px");
     };
         
     /*
@@ -86,10 +89,9 @@ var firstSectionModule = (function() {
         Positions the map, hides its markers and display the name of the recipient
     */
     var pageEntered = function() {
-        if(app.width() >= app.height())
-            mapModule.move((app.width() - mapModule.width() * .8) / 2, 2 / 3 * app.height(), true);
+        mapModule.move(0.09, .6, false);
         
-            mapModule.hideMarkers();
+        mapModule.hideMarkers();
         
         d3.select(_recipientContainer)
             .style("transform", "translateY(0)")
