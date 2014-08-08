@@ -7,6 +7,7 @@ svg {
 svg path {
     stroke: #fff;
     fill: #fff;
+    stroke-width: 1.01; /* Chrome trick so the stroke disappears */
 }
 
 #bubble {
