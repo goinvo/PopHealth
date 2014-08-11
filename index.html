@@ -1,35 +1,55 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>pophealth project</title>
+        <title>pophealth</title>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <link rel="stylesheet" type="text/css" href="css/default.css">
-        <link rel="stylesheet" type="text/css" href="css/onepage-scroll.css">
-        <link rel="stylesheet" type="text/css" href="css/us101-font.css">
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="css/animate.css">
+        <script src="https://api.tiles.mapbox.com/mapbox.js/v1.6.4/mapbox.js"></script>
+        <link href="https://api.tiles.mapbox.com/mapbox.js/v1.6.4/mapbox.css" rel="stylesheet" />
         <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-        <script src="libs/onepagescroll.min.js"></script>
-        <script src="js/modules.js"></script>
+        <link href="http://fonts.googleapis.com/css?family=PT+Sans:400,700,400italic" rel="stylesheet" type="text/css" />
     </head>
     <body>
-        <svg></svg>
-        <section>
-            <div id="intro">
-                <p>Nearly 50% of Massachusetts residents will visit a hospital this year.</p>
-                <p>Which one is the best for <span>you?</span></p>
-                <form>
-                    <input type="text" placeholder="ZIP code" pattern="\d{5}" title="Must be 5 numeric numbers" required />
-                    <button type="submit">Check out!</button>
-                </form>
-                <p class="loader"></p>
-            </div>
-        </section>
-        <section>
-        </section>
-        <script type="text/javascript">
-            app.init();
-            d3.select(window).on("resize", app.resize);
-            d3.select(window).on("orientationchange", app.resize);
+        <select id="question">
+            <option>What hospitals do your neighbors go to?</option>
+            <option>What are the safest hospitals?</option>
+            <option>What are the most accident prone?</option>
+            <option>Where do most seniors get treated?</option>
+            <option>What hospitals are getting the best quality outcomes?</option>
+            <option>Where is the least healthcare access?</option>
+            <option>Where is the least expensive healthcare?</option>
+            <option>Where are the most complex care plans?</option>
+        </select>
+        <div id="map"></div>
+        <script src="js/map-module.js"></script>
+        <script src="js/marker-module.js"></script>
+        <script src="js/menu-module.js"></script>
+        <script src="js/urban-area-module.js"></script>
+        <script>
+            var _urbanAreaData = {},
+                _hospitalData = {};
+            
+            //We load the data
+            d3.json("data/urban_areas.json", function(error, urbanAreaData) { //TODO in case of error
+                _urbanAreaData = urbanAreaData;
+                
+                //We load the hospitals' data
+                d3.json("data/hospitals.json", function(error, hospitalData) {
+                    _hospitalData = hospitalData;
+                    
+                    mapModule.init()
+                    urbanAreaModule.init(); //Should always be called before markerModule init (cause: SVG's "z-index")
+                    menuModule.init();
+                    markerModule.init();
+                });
+            });
+            
+            d3.select(window).on("resize", function() {
+                mapModule.update();
+                menuModule.update();
+            });
         </script>
     </body>
 </html>

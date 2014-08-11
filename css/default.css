@@ -1,137 +1,161 @@
-svg {
-    position: absolute;
-    top: 0;
+/* ----- GENERAL STYLES ----- */
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    width: 100%;
+    overflow: hidden;
+}
+
+/* ----- MAP/MAPBOX STYLES ----- */
+
+#map {
+    width: 100%;
     z-index: 100;
 }
 
-svg path {
-    stroke: #fff;
-    fill: #fff;
-    stroke-width: 1.01; /* Chrome trick so the stroke disappears */
+.noCloseButton .leaflet-popup-content {
+    padding-top: 5px !important;
+    padding: 5px 10px;
 }
 
-#bubble {
+image.marker {
+    cursor: pointer;
+}
+
+/* ----- QUESTION STYLES ----- */
+#question {
     position: absolute;
+    top: 20px;
+    left: 20px;
     z-index: 200;
-    background-color: #fff;
-    border-radius: 5px;
-    -webkit-box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, .4);
-    -moz-box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, .4);
-    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, .4);
+    padding: 20px 40px 20px 30px;
+    border: none;
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: #fff;
+    border-radius: 3px;
+    box-shadow: 0 1px 2px rgba(0,0,0,.1);
+    background: url(../icons/arrow.svg) #fff no-repeat right 15px center;
+    font-family: "PT Sans", sans-serif;
+    font-size: 30px;
 }
 
-#bubble div {
-    display: table;
+#question:focus {
+    outline: none;
 }
 
-#bubble div p {
-    display: table-cell;
-    margin: 0;
-    padding: 0;
-    vertical-align: middle;
-    text-align: center;
+/* ----- MENU STYLES ----- */
+
+.pane {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    z-index: 200;
+    width: 550px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 3px;
+    box-shadow: 0 1px 2px rgba(0,0,0,.1);
+    font-family: "PT Sans", sans-serif;
+    font-size: 15px;
+    cursor: pointer;
+    animation-duration: 1s;
+    -webkit-animation-duration: .5s !important;
+    -moz-animation-duration: .5s !important;
+    -ms-animation-duration: .5s !important;
 }
 
-section {
-    overflow: none;
+.pane .quit {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.pane table {
     width: 100%;
+    border-collapse: collapse;
 }
 
-/* ---------- First screen ---------- */
-section:first-of-type {
-    position: relative;
-    background-color: #1C1C1C;
+.pane th {
+    border-bottom: 1px solid #000;
+    text-align: left;
 }
 
-#intro {
-    overflow: auto;
-    margin: auto;
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    z-index: 200;
+.pane th, .pane td {
+    padding: 2px 0;
 }
 
-#intro p {
-    font-family: "u.s._101regular", sans-serif;
+.pane tr:nth-child(odd) {
+    background-color: #F0F0F0;
 }
 
-#intro p:first-of-type {
-    color: #fff;
-}
-
-#intro p:nth-of-type(2) {
-    color: #999;
-}
-
-#intro p:nth-of-type(2) span {
-    color: #cc0000;
-}
-
-#intro form {
-    display: block;
-    text-align: center;
-}
-
-#intro input, #intro input:required:invalid {
-    display: inline-block;
-    margin: 0 20px 0 0;
-    width: 8ch;
-    appearance: none;
-    box-shadow: none;
-    border-radius: none;
-    font-family: "u.s._101regular", sans-serif;
-    text-align: center;
-    color: #999;
-    background-color: transparent;
-    border: 1px solid #999;
-}
-
-#intro input.invalid {
-    outline: none;
-    color: #cc0000;
-    border: 1px solid #cc0000;
-}
-
-#intro input:hover, #intro input:focus, #intro input:required:valid {
-    outline: none;
-    color: #fff;
-    border: 1px solid #fff;
-}
-
-#intro button {
-    width: 11ch;
-    appearance: none;
-    box-shadow: none;
-    border-radius: none;
-    font-family: "u.s._101regular", sans-serif;
-    text-align: center;
-    color: #1C1C1C;
-    background-color: #999;
-    border: 1px solid #999;
-}
-
-#intro button.active  {
-    outline: none;
+.pane table tr:first-of-type {
     background-color: #fff;
-    border: 1px solid #fff;
 }
 
-#intro p.loader {
-    display: none;
-    text-align: center;
+.pane tr:hover, .pane tr.active {
+    background-color: #2b83ba;
+    color: #fff;
+    cursor: pointer;
 }
 
-#intro p.loader svg {
-    position: static;
-    fill: #fff;
+.pane tr:first-of-type {
+    background-color: #fff;
+    color: #000;
+    cursor: auto;
+}
+
+.pane .w25 {
+    width: 25%;
+}
+
+.pane .w50 {
+    width: 50%;
+}
+
+.pane h1 {
+    margin-bottom: 10px;
+    font-size: 35px;
 }
 
 
 
 
-section:nth-of-type(2) {
-    background-color: #b0b0b0;
+
+
+.panel div.hospital {
+    border-bottom: 1px dotted #B5B5B5;
+    cursor: default;
+}
+
+.panel div.hospital:hover, .panel div.hospital.active {
+    background-color: #E8E8E8;
+}
+
+.panel h2 {
+    font-family: "PT Sans", sans-serif;
+    font-size: 25px;
+}
+
+.panel h3 {
+    margin-bottom: 10px;
+    font-family: "PT Sans", sans-serif;
+    font-size: 17px;
+    font-weight: 100;
+    font-style: italic;
+}
+
+.bubble {
+    width: 150px;
+    height: 80px;
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    right: 400px;
+    background: #fff;
 }
