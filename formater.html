@@ -1,0 +1,170 @@
+<html>
+<head>
+    <title>JSON formater</title>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+</head>
+<body>
+    <script type="text/javascript">
+        function toTitleCase(str) {
+            return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+        }
+        
+//        d3.json("data/urban_areas.json", function(error, urbanArea) {
+//            d3.json("data/hospitals.json", function(error, hospitals) {
+//                //Reformating the data
+//                var newData = hospitals.hospitals;
+//                for(var i = 0; i < newData.length; i++) {
+//                    var topCommunities = newData[i].topCommunities;
+//                    var success = false;
+//                    for(var j = 0; j < topCommunities.length; j++) {
+//                        if(topCommunities[j].name !== undefined) {
+//                            var communityName = topCommunities[j].name.trim().toLocaleLowerCase();
+//                            success = false;
+//                            for(var k = 0; k < urbanArea.features.length; k++) {
+//                                if(urbanArea.features[k].properties.town.trim().toLocaleLowerCase() == communityName) {
+//                                    success = true;
+//                                    topCommunities[j].id_town = urbanArea.features[k].properties.id;
+//                                    break;
+//                                }
+//                            }
+//                            if(success) {
+//                                delete topCommunities[j].name;
+//                                delete topCommunities[j].state;
+//                            }
+//                            else
+//                                console.log(topCommunities[j].name+" unfound");
+//                        }
+//                    }
+//                }
+//                hospitals.hospitals = newData;
+//                document.body.appendChild(document.createElement('pre')).innerHTML = JSON.stringify(hospitals, undefined, 4);
+//            });
+//        });
+        
+//        d3.json("data/urban_areas.json", function(error, urbanArea) {
+//            var features = urbanArea.features;
+//            for(var i = 0; i < features.length; i ++) {
+//                features[i].properties.id = i;
+//                features[i].properties.town = toTitleCase(features[i].properties.TOWN);
+//                features[i].properties.state = "MA";
+//                delete features[i].properties.TOWN;
+//                delete features[i].properties.TOWN_ID;
+//                delete features[i].properties.SHAPE_AREA;
+//                delete features[i].properties.SHAPE_LEN;
+//            }
+//            urbanArea.features = features;
+//            document.body.appendChild(document.createElement('pre')).innerHTML = JSON.stringify(urbanArea, undefined, 2);
+//        });
+//        
+        
+        
+        //ADD OTHER STATES
+        
+//        var newData;
+//        var cities = [];
+//        var urbanData;
+//        var features;
+//        
+//        d3.json("data/urban_areas.json", function(error, urbanArea) {
+//            d3.json("data/hospitals.json", function(error, hospitals) {
+//                //Reformating the data
+//                newData = hospitals.hospitals;
+//                for(var i = 0; i < newData.length; i++) {
+//                    var topCommunities = newData[i].topCommunities;
+//                    for(var j = 0; j < topCommunities.length; j++) {
+//                        if(topCommunities[j].name !== null && topCommunities[j].name !== undefined) {
+//                            var city = topCommunities[j].name;
+//                            var state = topCommunities[j].state;
+//                            var found = false;
+//                            for(var k = 0; k < cities.length; k++) {
+//                                if(cities[k] === city+", "+state) {
+//                                    found = true;
+//                                    break;
+//                                }
+//                            }
+//                            if(!found) {
+//                                cities.push(city+", "+state);
+//                            }
+//                        }
+//                    }
+//                }
+//                
+//                urbanData = urbanArea;
+//                
+//                cities.forEach(function(q) {
+//                    setTimeout(function() {
+//                            retrieve(q);
+//                    }, 1000);
+//                });
+//            });
+//        });
+//        
+//        var id = 350;
+//        
+//        var retrieve = function(q) {
+//            var url = "http://nominatim.openstreetmap.org/search?q="+q+"&format=json&polygon=1&addressdetails=1";
+//            d3.json(url, function(error, data) {
+//                var _id = id;
+//                id++;
+//                
+//                features = urbanData.features;
+//                
+//                var feature = {};
+//                feature.type = "Feature";
+//                feature.properties = {};
+//                feature.properties.SHAPE_AREA = null;
+//                feature.properties.SHAPE_LEN = null;
+//                feature.properties.id = _id;
+//                feature.properties.town = q.split(", ")[0];
+//                feature.properties.state = q.split(", ")[1];
+//                feature.geometry = {};
+//                feature.geometry.type = "Polygon";
+//                feature.geometry.coordinates = [];
+//                var array = [];
+//                data[0].polygonpoints.forEach(function(coord) {
+//                    array.push([coord[0], coord[1]]);
+//                });
+//                feature.geometry.coordinates.push(array);
+//                
+//                features.push(feature);
+//
+//            });
+//        }
+//        
+//        var result = function() {
+//            urbanData.features = features;
+//            var output = JSON.stringify(urbanData, undefined, 4);
+//            for(var i = 1; i < 10; i++) {
+//                output = output.replace(new RegExp(i+"\"", "g"), i);
+//                output = output.replace(new RegExp("\""+i, "g"), i);
+//            }
+//            output = output.replace(/"-/g, "-");
+//
+//            document.body.appendChild(document.createElement('pre')).innerHTML = output;
+//        };
+        
+        var q = "salem, nh";
+        var url = "http://nominatim.openstreetmap.org/search?q="+q+"&format=json&polygon=1&addressdetails=1";
+        d3.json(url, function(error, data) {
+            var feature = {};
+            feature.type = "Feature";
+            feature.properties = {};
+            feature.properties.SHAPE_AREA = null;
+            feature.properties.SHAPE_LEN = null;
+            feature.properties.id = null;
+            feature.properties.town = q.split(", ")[0];
+            feature.properties.state = q.split(", ")[1];
+            feature.geometry = {};
+            feature.geometry.type = "Polygon";
+            feature.geometry.coordinates = [];
+            var array = [];
+            data[0].polygonpoints.forEach(function(coord) {
+                array.push([coord[0], coord[1]]);
+            });
+            feature.geometry.coordinates.push(array);
+            
+            document.body.appendChild(document.createElement('pre')).innerHTML = JSON.stringify(feature, undefined, 4);
+        });
+    </script>
+</body>
+</html>

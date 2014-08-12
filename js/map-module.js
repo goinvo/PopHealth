@@ -22,7 +22,7 @@ var mapModule = (function() {
             .setView([_config.defaultLatitude, _config.defaultLongitude], _config.defaultZoom)
             .on("viewreset", function() {markerModule.updateMarkers();});
         
-        _map.addControl(L.control.attribution().setPrefix("By <a href='http://www.goinvo.com' target='_blank'>Involution Stutios</a> and <a href='http://www.macadamian.com' target='_blank'>Macadamian</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='https://github.com/goinvo/pophealth' target='_blank'>Open Data + Code</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Feedback"))
+        _map.addControl(L.control.attribution().setPrefix("By <a href='http://www.goinvo.com' target='_blank'>Involution Stutios</a> and <a href='http://www.macadamian.com' target='_blank'>Macadamian</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='https://github.com/goinvo/pophealth' target='_blank'>Open Data + Code</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='mailto:pophealth-internal@goinvo.com'>Feedback</a>"))
             .addControl(L.control.zoom({position: "bottomright"}));
     };
     

@@ -35,16 +35,15 @@ var urbanAreaModule = (function() {
         Desc:   Return the layer whose id is id
     */
     var _getAreaById = function(id) {
-        return (function() {
-            var layers = _feature.getLayers();
-            var result = null;
-            layers.forEach(function(layer) {
-                if(layer.dataId !== null && layer.dataId !== undefined && layer.dataId === id) {
-                    result = layer;
-                }
-            });  
-            return result;
-        })();
+        var layers = _feature.getLayers();
+        var result = null;
+        for(var i = 0; i < layers.length; i++) {
+            if(layers[i].feature.properties.id === id) {
+                result = layers[i];
+                break;
+            }
+        } 
+        return result;
     };
     
     /*
@@ -77,15 +76,13 @@ var urbanAreaModule = (function() {
         Desc:   Set the style of the area whose id is id to style
     */
     var setAreaStyle = function(id, style) {
-        (function() {
-            var layer = _getAreaById(id);
-            if(layer === null || layer === undefined) {
-                console.log("urbanAreaModule.setAreaStyle: layer shouldn't be null or undefined");
-                return;
-            }
-            
-            layer.setStyle(style);
-        })();
+        var layer = _getAreaById(id);
+        if(layer === null || layer === undefined) {
+            console.log("urbanAreaModule.setAreaStyle: layer shouldn't be null or undefined");
+            return;
+        }
+
+        layer.setStyle(style);
     };
     
     /*
@@ -187,22 +184,6 @@ var urbanAreaModule = (function() {
     };
     
     /*
-        setId(urbanAreaName, id)
-        Desc:   Set the id to the layer named urbanAreaName
-    */
-    var setId = function(urbanAreaName, id) {
-        (function() {
-            var layer = _getArea(urbanAreaName);
-            if(layer === null || layer === undefined) {
-                console.log("urbanAreaModule.setId: layer shouldn't be null or undefined");
-                return;
-            }
-            
-            layer["dataId"] = id;
-        })();
-    };
-    
-    /*
         getId(urbanAreaName)
         Desc:   Return the id of the layer urbanArea
     */
@@ -212,11 +193,11 @@ var urbanAreaModule = (function() {
             return;
         }
 
-        if(urbanArea.dataId === null || urbanArea.dataId === undefined) {
+        if(urbanArea.feature.properties.id === null || urbanArea.feature.properties.id === undefined) {
             console.log("urbanAreaModule.getId: returning a null or undefined value");
         }
         
-        return urbanArea.dataId;
+        return urbanArea.feature.properties.id;
     };
     
     return {
@@ -228,7 +209,6 @@ var urbanAreaModule = (function() {
         setAreaMouseover: setAreaMouseover,
         setAreaMouseout: setAreaMouseout,
         getAreaData: getAreaData,
-        setId: setId,
         getId: getId
     };
 })();

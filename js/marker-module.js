@@ -43,8 +43,6 @@ var markerModule = (function() {
                 totalPatients += topCommunity.patients;
             });
             
-            var counter = 0;
-            
             var menuContent = d3.select(document.createElement("table"));
             var currentRow = menuContent.append("tr");
             currentRow.append("th")
@@ -56,94 +54,76 @@ var markerModule = (function() {
             currentRow.append("th")
                 .text("% of community");
             
-            //We make the marker size bigger
-            
             data.topCommunities.forEach(function(topCommunity) {
                 //Case where the community is within MA
-                if(topCommunity.state === "MA") {
-                    var defaultStyle = urbanAreaModule.getDefaultStyle();
-                    var percentage = (topCommunity.percentage === null) ? "–" : ((topCommunity.percentage * 100 <= 1) ? "<1" : Math.round(topCommunity.percentage * 100));
+                var defaultStyle = urbanAreaModule.getDefaultStyle();
+                var percentage = (topCommunity.percentage === null) ? "–" : ((topCommunity.percentage * 100 <= 1) ? "<1" : Math.round(topCommunity.percentage * 100));
 
-                    //We set an id to the urban area
-                    urbanAreaModule.setId(topCommunity.name.toLocaleLowerCase().trim(), counter);
-
-                    currentRow = menuContent.append("tr")
-                        .data([{id: counter}])
-                        .on("mouseover", function(d) {
-                            urbanAreaModule.setAreaStyle(d.id, {
-                                color: "#d61a51",
-                                opacity: .8,
-                                weight: 2
-                            });
-                        })
-                        .on("mouseout", function(d) {
-                            urbanAreaModule.setAreaStyle(d.id, {
-                                color: defaultStyle.color,
-                                opacity: defaultStyle.opacity,
-                                weight: defaultStyle.weight
-                            });
-                        });
-                    
-                    currentRow.append("td")
-                        .text(topCommunity.name+", "+topCommunity.state);
-                    currentRow.append("td")
-                        .text(topCommunity.patients);
-                    currentRow.append("td")
-                        .text((percentage !== "–") ? percentage+"%" : percentage);
-     
-                    //The community in the menu is hovered if the layer is hovered
-                    urbanAreaModule.setAreaMouseover(counter, menuModule.highlightItem, ["tr", function(e) {
-                        //We highlight the urban area on the map too
-                        urbanAreaModule.setAreaStyle(urbanAreaModule.getId(e.target), {
+                currentRow = menuContent.append("tr")
+                    .data([{id: topCommunity.id_town}])
+                    .on("mouseover", function() {
+                        urbanAreaModule.setAreaStyle(topCommunity.id_town, {
                             color: "#d61a51",
                             opacity: .8,
                             weight: 2
                         });
-
-                        return urbanAreaModule.getId(e.target);
-                    }]);
- 
-                    urbanAreaModule.setAreaMouseout(counter, menuModule.resetItem, ["tr", function(e) {
-                        //We highlight the urban area on the map too
-                        urbanAreaModule.setAreaStyle(urbanAreaModule.getId(e.target), {
+                    })
+                    .on("mouseout", function() {
+                        urbanAreaModule.setAreaStyle(topCommunity.id_town, {
                             color: defaultStyle.color,
                             opacity: defaultStyle.opacity,
                             weight: defaultStyle.weight
                         });
+                    });
 
-                        return urbanAreaModule.getId(e.target);
-                    }]);
+                currentRow.append("td")
+                    .text(getUrbanArea(topCommunity.id_town).properties.town+", "+getUrbanArea(topCommunity.id_town).properties.state);
+                currentRow.append("td")
+                    .text(topCommunity.patients);
+                currentRow.append("td")
+                    .text((percentage !== "–") ? percentage+"%" : percentage);
+//
+                //The community in the menu is hovered if the layer is hovered
+                urbanAreaModule.setAreaMouseover(topCommunity.id_town, menuModule.highlightItem, ["tr", function(e) {
+                    //We highlight the urban area on the map too
+                    urbanAreaModule.setAreaStyle(urbanAreaModule.getId(e.target), {
+                        color: "#d61a51",
+                        opacity: .8,
+                        weight: 2
+                    });
 
-                    //We're displaying the heat map
-                    var color;
-                    var ratio = topCommunity.patients / totalPatients;
-                    if(ratio > .6)
-                        color = _config.heatmapColorSchmeme[0];
-                    else if(ratio > .5)
-                        color = _config.heatmapColorSchmeme[1];
-                    else if(ratio > .3)
-                        color = _config.heatmapColorSchmeme[2];
-                    else if(ratio > .1)
-                        color = _config.heatmapColorSchmeme[3];
-                    else
-                        color = _config.heatmapColorSchmeme[4];
-                    urbanAreaModule
-                        .setAreaStyle(counter, {
-                            fillColor: color,
-                            fillOpacity: .8
-                        });
-                }
+                    return urbanAreaModule.getId(e.target);
+                }]);
+//
+                urbanAreaModule.setAreaMouseout(topCommunity.id_town, menuModule.resetItem, ["tr", function(e) {
+                    //We highlight the urban area on the map too
+                    urbanAreaModule.setAreaStyle(urbanAreaModule.getId(e.target), {
+                        color: defaultStyle.color,
+                        opacity: defaultStyle.opacity,
+                        weight: defaultStyle.weight
+                    });
 
-                //Case where the community is outside MA
-                else {
-//                        menuModule
-//                            .addItemContent({
-//                                title: title,
-//                                subtitle: subtitle
-//                            });
-                }
+                    return urbanAreaModule.getId(e.target);
+                }]);
 
-                counter++;
+                //We're displaying the heat map
+                var color;
+                var ratio = topCommunity.patients / totalPatients;
+                if(ratio > .6)
+                    color = _config.heatmapColorSchmeme[0];
+                else if(ratio > .5)
+                    color = _config.heatmapColorSchmeme[1];
+                else if(ratio > .3)
+                    color = _config.heatmapColorSchmeme[2];
+                else if(ratio > .1)
+                    color = _config.heatmapColorSchmeme[3];
+                else
+                    color = _config.heatmapColorSchmeme[4];
+                urbanAreaModule
+                    .setAreaStyle(topCommunity.id_town, {
+                        fillColor: color,
+                        fillOpacity: .8
+                    });
             });
             
             //No data for the hospital
