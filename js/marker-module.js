@@ -101,7 +101,7 @@ var markerModule = (function() {
         var currentRow = menuContent.append("tr");
         currentRow.append("th")
             .classed("w50", true)
-            .text("Community of origin");
+            .html("Community of origin<sup>1</sup>");
         currentRow.append("th")
             .classed("w25", true)
             .text("Patients");
@@ -171,6 +171,8 @@ var markerModule = (function() {
         }
 
         menuModule.addContent(menuContent);
+        
+        menuModule.setNote("<sup>1</sup> Only the top 10<sup>-</sup> communities are represented<br/>Data from the <a href='http://www.mass.gov/chia/researcher/hcf-data-resources/massachusetts-hospital-profiles/overiew-and-current-reports.html' target='_blank'>Center for Health Information and Analysis</a>");
 
         menuModule.open({
             onQuit: urbanAreaModule.reset,

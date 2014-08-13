@@ -67,7 +67,7 @@ var urbanAreaModule = (function() {
             .classed("w25", true)
             .text("Patients");
         currentRow.append("th")
-            .text("% of patients");
+            .html("% of patients<sup>1</sup>");
         
         layer.topHospitals.forEach(function(topHospital) {
             var percentage = (topHospital.percentage === null) ? "–" : ((topHospital.percentage * 100 <= 1) ? "<1" : Math.round(topHospital.percentage * 100));
@@ -118,6 +118,8 @@ var urbanAreaModule = (function() {
         }
 
         menuModule.addContent(menuContent);
+        
+        menuModule.setNote("<sup>1</sup> These data only take into account the patients coming from the top 10<sup>-</sup> communities<br/>Data from the <a href='http://www.mass.gov/chia/researcher/hcf-data-resources/massachusetts-hospital-profiles/overiew-and-current-reports.html' target='_blank'>Center for Health Information and Analysis</a>");
 
         menuModule.open({
             onQuit: null,

@@ -3,6 +3,7 @@ var menuModule = (function() {
         wrapper: "body",
         menuClass: "pane",
         titleElement: "h1",
+        noteElement: "caption",
         itemElement: "div",
         itemClass: "hospital",
         itemTitleElement: "h2",
@@ -72,7 +73,7 @@ var menuModule = (function() {
     
     /*
         setTitle(title)
-        Appends the title "title" to the menu using the element _config.titleElement
+        Appends the title text "title" to the menu using the element _config.titleElement
         If it already existed, it is just replaced
         It returns the menu itself so it could be chained with other function of the menu
     */
@@ -84,6 +85,25 @@ var menuModule = (function() {
         else {
             _menu.append(_config.titleElement)
                 .text(title);
+        }
+        
+        return this;
+    };
+    
+    /*
+        setNote(note)
+        Appends the note html content "note" to the menu using the element _config.noteElement
+        If it already existed, it is just replaced
+        It returns the menu itself so it could be chained with other function of the menu
+    */
+    var setNote = function(note) {
+        if(!_menu.select(_config.noteElement).empty()) { //In case a note already exists
+            _menu.select(_config.noteElement)
+                .html(note);
+        }
+        else {
+            _menu.append(_config.noteElement)
+                .html(note);
         }
         
         return this;
@@ -178,6 +198,7 @@ var menuModule = (function() {
         close: close,
         isOpened: isOpened,
         setTitle: setTitle,
+        setNote: setNote,
         addContent: addContent,
         resetContent: resetContent,
         highlightItem: highlightItem,

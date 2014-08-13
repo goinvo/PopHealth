@@ -124,6 +124,20 @@ image.marker {
     font-size: 35px;
 }
 
+.pane caption {
+    width: 100%;
+    font-size: 12px;
+    text-align: left;
+    margin-top: 15px;
+    color: #747474;
+}
+
+.pane caption a {
+    color: #747474;
+    text-decoration: none;
+    border-bottom: 1px dashed #747474;
+}
+
 
 
 
