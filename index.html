@@ -34,6 +34,10 @@
                     return _urbanAreaData.features[id];  
             };
             
+            var getHospital = function(id) {
+                    return _hospitalData.hospitals[id];  
+            };
+            
             //We load the data
             d3.json("data/urban_areas.json", function(error, urbanAreaData) { //TODO in case of error
                 _urbanAreaData = urbanAreaData;

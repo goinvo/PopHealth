@@ -54,9 +54,71 @@ var urbanAreaModule = (function() {
             .resetContent()
             .setTitle(layer.town);
         
-        //Remove the heatmap from the map
+        //Remove the heatmap of the map and reset the style of the markers
         reset();
+        markerModule.reset();
         
+        var menuContent = d3.select(document.createElement("table"));
+        var currentRow = menuContent.append("tr");
+        currentRow.append("th")
+            .classed("w50", true)
+            .text("Hospital of destination");
+        currentRow.append("th")
+            .classed("w25", true)
+            .text("Patients");
+        currentRow.append("th")
+            .text("% of patients");
+        
+        layer.topHospitals.forEach(function(topHospital) {
+            var percentage = (topHospital.percentage === null) ? "–" : ((topHospital.percentage * 100 <= 1) ? "<1" : Math.round(topHospital.percentage * 100));
+            currentRow = menuContent.append("tr")
+                .data([{id: topHospital.id_hospital}])
+                .on("mouseover", function() {
+//                    var color = _heatmapColor(topCommunity.patients / totalPatients);
+//                    urbanAreaModule.setFillOpacity(.3);
+//                    urbanAreaModule.setAreaStyle(topCommunity.id_town, {
+//                        color: color,
+//                        fillOpacity: 1
+//                    });
+//                    
+//                    d3.select(this)
+//                        .style("background-color", color);
+                })
+                .on("mouseout", function() {
+//                    urbanAreaModule.setFillOpacity(1);
+//                    urbanAreaModule.setAreaStyle(topCommunity.id_town, {
+//                        color: defaultStyle.color,
+//                        opacity: defaultStyle.opacity,
+//                        weight: defaultStyle.weight
+//                    });
+//                    
+//                    d3.select(this)
+//                        .attr("style", null);
+                });
+            
+            var hospital = getHospital(topHospital.id_hospital);
+            if(hospital === undefined)
+                console.log("shit on "+topHospital.id_hospital);
+            
+            currentRow.append("td")
+                .text(hospital.name);
+            currentRow.append("td")
+                .text(topHospital.patients);
+            currentRow.append("td")
+                .text((percentage !== "–") ? percentage+"%" : percentage);
+        });
+        
+        //No data for the hospital
+        if(menuContent.selectAll("tr")[0].length == 1) {
+            currentRow = menuContent.append("tr");
+            currentRow.append("td")
+                .text("No data");
+            currentRow.append("td");
+            currentRow.append("td");
+        }
+
+        menuModule.addContent(menuContent);
+
         menuModule.open({
             onQuit: null,
             onQuitArguments: null

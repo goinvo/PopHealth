@@ -1,7 +1,7 @@
 {
     "hospitals": [
         {
-            "id": 1,
+            "id": 0,
             "name": "Anna Jaques Hospital",
             "latitude": 42.8143083,
             "longitude": -70.8908172,
@@ -59,7 +59,7 @@
             ]
         },
         {
-            "id": 2,
+            "id": 1,
             "name": "Athol Memorial Hospital",
             "latitude": 42.5855,
             "longitude": -72.2089,
@@ -77,7 +77,7 @@
             ]
         },
         {
-            "id": 3,
+            "id": 2,
             "name": "Baystate Franklin Medical Center",
             "latitude": 42.595939,
             "longitude": -72.592548,
@@ -130,7 +130,7 @@
             ]
         },
         {
-            "id": 4,
+            "id": 3,
             "name": "Baystate Mary Lane Hospital",
             "latitude": 42.253867,
             "longitude": -72.242666,
@@ -178,7 +178,7 @@
             ]
         },
         {
-            "id": 5,
+            "id": 4,
             "name": "Baystate Medical Center",
             "latitude": 42.121312,
             "longitude": -72.6033233,
@@ -236,7 +236,7 @@
             ]
         },
         {
-            "id": 6,
+            "id": 5,
             "name": "Berkshire Medical Center",
             "latitude": 42.4599651,
             "longitude": -73.2492159,
@@ -294,7 +294,7 @@
             ]
         },
         {
-            "id": 7,
+            "id": 6,
             "name": "Beth Israel Deaconess Hospital - Milton",
             "latitude": 42.251403,
             "longitude": -71.076944,
@@ -337,7 +337,7 @@
             ]
         },
         {
-            "id": 8,
+            "id": 7,
             "name": "Beth Israel Deaconess Hospital - Needham",
             "latitude": 42.277483,
             "longitude": -71.2369,
@@ -390,7 +390,7 @@
             ]
         },
         {
-            "id": 9,
+            "id": 8,
             "name": "Beth Israel Deaconess Medical Center",
             "latitude": 42.339678,
             "longitude": -71.104676,
@@ -428,7 +428,7 @@
             ]
         },
         {
-            "id": 10,
+            "id": 9,
             "name": "Boston Children's Hospital",
             "latitude": 42.3372911,
             "longitude": -71.1057637138194,
@@ -456,7 +456,7 @@
             ]
         },
         {
-            "id": 11,
+            "id": 10,
             "name": "Boston Medical Center",
             "latitude": 42.33415835,
             "longitude": -71.0746463882924,
@@ -489,7 +489,7 @@
             ]
         },
         {
-            "id": 12,
+            "id": 11,
             "name": "Brigham and Women's Faulkner Hospital",
             "latitude": 42.301758,
             "longitude": -71.128859,
@@ -512,7 +512,7 @@
             ]
         },
         {
-            "id": 13,
+            "id": 12,
             "name": "Brigham and Women's Hospital",
             "latitude": 42.3371126,
             "longitude": -71.1022239226481,
@@ -540,7 +540,7 @@
             ]
         },
         {
-            "id": 14,
+            "id": 13,
             "name": "Cambridge Health Alliance",
             "latitude": 42.3745755,
             "longitude": -71.1023396462866,
@@ -598,7 +598,7 @@
             ]
         },
         {
-            "id": 15,
+            "id": 14,
             "name": "Cape Cod Hospital",
             "latitude": 41.6528888,
             "longitude": -70.2716875,
@@ -641,7 +641,7 @@
             ]
         },
         {
-            "id": 16,
+            "id": 15,
             "name": "Clinton Hospital",
             "latitude": 42.4278699,
             "longitude": -71.6925695,
@@ -684,7 +684,7 @@
             ]
         },
         {
-            "id": 17,
+            "id": 16,
             "name": "Cooley Dickinson Hospital",
             "latitude": 42.3305522,
             "longitude": -72.6537695,
@@ -732,14 +732,14 @@
             ]
         },
         {
-            "id": 18,
+            "id": 17,
             "name": "Dana-Farber Cancer Institute",
             "latitude": 42.33757285,
             "longitude": -71.1077818722085,
             "topCommunities": []
         },
         {
-            "id": 19,
+            "id": 18,
             "name": "Emerson Hospital",
             "latitude": 42.451609,
             "longitude": -71.3757835517244,
@@ -797,7 +797,7 @@
             ]
         },
         {
-            "id": 20,
+            "id": 19,
             "name": "Fairview Hospital",
             "latitude": 42.1911142,
             "longitude": -73.3718796,
@@ -850,7 +850,7 @@
             ]
         },
         {
-            "id": 21,
+            "id": 20,
             "name": "Falmouth Hospital",
             "latitude": 41.5643246,
             "longitude": -70.6226409,
@@ -883,7 +883,7 @@
             ]
         },
         {
-            "id": 22,
+            "id": 21,
             "name": "Hallmark Health",
             "latitude": 42.4628597,
             "longitude": -71.0621943,
@@ -941,7 +941,7 @@
             ]
         },
         {
-            "id": 23,
+            "id": 22,
             "name": "Harrington Memorial Hospital",
             "latitude": 42.0778731,
             "longitude": -72.0422974,
@@ -994,7 +994,7 @@
             ]
         },
         {
-            "id": 24,
+            "id": 23,
             "name": "HealthAlliance Hospital",
             "latitude": 42.5411401,
             "longitude": -71.7624195,
@@ -1052,7 +1052,7 @@
             ]
         },
         {
-            "id": 25,
+            "id": 24,
             "name": "Heywood Hospital",
             "latitude": 42.586304,
             "longitude": -71.9871224,
@@ -1105,7 +1105,7 @@
             ]
         },
         {
-            "id": 26,
+            "id": 25,
             "name": "Holyoke Medical Center",
             "latitude": 42.2006118,
             "longitude": -72.6274917,
@@ -1163,7 +1163,7 @@
             ]
         },
         {
-            "id": 27,
+            "id": 26,
             "name": "Jordan Hospital",
             "latitude": 41.9437147,
             "longitude": -70.6453123,
@@ -1221,21 +1221,21 @@
             ]
         },
         {
-            "id": 28,
+            "id": 27,
             "name": "Kindred Hospital - Boston",
             "latitude": 42.3466009,
             "longitude": -71.1419091,
             "topCommunities": []
         },
         {
-            "id": 29,
+            "id": 28,
             "name": "Kindred Hospital - Boston North Shore",
             "latitude": 42.5289964,
             "longitude": -70.9376782,
             "topCommunities": []
         },
         {
-            "id": 30,
+            "id": 29,
             "name": "Lahey Clinic",
             "latitude": 42.484958,
             "longitude": -71.204419,
@@ -1293,7 +1293,7 @@
             ]
         },
         {
-            "id": 31,
+            "id": 30,
             "name": "Lawrence General Hospital",
             "latitude": 42.7098,
             "longitude": -71.1503,
@@ -1351,7 +1351,7 @@
             ]
         },
         {
-            "id": 32,
+            "id": 31,
             "name": "Lowell General Hospital",
             "latitude": 42.64789075,
             "longitude": -71.3421409774274,
@@ -1404,7 +1404,7 @@
             ]
         },
         {
-            "id": 33,
+            "id": 32,
             "name": "Marlborough Hospital",
             "latitude": 42.3553094,
             "longitude": -71.5545552,
@@ -1462,7 +1462,7 @@
             ]
         },
         {
-            "id": 34,
+            "id": 33,
             "name": "Martha's Vineyard Hospital",
             "latitude": 41.4606309,
             "longitude": -70.5799022207455,
@@ -1495,7 +1495,7 @@
             ]
         },
         {
-            "id": 35,
+            "id": 34,
             "name": "Massachusetts Eye and Ear Infirmary",
             "latitude": 42.362739,
             "longitude": -71.0701541,
@@ -1513,7 +1513,7 @@
             ]
         },
         {
-            "id": 36,
+            "id": 35,
             "name": "Massachusetts General Hospital",
             "latitude": 42.3613383,
             "longitude": -71.0691550821782,
@@ -1566,7 +1566,7 @@
             ]
         },
         {
-            "id": 37,
+            "id": 36,
             "name": "Mercy Medical Center",
             "latitude": 42.11555,
             "longitude": -72.593687,
@@ -1614,7 +1614,7 @@
             ]
         },
         {
-            "id": 38,
+            "id": 37,
             "name": "Merrimack Valley Hospital",
             "latitude": 42.7652,
             "longitude": -71.0455,
@@ -1672,7 +1672,7 @@
             ]
         },
         {
-            "id": 39,
+            "id": 38,
             "name": "MetroWest Medical Center",
             "latitude": 42.2843849,
             "longitude": -71.4200428,
@@ -1730,7 +1730,7 @@
             ]
         },
         {
-            "id": 40,
+            "id": 39,
             "name": "Milford Regional Medical Center",
             "latitude": 42.089255,
             "longitude": -71.42508,
@@ -1783,7 +1783,7 @@
             ]
         },
         {
-            "id": 41,
+            "id": 40,
             "name": "Morton Hospital",
             "latitude": 41.9067676,
             "longitude": -71.0944899,
@@ -1836,7 +1836,7 @@
             ]
         },
         {
-            "id": 42,
+            "id": 41,
             "name": "Mount Auburn Hospital",
             "latitude": 42.3743565,
             "longitude": -71.1334339,
@@ -1889,7 +1889,7 @@
             ]
         },
         {
-            "id": 43,
+            "id": 42,
             "name": "Nantucket Cottage Hospital",
             "latitude": 41.2751843,
             "longitude": -70.1007772,
@@ -1902,7 +1902,7 @@
             ]
         },
         {
-            "id": 44,
+            "id": 43,
             "name": "Nashoba Valley Medical Center",
             "latitude": 42.5774204,
             "longitude": -71.5738808399699,
@@ -1960,7 +1960,7 @@
             ]
         },
         {
-            "id": 45,
+            "id": 44,
             "name": "New England Baptist Hospital",
             "latitude": 42.329917,
             "longitude": -71.1071403,
@@ -2013,7 +2013,7 @@
             ]
         },
         {
-            "id": 46,
+            "id": 45,
             "name": "Newton-Wellesley Hospital",
             "latitude": 42.3306411,
             "longitude": -71.2480116,
@@ -2056,7 +2056,7 @@
             ]
         },
         {
-            "id": 47,
+            "id": 46,
             "name": "Noble Hospital",
             "latitude": 42.11832845,
             "longitude": -72.7595389046631,
@@ -2109,7 +2109,7 @@
             ]
         },
         {
-            "id": 48,
+            "id": 47,
             "name": "North Adams Regional Hospital",
             "latitude": 42.70716725,
             "longitude": -73.1092515762137,
@@ -2157,7 +2157,7 @@
             ]
         },
         {
-            "id": 49,
+            "id": 48,
             "name": "North Shore Medical Center",
             "latitude": 42.511787,
             "longitude": -70.906405,
@@ -2215,7 +2215,7 @@
             ]
         },
         {
-            "id": 50,
+            "id": 49,
             "name": "Northeast Hospital",
             "latitude": 42.564296,
             "longitude": -70.875068,
@@ -2273,7 +2273,7 @@
             ]
         },
         {
-            "id": 51,
+            "id": 50,
             "name": "Quincy Medical Center",
             "latitude": 42.2510718,
             "longitude": -71.0138915,
@@ -2316,7 +2316,7 @@
             ]
         },
         {
-            "id": 52,
+            "id": 51,
             "name": "Saint Vincent Hospital",
             "latitude": 42.264508,
             "longitude": -71.796771,
@@ -2374,7 +2374,7 @@
             ]
         },
         {
-            "id": 53,
+            "id": 52,
             "name": "Saints Medical Center",
             "latitude": 42.645352,
             "longitude": -71.300523,
@@ -2422,7 +2422,7 @@
             ]
         },
         {
-            "id": 54,
+            "id": 53,
             "name": "Signature Healthcare Brockton Hospital",
             "latitude": 42.086297,
             "longitude": -70.991076,
@@ -2480,7 +2480,7 @@
             ]
         },
         {
-            "id": 55,
+            "id": 54,
             "name": "South Shore Hospital",
             "latitude": 42.176357,
             "longitude": -70.954059,
@@ -2528,7 +2528,7 @@
             ]
         },
         {
-            "id": 56,
+            "id": 55,
             "name": "Southcoast Hospitals Group",
             "latitude": 41.626683,
             "longitude": -70.938483,
@@ -2581,7 +2581,7 @@
             ]
         },
         {
-            "id": 57,
+            "id": 56,
             "name": "Steward Carney Hospital",
             "latitude": 42.27858,
             "longitude": -71.066216,
@@ -2619,7 +2619,7 @@
             ]
         },
         {
-            "id": 58,
+            "id": 57,
             "name": "Steward Good Samaritan Medical Center",
             "latitude": 42.098142,
             "longitude": -71.06202,
@@ -2672,7 +2672,7 @@
             ]
         },
         {
-            "id": 59,
+            "id": 58,
             "name": "Steward Holy Family Hospital",
             "latitude": 42.727666,
             "longitude": -71.168378,
@@ -2730,7 +2730,7 @@
             ]
         },
         {
-            "id": 60,
+            "id": 59,
             "name": "Steward Norwood Hospital",
             "latitude": 42.18918,
             "longitude": -71.202191,
@@ -2788,7 +2788,7 @@
             ]
         },
         {
-            "id": 61,
+            "id": 60,
             "name": "Steward Saint Anne's Hospital",
             "latitude": 41.692484,
             "longitude": -71.163977,
@@ -2846,7 +2846,7 @@
             ]
         },
         {
-            "id": 62,
+            "id": 61,
             "name": "Steward St. Elizabeth's Medical Center",
             "latitude": 42.348308,
             "longitude": -71.149735,
@@ -2894,7 +2894,7 @@
             ]
         },
         {
-            "id": 63,
+            "id": 62,
             "name": "Sturdy Memorial Hospital",
             "latitude": 41.9423219,
             "longitude": -71.2747745,
@@ -2947,7 +2947,7 @@
             ]
         },
         {
-            "id": 64,
+            "id": 63,
             "name": "Tufts Medical Center",
             "latitude": 42.3496857,
             "longitude": -71.0639202,
@@ -3000,7 +3000,7 @@
             ]
         },
         {
-            "id": 65,
+            "id": 64,
             "name": "UMass Memorial Medical Center",
             "latitude": 42.273059,
             "longitude": -71.79315,
@@ -3058,7 +3058,7 @@
             ]
         },
         {
-            "id": 66,
+            "id": 65,
             "name": "Winchester Hospital",
             "latitude": 42.4659908,
             "longitude": -71.1227637,
@@ -3116,7 +3116,7 @@
             ]
         },
         {
-            "id": 67,
+            "id": 66,
             "name": "Wing Memorial Hospital",
             "latitude": 42.169538,
             "longitude": -72.3411932,

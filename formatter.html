@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>JSON formater</title>
+    <title>JSON formatter</title>
     <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 </head>
 <body>
@@ -143,28 +143,72 @@
 //            document.body.appendChild(document.createElement('pre')).innerHTML = output;
 //        };
         
-        var q = "salem, nh";
-        var url = "http://nominatim.openstreetmap.org/search?q="+q+"&format=json&polygon=1&addressdetails=1";
-        d3.json(url, function(error, data) {
-            var feature = {};
-            feature.type = "Feature";
-            feature.properties = {};
-            feature.properties.SHAPE_AREA = null;
-            feature.properties.SHAPE_LEN = null;
-            feature.properties.id = null;
-            feature.properties.town = q.split(", ")[0];
-            feature.properties.state = q.split(", ")[1];
-            feature.geometry = {};
-            feature.geometry.type = "Polygon";
-            feature.geometry.coordinates = [];
-            var array = [];
-            data[0].polygonpoints.forEach(function(coord) {
-                array.push([coord[0], coord[1]]);
+//        var q = "salem, nh";
+//        var url = "http://nominatim.openstreetmap.org/search?q="+q+"&format=json&polygon=1&addressdetails=1";
+//        d3.json(url, function(error, data) {
+//            var feature = {};
+//            feature.type = "Feature";
+//            feature.properties = {};
+//            feature.properties.SHAPE_AREA = null;
+//            feature.properties.SHAPE_LEN = null;
+//            feature.properties.id = null;
+//            feature.properties.town = q.split(", ")[0];
+//            feature.properties.state = q.split(", ")[1];
+//            feature.geometry = {};
+//            feature.geometry.type = "Polygon";
+//            feature.geometry.coordinates = [];
+//            var array = [];
+//            data[0].polygonpoints.forEach(function(coord) {
+//                array.push([coord[0], coord[1]]);
+//            });
+//            feature.geometry.coordinates.push(array);
+//            
+//            document.body.appendChild(document.createElement('pre')).innerHTML = JSON.stringify(feature, undefined, 4);
+//        });
+        
+        
+        //Create the topHospitals
+        var topHospital = [];
+        d3.json("data/urban_areas.json", function(error, urbanArea) {
+            d3.json("data/hospitals.json", function(error, hospitals) {
+                urbanArea.features.forEach(function(feature) {
+                    var id = feature.properties.id;
+                    var town = [];
+                    
+                    hospitals.hospitals.forEach(function(hospital) {
+                        var element = {};
+                        var totalPatients = 0;
+                        
+                        hospital.topCommunities.forEach(function(community) {
+                            if(community.id_town === id) {
+                                element.id_hospital = hospital.id;
+                                element.patients = community.patients;
+                            }
+                            totalPatients += community.patients;
+                        });
+                        
+                        //Found
+                        if(element.id_hospital !== null && element.id_hospital !== undefined) {
+                            element.percentage = element.patients / totalPatients;
+                            town.push(element);
+                        }
+                    });
+                    
+                    town.sort(function(a, b) {return b.patients - a.patients;});
+                    feature.properties.topHospitals = town;
+                });
+                document.body.appendChild(document.createElement('pre')).innerHTML = JSON.stringify(urbanArea, undefined, 4);
             });
-            feature.geometry.coordinates.push(array);
-            
-            document.body.appendChild(document.createElement('pre')).innerHTML = JSON.stringify(feature, undefined, 4);
         });
+        
+        
+//        d3.json("data/hospitals.json", function(error, hospitals) {
+//            hospitals.hospitals.forEach(function(hospital) {
+//                hospital.id = hospital.id - 1; 
+//            });
+//            document.body.appendChild(document.createElement('pre')).innerHTML = JSON.stringify(hospitals, undefined, 4);
+//        });
+        
     </script>
 </body>
 </html>
