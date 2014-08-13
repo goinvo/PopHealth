@@ -45,15 +45,32 @@ var urbanAreaModule = (function() {
     };
     
     /*
+        _topHospitals(layer)
+        Displays the hospitals the most visited by the people from the selected area  with a pane
+    */
+    var _topHospitals = function(layer) {
+        //We reset the menu
+        menuModule
+            .resetContent()
+            .setTitle(layer.town);
+        
+        menuModule.open({
+            onQuit: null,
+            onQuitArguments: null
+        });
+    };
+    
+    /*
         init
         Displays the urban areas on the map
     */
     var init = function() {
         mapModule.getMap()._initPathRoot();
-        _feature = L.geoJson(_urbanAreaData, {
-            style: _config.style
-        })
-        .addTo(mapModule.getMap());
+        _feature = L.geoJson(_urbanAreaData, {style: _config.style, onEachFeature: function(feature, layer) {
+                layer.on("click", function(e) {_topHospitals(e.target.feature.properties);});
+            }})
+            .addTo(mapModule.getMap());
+
     };
     
     /*
@@ -64,7 +81,8 @@ var urbanAreaModule = (function() {
         _feature.getLayers().forEach(function(layer) {
             layer.setStyle(_config.style);
             layer["dataId"] = null;
-            layer.removeEventListener();
+            layer.removeEventListener("mouseover");
+            layer.removeEventListener("mouseout");
         });
     };
     

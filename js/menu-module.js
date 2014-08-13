@@ -23,6 +23,7 @@ var menuModule = (function() {
     var open = function(options) {
         _menu
             .style("display", "block")
+            .classed("fadeOutDown", false)
             .classed("animated fadeInUp", true);
         
         _menuOpened = true;
