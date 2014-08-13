@@ -73,10 +73,10 @@ var markerModule = (function() {
     };
     
     /*
-        _displayTopCommunities(data, marker)
+        displayTopCommunities(data, marker)
         For a selected hospital, displays where people comes from with a heat map and a pane
     */
-    var _displayTopCommunities = function(data, marker) {
+    var displayTopCommunities = function(data, marker) {
         //We reset the menu
         menuModule
             .resetContent()
@@ -135,6 +135,9 @@ var markerModule = (function() {
                     
                     d3.select(this)
                         .attr("style", null);
+                })
+                .on("click", function(d) {
+                    urbanAreaModule.displayTopHospitals(urbanAreaModule.getAreaData(getUrbanArea(d.id)));
                 });
 
             currentRow.append("td")
@@ -210,7 +213,8 @@ var markerModule = (function() {
             })
             .on("click", function(d) {
                 _markerSelected = this;
-                _displayTopCommunities(d, this);
+                console.log(this);
+                displayTopCommunities(d, this);
             });
         
         updateMarkers();
@@ -242,9 +246,19 @@ var markerModule = (function() {
             });
     }
     
+    /*
+        getMarker(id)
+        Returns the marker whose id matched the arg
+    */
+    var getMarker = function(id) {
+        return _markers[0][id];
+    };
+    
     return {
         init: init,
         reset: reset,
-        updateMarkers: updateMarkers
+        displayTopCommunities: displayTopCommunities,
+        updateMarkers: updateMarkers,
+        getMarker: getMarker
     };
 })();

@@ -45,10 +45,10 @@ var urbanAreaModule = (function() {
     };
     
     /*
-        _topHospitals(layer)
+        displayTopHospitals(layer)
         Displays the hospitals the most visited by the people from the selected area  with a pane
     */
-    var _topHospitals = function(layer) {
+    var displayTopHospitals = function(layer) {
         //We reset the menu
         menuModule
             .resetContent()
@@ -94,6 +94,9 @@ var urbanAreaModule = (function() {
 //                    
 //                    d3.select(this)
 //                        .attr("style", null);
+                })
+                .on("click", function(d) {
+                    markerModule.displayTopCommunities(getHospital(d.id), markerModule.getMarker(d.id));
                 });
             
             var hospital = getHospital(topHospital.id_hospital);
@@ -134,7 +137,7 @@ var urbanAreaModule = (function() {
     var init = function() {
         mapModule.getMap()._initPathRoot();
         _feature = L.geoJson(_urbanAreaData, {style: _config.style, onEachFeature: function(feature, layer) {
-                layer.on("click", function(e) {_topHospitals(e.target.feature.properties);});
+                layer.on("click", function(e) {displayTopHospitals(e.target.feature.properties);});
             }})
             .addTo(mapModule.getMap());
 
@@ -281,7 +284,13 @@ var urbanAreaModule = (function() {
         Returns the data binded to the layer getAreaData
     */
     var getAreaData = function(urbanArea) {
-        return urbanArea.feature.properties;
+        //The object returned depends on the object given
+        if(urbanArea.feature !== null && urbanArea.feature !== undefined)
+            return urbanArea.feature.properties;
+        else if(urbanArea.properties !== null && urbanArea.properties !== undefined)
+            return urbanArea.properties;
+        else
+            console.log("urbanAreaModule.getAreaData: urbanArea not recognized");
     };
     
     /*
@@ -304,6 +313,7 @@ var urbanAreaModule = (function() {
     return {
         init: init,
         reset: reset,
+        displayTopHospitals: displayTopHospitals,
         setFillOpacity: setFillOpacity,
         setAreaStyle: setAreaStyle,
         resetArea: resetArea,
