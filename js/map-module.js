@@ -11,7 +11,7 @@ var mapModule = (function() {
     
     /*
         init
-        Desc:   Initialize the map
+        Initializes the map
     */
     var init = function() {
         d3.select(_config.mapElement)
@@ -28,16 +28,17 @@ var mapModule = (function() {
     
     /*
         update
-        Desc:   Resize the map depending on the size of the window
+        Resizes the map depending on the size of the window
     */
     var update = function() {
         d3.select(_config.mapElement)
-            .style("height", window.innerHeight+"px");  
+            .style("height", window.innerHeight+"px") 
+            .style("width", window.innerWidth+"px");  
     };
     
     /*
         getMap
-        Desc: Return the mapbox object for the map
+        Returns the mapbox object of the map
     */
     var getMap = function() {
         return _map;  

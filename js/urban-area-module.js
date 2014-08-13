@@ -15,24 +15,22 @@ var urbanAreaModule = (function() {
     
     /*
         _getArea(urbanAreaName)
-        Desc:   Return the layer whose name is urbanAreaName
+        Returns the layer whose name is urbanAreaName
     */
     var _getArea = function(urbanAreaName) {
-        return (function() {
-            var layers = _feature.getLayers();
-            var result = null;
-            layers.forEach(function(layer) {
-                if(layer.feature.properties.TOWN.toLowerCase().trim() == urbanAreaName) {
-                    result = layer;
-                }
-            });  
-            return result;
-        })();
+        var layers = _feature.getLayers();
+        var result = null;
+        layers.forEach(function(layer) {
+            if(layer.feature.properties.TOWN.toLowerCase().trim() == urbanAreaName) {
+                result = layer;
+            }
+        });  
+        return result;
     };
     
     /*
         _getAreaById(id)
-        Desc:   Return the layer whose id is id
+       Returns the layer whose id is id
     */
     var _getAreaById = function(id) {
         var layers = _feature.getLayers();
@@ -48,7 +46,7 @@ var urbanAreaModule = (function() {
     
     /*
         init
-        Desc:   Display the urban areas on the map
+        Displays the urban areas on the map
     */
     var init = function() {
         mapModule.getMap()._initPathRoot();
@@ -58,10 +56,9 @@ var urbanAreaModule = (function() {
         .addTo(mapModule.getMap());
     };
     
-    
     /*
         reset
-        Desc:   Reset the style of the layers to _config.style
+        Resets the style of the layers to _config.style and removes the event listenners
     */
     var reset = function() {
         _feature.getLayers().forEach(function(layer) {
@@ -72,8 +69,31 @@ var urbanAreaModule = (function() {
     };
     
     /*
+        setFillOpacity(opacity)
+        Sets the fill opacity of all the layers
+        If the fill color is white, the method has no effect
+    */
+    var setFillOpacity = function(opacity) {
+        _feature.getLayers().forEach(function(layer) {
+            
+            //The area is made of only one layer
+            if(layer.options !== undefined && layer.options.fillColor !== "#fff" && layer.options.fillColor !== "#ffffff")
+                layer.setStyle({fillOpacity: opacity});
+            
+            //The area is made of various sub-layers
+            if(layer._layers !== undefined) {
+                for(var key in layer._layers) {
+                    var subLayer = layer._layers[key];
+                    if(subLayer.options !== undefined && subLayer.options.fillColor !== "#fff" && subLayer.options.fillColor !== "#fffff")
+                        subLayer.setStyle({fillOpacity: opacity});
+                }
+            }
+        });
+    };
+    
+    /*
         setAreaStyle(id, style)
-        Desc:   Set the style of the area whose id is id to style
+        Sets the style of the area whose id is id to style
     */
     var setAreaStyle = function(id, style) {
         var layer = _getAreaById(id);
@@ -87,7 +107,7 @@ var urbanAreaModule = (function() {
     
     /*
         resetArea(urbanAreaName)
-        Desc:   Reset the style of the area named urbanAreaName to _config.style
+        Resets the style of the area named urbanAreaName to _config.style
     */
     var resetArea = function(urbanAreaName) {
         (function() {
@@ -103,7 +123,7 @@ var urbanAreaModule = (function() {
     
     /*
         getDefaultStyle
-        Desc:   Return the default style of the layers (ie areas)
+        Returns the default style of the layers (ie areas)
     */
     var getDefaultStyle = function() {
         return _config.style;  
@@ -111,73 +131,69 @@ var urbanAreaModule = (function() {
     
     /*
         setAreaMouseover(id, callback, args)
-        Desc:   Set for the area whose id is id the callback function "callback" when the event mouseover is caught
-                args is the an array of the arguments that are passed to the callback function
-                If one of the arguments is actually a function, it is executed passing it as first and only parameter the event caught
+        Sets for the area whose id is id the callback function "callback" when the event mouseover is caught
+        args is the an array of the arguments that are passed to the callback function
+        If one of the arguments is actually a function, it is executed passing it as first and only parameter the event caught
     */
     var setAreaMouseover = function(id, callback, args) {
-        (function() {
-            var layer = _getAreaById(id);
-            if(layer === null || layer === undefined) {
-                console.log("urbanAreaModule.setAreaMouseover: layer shouldn't be null or undefined");
-                return;
+        var layer = _getAreaById(id);
+        if(layer === null || layer === undefined) {
+            console.log("urbanAreaModule.setAreaMouseover: layer shouldn't be null or undefined");
+            return;
+        }
+
+        layer.on("mouseover", function(e) {
+            //If args contains functions, we execute them before
+            var newArgs = [];
+            if(args !== null && args !== undefined) {
+                args.forEach(function(arg) {
+                    if(typeof arg === "function") { 
+                        newArgs.push(arg.apply(null, [e]));
+                    }
+                    else {
+                        newArgs.push(arg);
+                    }
+                });
             }
-            
-            layer.on("mouseover", function(e) {
-                //If args contains functions, we execute them before
-                var newArgs = [];
-                if(args !== null && args !== undefined) {
-                    args.forEach(function(arg) {
-                        if(typeof arg === "function") { 
-                            newArgs.push(arg.apply(null, [e]));
-                        }
-                        else {
-                            newArgs.push(arg);
-                        }
-                    });
-                }
-                
-                callback.apply(null, newArgs) ;
-            });
-        })();
+
+            callback.apply(null, newArgs) ;
+        });
     };
     
     /*
         setAreaMouseout(id, callback, args)
-        Desc:   Set for the area whose id is id the callback function "callback" when the event mouseout is caught
-                args is the an array of the arguments that are passed to the callback function
-                If one of the arguments is actually a function, it is executed passing it as first and only parameter the event caught
+        Sets for the area whose id is id the callback function "callback" when the event mouseout is caught
+        args is the an array of the arguments that are passed to the callback function
+        If one of the arguments is actually a function, it is executed passing it as first and only parameter the event caught
     */
     var setAreaMouseout = function(id, callback, args) {
-        (function() {
-            var layer = _getAreaById(id);
-            if(layer === null || layer === undefined) {
-                console.log("urbanAreaModule.setAreaMouseout: layer shouldn't be null or undefined");
-                return;
+        var layer = _getAreaById(id);
+        if(layer === null || layer === undefined) {
+            console.log("urbanAreaModule.setAreaMouseout: layer shouldn't be null or undefined");
+            return;
+        }
+
+        layer.on("mouseout", function(e) {
+            //If args contains functions, we exexute them before
+            var newArgs = [];
+            if(args !== null && args !== undefined) {
+                args.forEach(function(arg) {
+                    if(typeof arg === "function") { 
+                        newArgs.push(arg.apply(null, [e]));
+                    }
+                    else {
+                        newArgs.push(arg);
+                    }
+                });
             }
-            
-            layer.on("mouseout", function(e) {
-                //If args contains functions, we exexute them before
-                var newArgs = [];
-                if(args !== null && args !== undefined) {
-                    args.forEach(function(arg) {
-                        if(typeof arg === "function") { 
-                            newArgs.push(arg.apply(null, [e]));
-                        }
-                        else {
-                            newArgs.push(arg);
-                        }
-                    });
-                }
-                
-                callback.apply(null, newArgs) ;
-            });
-        })();
+
+            callback.apply(null, newArgs) ;
+        });
     };
     
     /*
         getAreaData(urbanArea)
-        Desc:   Return the data binded to the layer getAreaData
+        Returns the data binded to the layer getAreaData
     */
     var getAreaData = function(urbanArea) {
         return urbanArea.feature.properties;
@@ -185,7 +201,7 @@ var urbanAreaModule = (function() {
     
     /*
         getId(urbanAreaName)
-        Desc:   Return the id of the layer urbanArea
+        Returns the id of the layer urbanArea
     */
     var getId = function(urbanArea) {
         if(urbanArea === null || urbanArea === undefined) {
@@ -203,6 +219,7 @@ var urbanAreaModule = (function() {
     return {
         init: init,
         reset: reset,
+        setFillOpacity: setFillOpacity,
         setAreaStyle: setAreaStyle,
         resetArea: resetArea,
         getDefaultStyle: getDefaultStyle,
