@@ -54,6 +54,9 @@ var urbanAreaModule = (function() {
             .resetContent()
             .setTitle(layer.town);
         
+        //Remove the heatmap from the map
+        reset();
+        
         menuModule.open({
             onQuit: null,
             onQuitArguments: null
