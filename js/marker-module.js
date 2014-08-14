@@ -4,7 +4,7 @@ var markerModule = (function() {
         icon: "icons/hospital.svg",
         containerClass: "markers",
         markerClass: "marker",
-        heatmapColorSchmeme: ["#c9181b", "#fdae61", "#ebc036", "#53a348", "#2b83ba"],
+        heatmapColorSchmeme: ["#565756", "#777877", "#999999", "#B8B8B8", "#D6D6D6"],
         hiddenMarkerOpacity: .2
     };
     

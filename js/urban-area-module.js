@@ -76,7 +76,12 @@ var urbanAreaModule = (function() {
             .classed("w25", true)
             .text("Patients");
         currentRow.append("th")
-            .html("% of patients<sup>1</sup>");
+            .html("% of patients/hospital<sup>1</sup>");
+        
+        var totalPatients = 0;
+        layer.topHospitals.forEach(function(topHospital) {
+            totalPatients += topHospital.patients;
+        });
         
         layer.topHospitals.forEach(function(topHospital) {
             var percentage = (topHospital.percentage === null) ? "–" : ((topHospital.percentage * 100 <= 1) ? "<1" : Math.round(topHospital.percentage * 100));
@@ -94,7 +99,7 @@ var urbanAreaModule = (function() {
                                 return _config.hiddenLineOpacity;
                             return 1;
                         });
-//                    
+
                     d3.select(this)
                         .style("background-color", "#dc254f");
                 })
@@ -145,6 +150,21 @@ var urbanAreaModule = (function() {
                     }
                 }])
                 .append("line")
+                .style("stroke-width", function() {
+                    var ratio = topHospital.patients / totalPatients;
+                    var thickness;
+                    if(ratio > .6)
+                        thickness = 6;
+                    else if(ratio > .5)
+                        thickness = 5;
+                    else if(ratio > .3)
+                        thickness = 4;
+                    else if(ratio > .1)
+                        thickness = 3;
+                    else
+                        thickness = 2;
+                    return thickness+"px";
+                })
                 .attr("x1", originCoords.x)
                 .attr("y1", originCoords.y)
                 .attr("x2", destinationCoords.x)
