@@ -5,11 +5,11 @@ var markerModule = (function() {
         containerClass: "markers",
         markerClass: "marker",
         heatmapColorSchmeme: ["#c9181b", "#fdae61", "#ebc036", "#53a348", "#2b83ba"],
-        hiddenMarkerOpacity: .3
+        hiddenMarkerOpacity: .2
     };
     
     var _markers,
-        _markerSelected = null,
+        _markersSelected = [],
         _popup = null;
     
     /*
@@ -205,15 +205,14 @@ var markerModule = (function() {
                 _displayBubble(d);
             })
             .on("mouseout", function() {
-                if(menuModule.isOpened() && this !== _markerSelected) {
+                if(menuModule.isOpened() && _markersSelected.indexOf(this) === -1) {
                     d3.select(this)
                         .style("opacity", _config.hiddenMarkerOpacity);
                 }
                 _closeBubble();
             })
             .on("click", function(d) {
-                _markerSelected = this;
-                console.log(this);
+                _markersSelected.push(this);
                 displayTopCommunities(d, this);
             });
         
@@ -227,6 +226,8 @@ var markerModule = (function() {
     var reset = function() {
         d3.selectAll("."+_config.markerClass)
             .style("opacity", 1);
+        
+        _markersSelected = [];
     };
     
     /*
@@ -254,11 +255,42 @@ var markerModule = (function() {
         return _markers[0][id];
     };
     
+    /*
+        hideMarkers
+        Changes the opacity of all the markers to _config.hiddenMarkerOpacity
+    */
+    var hideMarkers = function() {
+        d3.selectAll("."+_config.markerClass)
+            .style("opacity", _config.hiddenMarkerOpacity);
+    };
+    
+    /*
+        restoreSelectedMarkers
+        Puts the opacity to 1 for all the selected markers
+    */
+    var restoreSelectedMarkers = function() {
+        _markersSelected.forEach(function(selectedMarker) {
+            d3.select(selectedMarker)
+                .style("opacity", 1);
+        });
+    };
+    
+    /*
+        addSelectedMarker(marker)
+        Adds the marker to the one selected so they won't react to the mouseover/mouseout events
+    */
+    var addSelectedMarker = function(marker) {
+        _markersSelected.push(marker);  
+    };
+    
     return {
         init: init,
         reset: reset,
         displayTopCommunities: displayTopCommunities,
         updateMarkers: updateMarkers,
-        getMarker: getMarker
+        getMarker: getMarker,
+        hideMarkers: hideMarkers,
+        restoreSelectedMarkers: restoreSelectedMarkers,
+        addSelectedMarker: addSelectedMarker
     };
 })();

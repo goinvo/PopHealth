@@ -56,7 +56,9 @@ var urbanAreaModule = (function() {
         
         //Remove the heatmap of the map and reset the style of the markers
         reset();
-        markerModule.reset();
+        
+        //We hide all the markers
+        markerModule.hideMarkers();
         
         var menuContent = d3.select(document.createElement("table"));
         var currentRow = menuContent.append("tr");
@@ -73,27 +75,19 @@ var urbanAreaModule = (function() {
             var percentage = (topHospital.percentage === null) ? "–" : ((topHospital.percentage * 100 <= 1) ? "<1" : Math.round(topHospital.percentage * 100));
             currentRow = menuContent.append("tr")
                 .data([{id: topHospital.id_hospital}])
-                .on("mouseover", function() {
-//                    var color = _heatmapColor(topCommunity.patients / totalPatients);
-//                    urbanAreaModule.setFillOpacity(.3);
-//                    urbanAreaModule.setAreaStyle(topCommunity.id_town, {
-//                        color: color,
-//                        fillOpacity: 1
-//                    });
+                .on("mouseover", function(d) {
+                    markerModule.hideMarkers();
+                    d3.select(markerModule.getMarker(d.id))
+                        .style("opacity", 1);
 //                    
-//                    d3.select(this)
-//                        .style("background-color", color);
+                    d3.select(this)
+                        .style("background-color", "#dc254f");
                 })
                 .on("mouseout", function() {
-//                    urbanAreaModule.setFillOpacity(1);
-//                    urbanAreaModule.setAreaStyle(topCommunity.id_town, {
-//                        color: defaultStyle.color,
-//                        opacity: defaultStyle.opacity,
-//                        weight: defaultStyle.weight
-//                    });
-//                    
-//                    d3.select(this)
-//                        .attr("style", null);
+                    markerModule.restoreSelectedMarkers();
+                    
+                    d3.select(this)
+                        .attr("style", null);
                 })
                 .on("click", function(d) {
                     markerModule.displayTopCommunities(getHospital(d.id), markerModule.getMarker(d.id));
@@ -109,6 +103,12 @@ var urbanAreaModule = (function() {
                 .text(topHospital.patients);
             currentRow.append("td")
                 .text((percentage !== "–") ? percentage+"%" : percentage);
+            
+            //We highlight the marker of the current hospital
+            var marker = markerModule.getMarker(topHospital.id_hospital);
+            d3.select(marker)
+                .style("opacity", 1);
+            markerModule.addSelectedMarker(marker);
         });
         
         //No data for the hospital
