@@ -26,6 +26,11 @@ image.marker {
     cursor: pointer;
 }
 
+svg .lines line {
+    stroke: #dc254f;
+    stroke-width: 2px;
+}
+
 /* ----- QUESTION STYLES ----- */
 #question {
     position: absolute;

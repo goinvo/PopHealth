@@ -84,6 +84,9 @@ var markerModule = (function() {
         urbanAreaModule
             .reset();
         
+        //We delete the lines
+        urbanAreaModule.deleteLines();
+        
         //We change the opacity of the markers
         d3.selectAll("."+_config.markerClass)
             .style("opacity", function(d) {

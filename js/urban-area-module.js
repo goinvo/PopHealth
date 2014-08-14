@@ -8,7 +8,10 @@ var urbanAreaModule = (function() {
             weight: 1,
             color: '#000',
             opacity: .1
-        }
+        },
+        linesContainerClass: "lines",
+        svgContainer: "#map svg",
+        hiddenLineOpacity: .2
     };
     
     var _feature; //Contains the mapbox object for the urban areas
@@ -47,8 +50,9 @@ var urbanAreaModule = (function() {
     /*
         displayTopHospitals(layer)
         Displays the hospitals the most visited by the people from the selected area  with a pane
+        center is an object containing the latitude and the longitude of the center of the clicked area
     */
-    var displayTopHospitals = function(layer) {
+    var displayTopHospitals = function(layer, center) {
         //We reset the menu
         menuModule
             .resetContent()
@@ -59,6 +63,9 @@ var urbanAreaModule = (function() {
         
         //We hide all the markers
         markerModule.hideMarkers();
+        
+        //We delete all the lines
+        deleteLines();
         
         var menuContent = d3.select(document.createElement("table"));
         var currentRow = menuContent.append("tr");
@@ -79,6 +86,14 @@ var urbanAreaModule = (function() {
                     markerModule.hideMarkers();
                     d3.select(markerModule.getMarker(d.id))
                         .style("opacity", 1);
+                    
+                    var id = d.id;
+                    d3.selectAll(_config.svgContainer+" ."+_config.linesContainerClass+" line")
+                        .style("opacity", function(d) {
+                            if(d.id != id)
+                                return _config.hiddenLineOpacity;
+                            return 1;
+                        });
 //                    
                     d3.select(this)
                         .style("background-color", "#dc254f");
@@ -88,6 +103,9 @@ var urbanAreaModule = (function() {
                     
                     d3.select(this)
                         .attr("style", null);
+                    
+                    d3.selectAll(_config.svgContainer+" ."+_config.linesContainerClass+" line")
+                        .style("opacity", 1);
                 })
                 .on("click", function(d) {
                     markerModule.displayTopCommunities(getHospital(d.id), markerModule.getMarker(d.id));
@@ -109,6 +127,29 @@ var urbanAreaModule = (function() {
             d3.select(marker)
                 .style("opacity", 1);
             markerModule.addSelectedMarker(marker);
+            
+            //We add the line
+            var originCoords = mapModule.getMap().latLngToLayerPoint([center.lat, center.lng]);
+            var destinationCoords = mapModule.getMap().latLngToLayerPoint([getHospital(topHospital.id_hospital).latitude, getHospital(topHospital.id_hospital).longitude]);
+            
+            d3.select(_config.svgContainer+" ."+_config.linesContainerClass)
+                .data([{
+                    id: topHospital.id_hospital,
+                    origin: {
+                        latitude: center.lat,
+                        longitude: center.lng
+                    },
+                    destination: {
+                        latitude: getHospital(topHospital.id_hospital).latitude,
+                        longitude: getHospital(topHospital.id_hospital).longitude
+                    }
+                }])
+                .append("line")
+                .attr("x1", originCoords.x)
+                .attr("y1", originCoords.y)
+                .attr("x2", destinationCoords.x)
+                .attr("y2", destinationCoords.y);
+            
         });
         
         //No data for the hospital
@@ -125,9 +166,18 @@ var urbanAreaModule = (function() {
         menuModule.setNote("<sup>1</sup> These data only take into account the patients coming from the top 10<sup>-</sup> communities<br/>Data from the <a href='http://www.mass.gov/chia/researcher/hcf-data-resources/massachusetts-hospital-profiles/overiew-and-current-reports.html' target='_blank'>Center for Health Information and Analysis</a>");
 
         menuModule.open({
-            onQuit: null,
+            onQuit: urbanAreaModule.deleteLines,
             onQuitArguments: null
         });
+    };
+    
+    /*
+        deleteLines
+        Deletes all the lines
+    */
+    var deleteLines = function() {
+        d3.selectAll(_config.svgContainer+" ."+_config.linesContainerClass+" line")
+            .remove();
     };
     
     /*
@@ -137,9 +187,14 @@ var urbanAreaModule = (function() {
     var init = function() {
         mapModule.getMap()._initPathRoot();
         _feature = L.geoJson(_urbanAreaData, {style: _config.style, onEachFeature: function(feature, layer) {
-                layer.on("click", function(e) {displayTopHospitals(e.target.feature.properties);});
+                layer.on("click", function(e) {
+                    displayTopHospitals(e.target.feature.properties, this.getBounds().getCenter());});
             }})
             .addTo(mapModule.getMap());
+        
+        d3.select(_config.svgContainer)
+            .append("g")
+            .classed(_config.linesContainerClass, true);
 
     };
     
@@ -154,6 +209,26 @@ var urbanAreaModule = (function() {
             layer.removeEventListener("mouseover");
             layer.removeEventListener("mouseout");
         });
+    };
+    
+    /*
+        update
+        Updates the lines' position when the zoom changes
+    */
+    var update = function() {
+       d3.selectAll(_config.svgContainer+" ."+_config.linesContainerClass+" line")
+            .attr("x1", function(d) {
+                return mapModule.getMap().latLngToLayerPoint([d.origin.latitude, d.origin.longitude]).x;
+            })
+            .attr("y1", function(d) {
+                return mapModule.getMap().latLngToLayerPoint([d.origin.latitude, d.origin.longitude]).y;
+            })
+            .attr("x2", function(d) {
+                return mapModule.getMap().latLngToLayerPoint([d.destination.latitude, d.destination.longitude]).x;
+            })
+            .attr("y2", function(d) {
+                return mapModule.getMap().latLngToLayerPoint([d.destination.latitude, d.destination.longitude]).y;
+            });  
     };
     
     /*
@@ -313,6 +388,7 @@ var urbanAreaModule = (function() {
     return {
         init: init,
         reset: reset,
+        update: update,
         displayTopHospitals: displayTopHospitals,
         setFillOpacity: setFillOpacity,
         setAreaStyle: setAreaStyle,
@@ -321,6 +397,7 @@ var urbanAreaModule = (function() {
         setAreaMouseover: setAreaMouseover,
         setAreaMouseout: setAreaMouseout,
         getAreaData: getAreaData,
-        getId: getId
+        getId: getId,
+        deleteLines: deleteLines
     };
 })();
