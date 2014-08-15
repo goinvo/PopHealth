@@ -79,8 +79,11 @@ var markerModule = (function() {
     var displayTopCommunities = function(data, marker) {
         //We reset the menu
         menuModule
-            .resetContent()
-            .setTitle(data.name);
+            .resetContent(1)
+            .resetContent(2)
+            .setTitle(1, data.name)
+            .setTitle(2, "Top DRGs");
+        
         urbanAreaModule
             .reset();
         
@@ -151,11 +154,11 @@ var markerModule = (function() {
                 .text((percentage !== "–") ? percentage+"%" : percentage);
 
             //The community in the menu is hovered if the layer is hovered
-            urbanAreaModule.setAreaMouseover(topCommunity.id_town, menuModule.highlightItem, ["tr", _heatmapColor(topCommunity.patients / totalPatients), function(e) {
+            urbanAreaModule.setAreaMouseover(topCommunity.id_town, menuModule.highlightItem, [1, "tr", _heatmapColor(topCommunity.patients / totalPatients), function(e) {
                 return urbanAreaModule.getId(e.target);
             }]);
 
-            urbanAreaModule.setAreaMouseout(topCommunity.id_town, menuModule.resetItem, ["tr", function(e) {
+            urbanAreaModule.setAreaMouseout(topCommunity.id_town, menuModule.resetItem, [1, "tr", function(e) {
                 return urbanAreaModule.getId(e.target);
             }]);
 
@@ -176,12 +179,53 @@ var markerModule = (function() {
             currentRow.append("td");
         }
 
-        menuModule.addContent(menuContent);
+        menuModule.addContent(1, menuContent);
         
-        menuModule.setNote("<sup>1</sup> Only the top 10<sup>-</sup> communities are represented<br/>Data from the <a href='http://www.mass.gov/chia/researcher/hcf-data-resources/massachusetts-hospital-profiles/overiew-and-current-reports.html' target='_blank'>Center for Health Information and Analysis</a>");
+        menuModule.setNote(1, "<sup>1</sup> Only the top 10<sup>-</sup> communities are represented<br/>Data from the <a href='http://www.mass.gov/chia/researcher/hcf-data-resources/massachusetts-hospital-profiles/overiew-and-current-reports.html' target='_blank'>Center for Health Information and Analysis</a>");
 
-        menuModule.open({
+        menuModule.open(1, {
             onQuit: urbanAreaModule.reset,
+            onQuitArguments: null
+        });
+        
+        //Second pane
+        menuContent = d3.select(document.createElement("table"));
+        var currentRow = menuContent.append("tr");
+        currentRow.append("th")
+            .classed("w50", true)
+            .html("DRG's name<sup>1</sup>");
+        currentRow.append("th")
+            .classed("w25", true)
+            .text("Patients");
+        currentRow.append("th")
+            .text("% of community");
+
+        data.topDRGs.forEach(function(topDRG) {
+            var percentage = (topDRG.percentage === null) ? "–" : ((topDRG.percentage * 100 <= 1) ? "<1" : Math.round(topDRG.percentage * 100));
+            currentRow = menuContent.append("tr");
+            currentRow.append("td")
+                .text(topDRG.name);
+            currentRow.append("td")
+                .text(topDRG.patients);
+            currentRow.append("td")
+                .text((percentage !== "–") ? percentage+"%" : percentage);
+        });
+        
+        //No data for the hospital
+        if(menuContent.selectAll("tr")[0].length == 1) {
+            currentRow = menuContent.append("tr");
+            currentRow.append("td")
+                .text("No data");
+            currentRow.append("td");
+            currentRow.append("td");
+        }
+        
+        menuModule.addContent(2, menuContent);
+        
+        menuModule.setNote(2, "<sup>1</sup> Only the top 10<sup>-</sup> DRGs are represented");
+        
+        menuModule.open(2, {
+            onQuit: null,
             onQuitArguments: null
         });
     }
@@ -208,7 +252,7 @@ var markerModule = (function() {
                 _displayBubble(d);
             })
             .on("mouseout", function() {
-                if(menuModule.isOpened() && _markersSelected.indexOf(this) === -1) {
+                if(menuModule.isOpened(1) && _markersSelected.indexOf(this) === -1) {
                     d3.select(this)
                         .style("opacity", _config.hiddenMarkerOpacity);
                 }

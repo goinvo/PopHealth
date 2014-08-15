@@ -55,8 +55,9 @@ var urbanAreaModule = (function() {
     var displayTopHospitals = function(layer, center) {
         //We reset the menu
         menuModule
-            .resetContent()
-            .setTitle(layer.town);
+            .resetContent(1)
+            .setTitle(1, layer.town)
+            .close(2);
         
         //Remove the heatmap of the map and reset the style of the markers
         reset();
@@ -181,11 +182,11 @@ var urbanAreaModule = (function() {
             currentRow.append("td");
         }
 
-        menuModule.addContent(menuContent);
+        menuModule.addContent(1, menuContent);
         
-        menuModule.setNote("<sup>1</sup> These data only take into account the patients coming from the top 10<sup>-</sup> communities<br/>Data from the <a href='http://www.mass.gov/chia/researcher/hcf-data-resources/massachusetts-hospital-profiles/overiew-and-current-reports.html' target='_blank'>Center for Health Information and Analysis</a>");
+        menuModule.setNote(1, "<sup>1</sup> These data only take into account the patients coming from the top 10<sup>-</sup> communities<br/>Data from the <a href='http://www.mass.gov/chia/researcher/hcf-data-resources/massachusetts-hospital-profiles/overiew-and-current-reports.html' target='_blank'>Center for Health Information and Analysis</a>");
 
-        menuModule.open({
+        menuModule.open(1, {
             onQuit: urbanAreaModule.deleteLines,
             onQuitArguments: null
         });

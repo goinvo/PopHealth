@@ -56,6 +56,58 @@
                     "percentage": 0.4726775956284153,
                     "id_town": 324
                 }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Delivery DRGs",
+                    "patients": 1155,
+                    "percentage": 1
+                },
+                {
+                    "name": "Maj Dep& Oth/Unsp Psychoses",
+                    "patients": 503,
+                    "percentage": 1
+                },
+                {
+                    "name": "Bipolar Disorders",
+                    "patients": 368,
+                    "percentage": 1
+                },
+                {
+                    "name": "COPD",
+                    "patients": 341,
+                    "percentage": 1
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 237,
+                    "percentage": 1
+                },
+                {
+                    "name": "Card Arrth & Cond Dis",
+                    "patients": 223,
+                    "percentage": 1
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 214,
+                    "percentage": 1
+                },
+                {
+                    "name": "Angina & Cor Athero",
+                    "patients": 179,
+                    "percentage": 1
+                },
+                {
+                    "name": "Syncope & Collapse",
+                    "patients": 128,
+                    "percentage": 1
+                },
+                {
+                    "name": "Dep exc Maj Dep",
+                    "patients": 125,
+                    "percentage": 1
+                }
             ]
         },
         {
@@ -73,6 +125,58 @@
                     "patients": 193,
                     "percentage": 0.19146825396825398,
                     "id_town": 292
+                }
+            ],
+            "topDRGs": [
+                {
+                    "name": "COPD",
+                    "patients": 92,
+                    "percentage": 0.05
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 53,
+                    "percentage": 0.02
+                },
+                {
+                    "name": "Renal Failure",
+                    "patients": 41,
+                    "percentage": 0.03
+                },
+                {
+                    "name": "Sepsis & Dissem Inf",
+                    "patients": 35,
+                    "percentage": 0.02
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 33,
+                    "percentage": 0.02
+                },
+                {
+                    "name": null,
+                    "patients": null,
+                    "percentage": null
+                },
+                {
+                    "name": null,
+                    "patients": null,
+                    "percentage": null
+                },
+                {
+                    "name": null,
+                    "patients": null,
+                    "percentage": null
+                },
+                {
+                    "name": null,
+                    "patients": null,
+                    "percentage": null
+                },
+                {
+                    "name": null,
+                    "patients": null,
+                    "percentage": null
                 }
             ]
         },
@@ -127,6 +231,58 @@
                     "percentage": 0.5966850828729282,
                     "id_town": 102
                 }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Delivery DRGs",
+                    "patients": 905,
+                    "percentage": 0.07
+                },
+                {
+                    "name": "Maj Dep& Oth/Unsp Psychoses",
+                    "patients": 209,
+                    "percentage": 0.11
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 173,
+                    "percentage": 0.09
+                },
+                {
+                    "name": "Adj Dis/Neur exc Dep ",
+                    "patients": 159,
+                    "percentage": 0.25
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 147,
+                    "percentage": 0.06
+                },
+                {
+                    "name": "Bipolar Disorders",
+                    "patients": 122,
+                    "percentage": 0.08
+                },
+                {
+                    "name": "COPD",
+                    "patients": 117,
+                    "percentage": 0.06
+                },
+                {
+                    "name": "Cellulitis, Oth Bact Skn Inf",
+                    "patients": 101,
+                    "percentage": 0.07
+                },
+                {
+                    "name": "Schizophrenia",
+                    "patients": 98,
+                    "percentage": 0.1
+                },
+                {
+                    "name": "Sepsis & Dissem Inf",
+                    "patients": 94,
+                    "percentage": 0.06
+                }
             ]
         },
         {
@@ -174,6 +330,58 @@
                     "patients": 26,
                     "percentage": 0.06190476190476191,
                     "id_town": 246
+                }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Sepsis & Dissem Inf",
+                    "patients": 80,
+                    "percentage": 0.05
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 70,
+                    "percentage": 0.03
+                },
+                {
+                    "name": "COPD",
+                    "patients": 66,
+                    "percentage": 0.03
+                },
+                {
+                    "name": "Cellulitis, Oth Bact Skn Inf",
+                    "patients": 60,
+                    "percentage": 0.04
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 55,
+                    "percentage": 0.03
+                },
+                {
+                    "name": "Card Arrth & Cond Dis",
+                    "patients": 39,
+                    "percentage": 0.03
+                },
+                {
+                    "name": "Kidney & UT Infections",
+                    "patients": 38,
+                    "percentage": 0.03
+                },
+                {
+                    "name": "Renal Failure",
+                    "patients": 35,
+                    "percentage": 0.03
+                },
+                {
+                    "name": "Appendectomy",
+                    "patients": 27,
+                    "percentage": 0.04
+                },
+                {
+                    "name": "Other Digestive System Dx",
+                    "patients": 27,
+                    "percentage": 0.04
                 }
             ]
         },
@@ -233,6 +441,58 @@
                     "percentage": 0.4789297658862876,
                     "id_town": 346
                 }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Delivery DRGs",
+                    "patients": 7572,
+                    "percentage": 0.58
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 1078,
+                    "percentage": 0.46
+                },
+                {
+                    "name": "Knee Joint Replacement",
+                    "patients": 820,
+                    "percentage": 0.59
+                },
+                {
+                    "name": "Sepsis & Dissem Inf",
+                    "patients": 677,
+                    "percentage": 0.4
+                },
+                {
+                    "name": "Percut Card proc w/ AMI",
+                    "patients": 649,
+                    "percentage": 1
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 599,
+                    "percentage": 0.3
+                },
+                {
+                    "name": "COPD",
+                    "patients": 564,
+                    "percentage": 0.27
+                },
+                {
+                    "name": "Cellulitis, Oth Bact Skn Inf",
+                    "patients": 551,
+                    "percentage": 0.36
+                },
+                {
+                    "name": "Card Arrth & Cond Dis",
+                    "patients": 548,
+                    "percentage": 0.38
+                },
+                {
+                    "name": "Hip Joint Replacement",
+                    "patients": 527,
+                    "percentage": 0.59
+                }
             ]
         },
         {
@@ -291,6 +551,58 @@
                     "percentage": 0.3058510638297872,
                     "id_town": 302
                 }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Delivery DRGs",
+                    "patients": 1342,
+                    "percentage": 0.65
+                },
+                {
+                    "name": "Alc & Drg Dx-Rehab w/wo Detox",
+                    "patients": 890,
+                    "percentage": 1
+                },
+                {
+                    "name": "Drug/Alcohol Abuse, LAMA",
+                    "patients": 550,
+                    "percentage": 0.99
+                },
+                {
+                    "name": "Bipolar Disorders",
+                    "patients": 524,
+                    "percentage": 0.82
+                },
+                {
+                    "name": "Sepsis & Dissem Inf",
+                    "patients": 393,
+                    "percentage": 0.55
+                },
+                {
+                    "name": "Maj Dep& Oth/Unsp Psychoses",
+                    "patients": 365,
+                    "percentage": 0.79
+                },
+                {
+                    "name": "Card Arrth & Cond Dis",
+                    "patients": 322,
+                    "percentage": 0.74
+                },
+                {
+                    "name": "Rehabilitation",
+                    "patients": 308,
+                    "percentage": 1
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 303,
+                    "percentage": 0.67
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 301,
+                    "percentage": 0.67
+                }
             ]
         },
         {
@@ -333,6 +645,58 @@
                     "patients": 73,
                     "percentage": 0.0042961393596986815,
                     "id_town": 42
+                }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 233,
+                    "percentage": 0.04
+                },
+                {
+                    "name": "Sepsis & Dissem Inf",
+                    "patients": 215,
+                    "percentage": 0.04
+                },
+                {
+                    "name": "Cellulitis, Oth Bact Skn Inf",
+                    "patients": 197,
+                    "percentage": 0.05
+                },
+                {
+                    "name": "COPD",
+                    "patients": 167,
+                    "percentage": 0.05
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 166,
+                    "percentage": 0.03
+                },
+                {
+                    "name": "Card Arrth & Cond Dis",
+                    "patients": 165,
+                    "percentage": 0.04
+                },
+                {
+                    "name": "Kidney & UT Infections",
+                    "patients": 159,
+                    "percentage": 0.04
+                },
+                {
+                    "name": "Chest Pain",
+                    "patients": 126,
+                    "percentage": 0.11
+                },
+                {
+                    "name": "Renal Failure",
+                    "patients": 125,
+                    "percentage": 0.04
+                },
+                {
+                    "name": "NBact Gastro, Naus, Vom ",
+                    "patients": 112,
+                    "percentage": 0.04
                 }
             ]
         },
@@ -387,6 +751,58 @@
                     "percentage": 0.009883198562443846,
                     "id_town": 56
                 }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Heart Failure",
+                    "patients": 168,
+                    "percentage": 0.03
+                },
+                {
+                    "name": "Cellulitis, Oth Bact Skn Inf",
+                    "patients": 130,
+                    "percentage": 0.03
+                },
+                {
+                    "name": "Kidney & UT Infections",
+                    "patients": 120,
+                    "percentage": 0.03
+                },
+                {
+                    "name": "Sepsis & Dissem Inf",
+                    "patients": 116,
+                    "percentage": 0.02
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 113,
+                    "percentage": 0.02
+                },
+                {
+                    "name": "Maj Resp Infect & Inflam",
+                    "patients": 106,
+                    "percentage": 0.05
+                },
+                {
+                    "name": "COPD",
+                    "patients": 79,
+                    "percentage": 0.02
+                },
+                {
+                    "name": "Card Arrth & Cond Dis",
+                    "patients": 76,
+                    "percentage": 0.02
+                },
+                {
+                    "name": "Diverticulitis/osis",
+                    "patients": 51,
+                    "percentage": 0.03
+                },
+                {
+                    "name": "NBact Gastro, Naus, Vom ",
+                    "patients": 47,
+                    "percentage": 0.02
+                }
             ]
         },
         {
@@ -425,6 +841,58 @@
                     "percentage": 0.06921748372525574,
                     "id_town": 226
                 }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Delivery DRGs",
+                    "patients": 8655,
+                    "percentage": 0.16
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 595,
+                    "percentage": 0.11
+                },
+                {
+                    "name": "Maj Sml & Lrg Bowel Procs",
+                    "patients": 542,
+                    "percentage": 0.15
+                },
+                {
+                    "name": "Chemotherapy",
+                    "patients": 539,
+                    "percentage": 0.19
+                },
+                {
+                    "name": "Sepsis & Dissem Inf",
+                    "patients": 536,
+                    "percentage": 0.11
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 519,
+                    "percentage": 0.1
+                },
+                {
+                    "name": "Percut Card proc w/o AMI",
+                    "patients": 494,
+                    "percentage": 0.15
+                },
+                {
+                    "name": "Renal Failure",
+                    "patients": 453,
+                    "percentage": 0.13
+                },
+                {
+                    "name": "Cellulitis, Oth Bact Skn Inf",
+                    "patients": 446,
+                    "percentage": 0.11
+                },
+                {
+                    "name": "Kidney & UT Infections",
+                    "patients": 416,
+                    "percentage": 0.11
+                }
             ]
         },
         {
@@ -452,6 +920,58 @@
                     "patients": 195,
                     "percentage": 0.01570933698541851,
                     "id_town": 224
+                }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Seizure",
+                    "patients": 734,
+                    "percentage": 0.24
+                },
+                {
+                    "name": "Asthma",
+                    "patients": 723,
+                    "percentage": 0.36
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 413,
+                    "percentage": 0.08
+                },
+                {
+                    "name": "Bronchiolitis & RSV Pneum",
+                    "patients": 412,
+                    "percentage": 0.54
+                },
+                {
+                    "name": "Other Digestive System Dx",
+                    "patients": 388,
+                    "percentage": 0.13
+                },
+                {
+                    "name": "NBact Gastro, Naus, Vom ",
+                    "patients": 354,
+                    "percentage": 0.12
+                },
+                {
+                    "name": "Chemotherapy",
+                    "patients": 331,
+                    "percentage": 0.11
+                },
+                {
+                    "name": "Craniotomy; exc Trauma",
+                    "patients": 327,
+                    "percentage": 0.13
+                },
+                {
+                    "name": "Infects- Upper Resp Tract",
+                    "patients": 322,
+                    "percentage": 0.35
+                },
+                {
+                    "name": "Hip & Fem; N-TrauExc Jt Rep ",
+                    "patients": 285,
+                    "percentage": 0.4
                 }
             ]
         },
@@ -486,6 +1006,58 @@
                     "percentage": 0.0330743879472693,
                     "id_town": 42
                 }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Delivery DRGs",
+                    "patients": 4348,
+                    "percentage": 0.08
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 658,
+                    "percentage": 0.12
+                },
+                {
+                    "name": "Cellulitis, Oth Bact Skn Inf",
+                    "patients": 544,
+                    "percentage": 0.13
+                },
+                {
+                    "name": "Sepsis & Dissem Inf",
+                    "patients": 513,
+                    "percentage": 0.11
+                },
+                {
+                    "name": "COPD",
+                    "patients": 457,
+                    "percentage": 0.13
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 447,
+                    "percentage": 0.08
+                },
+                {
+                    "name": "Renal Failure",
+                    "patients": 434,
+                    "percentage": 0.13
+                },
+                {
+                    "name": "Asthma",
+                    "patients": 420,
+                    "percentage": 0.21
+                },
+                {
+                    "name": "Sickle Cell Anemia Crisis",
+                    "patients": 413,
+                    "percentage": 0.46
+                },
+                {
+                    "name": "Kidney & UT Infections",
+                    "patients": 354,
+                    "percentage": 0.09
+                }
             ]
         },
         {
@@ -508,6 +1080,58 @@
                     "patients": 136,
                     "percentage": 0.028905419766206163,
                     "id_town": 235
+                }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Alcohol Abuse & Dependence",
+                    "patients": 424,
+                    "percentage": 0.2
+                },
+                {
+                    "name": "Knee Joint Replacement",
+                    "patients": 370,
+                    "percentage": 0.06
+                },
+                {
+                    "name": "Alc & Drg Dx-Rehab w/wo Detox",
+                    "patients": 313,
+                    "percentage": 0.42
+                },
+                {
+                    "name": "Opioid Abuse & Dependence",
+                    "patients": 303,
+                    "percentage": 0.31
+                },
+                {
+                    "name": "Mastectomy Procedures",
+                    "patients": 289,
+                    "percentage": 0.22
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 265,
+                    "percentage": 0.05
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 258,
+                    "percentage": 0.05
+                },
+                {
+                    "name": "Kidney & UT Infections",
+                    "patients": 239,
+                    "percentage": 0.06
+                },
+                {
+                    "name": "Cellulitis, Oth Bact Skn Inf",
+                    "patients": 192,
+                    "percentage": 0.05
+                },
+                {
+                    "name": "COPD",
+                    "patients": 191,
+                    "percentage": 0.05
                 }
             ]
         },
@@ -536,6 +1160,58 @@
                     "patients": 993,
                     "percentage": 0.11233031674208145,
                     "id_town": 144
+                }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Delivery DRGs",
+                    "patients": 13747,
+                    "percentage": 0.26
+                },
+                {
+                    "name": "Knee Joint Replacement",
+                    "patients": 812,
+                    "percentage": 0.12
+                },
+                {
+                    "name": "Maj Sml & Lrg Bowel Procs",
+                    "patients": 796,
+                    "percentage": 0.22
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 753,
+                    "percentage": 0.13
+                },
+                {
+                    "name": "Hip Joint Replacement",
+                    "patients": 659,
+                    "percentage": 0.12
+                },
+                {
+                    "name": "Percut Card proc w/o AMI",
+                    "patients": 650,
+                    "percentage": 0.2
+                },
+                {
+                    "name": "Other Resp & Chest Procs",
+                    "patients": 644,
+                    "percentage": 0.39
+                },
+                {
+                    "name": "Craniotomy; exc Trauma",
+                    "patients": 576,
+                    "percentage": 0.23
+                },
+                {
+                    "name": "Chemotherapy",
+                    "patients": 563,
+                    "percentage": 0.19
+                },
+                {
+                    "name": "Card Vlv Proc w/o Cath",
+                    "patients": 512,
+                    "percentage": 0.31
                 }
             ]
         },
@@ -595,6 +1271,58 @@
                     "percentage": 0.07534883720930233,
                     "id_town": 348
                 }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Delivery DRGs",
+                    "patients": 2342,
+                    "percentage": 0.04
+                },
+                {
+                    "name": "Bipolar Disorders",
+                    "patients": 835,
+                    "percentage": 0.25
+                },
+                {
+                    "name": "Maj Dep& Oth/Unsp Psychoses",
+                    "patients": 553,
+                    "percentage": 0.18
+                },
+                {
+                    "name": "COPD",
+                    "patients": 421,
+                    "percentage": 0.12
+                },
+                {
+                    "name": "Schizophrenia",
+                    "patients": 394,
+                    "percentage": 0.21
+                },
+                {
+                    "name": "Sepsis & Dissem Inf",
+                    "patients": 330,
+                    "percentage": 0.07
+                },
+                {
+                    "name": "Adj Dis/Neur exc Dep ",
+                    "patients": 330,
+                    "percentage": 0.49
+                },
+                {
+                    "name": "Dep exc Maj Dep",
+                    "patients": 313,
+                    "percentage": 0.36
+                },
+                {
+                    "name": "Alcohol Abuse & Dependence",
+                    "patients": 286,
+                    "percentage": 0.13
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 277,
+                    "percentage": 0.05
+                }
             ]
         },
         {
@@ -638,6 +1366,58 @@
                     "percentage": 0.24039460020768433,
                     "id_town": 73
                 }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Delivery DRGs",
+                    "patients": 1555,
+                    "percentage": 0.53
+                },
+                {
+                    "name": "Sepsis & Dissem Inf",
+                    "patients": 602,
+                    "percentage": 0.51
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 533,
+                    "percentage": 0.65
+                },
+                {
+                    "name": "Renal Failure",
+                    "patients": 362,
+                    "percentage": 0.67
+                },
+                {
+                    "name": "Kidney & UT Infections",
+                    "patients": 358,
+                    "percentage": 0.67
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 354,
+                    "percentage": 0.57
+                },
+                {
+                    "name": "Card Arrth & Cond Dis",
+                    "patients": 345,
+                    "percentage": 0.73
+                },
+                {
+                    "name": "Bipolar Disorders",
+                    "patients": 340,
+                    "percentage": 1
+                },
+                {
+                    "name": "COPD",
+                    "patients": 337,
+                    "percentage": 0.63
+                },
+                {
+                    "name": "Hip Joint Replacement",
+                    "patients": 292,
+                    "percentage": 0.58
+                }
             ]
         },
         {
@@ -680,6 +1460,58 @@
                     "patients": 26,
                     "percentage": 0.0790273556231003,
                     "id_town": 39
+                }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Org Mental Hlth Disturb",
+                    "patients": 181,
+                    "percentage": 0.44
+                },
+                {
+                    "name": "Degen Nrvs Syst exc MS ",
+                    "patients": 111,
+                    "percentage": 0.33
+                },
+                {
+                    "name": "Maj Dep& Oth/Unsp Psychoses",
+                    "patients": 79,
+                    "percentage": 0.07
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 60,
+                    "percentage": 0.03
+                },
+                {
+                    "name": "COPD",
+                    "patients": 53,
+                    "percentage": 0.03
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 46,
+                    "percentage": 0.02
+                },
+                {
+                    "name": "Schizophrenia",
+                    "patients": 44,
+                    "percentage": 0.06
+                },
+                {
+                    "name": "Kidney & UT Infections",
+                    "patients": 40,
+                    "percentage": 0.03
+                },
+                {
+                    "name": "Bipolar Disorders",
+                    "patients": 37,
+                    "percentage": 0.03
+                },
+                {
+                    "name": "Card Arrth & Cond Dis",
+                    "patients": 27,
+                    "percentage": 0.02
                 }
             ]
         },
@@ -729,6 +1561,58 @@
                     "percentage": 0.6920289855072463,
                     "id_town": 164
                 }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Delivery DRGs",
+                    "patients": 1564,
+                    "percentage": 0.12
+                },
+                {
+                    "name": "Bipolar Disorders",
+                    "patients": 304,
+                    "percentage": 0.19
+                },
+                {
+                    "name": "Sepsis & Dissem Inf",
+                    "patients": 277,
+                    "percentage": 0.16
+                },
+                {
+                    "name": "COPD",
+                    "patients": 264,
+                    "percentage": 0.13
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 258,
+                    "percentage": 0.13
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 233,
+                    "percentage": 0.1
+                },
+                {
+                    "name": "Maj Dep& Oth/Unsp Psychoses",
+                    "patients": 186,
+                    "percentage": 0.09
+                },
+                {
+                    "name": "Card Arrth & Cond Dis",
+                    "patients": 176,
+                    "percentage": 0.12
+                },
+                {
+                    "name": "Knee Joint Replacement",
+                    "patients": 172,
+                    "percentage": 0.12
+                },
+                {
+                    "name": "Cellulitis, Oth Bact Skn Inf",
+                    "patients": 157,
+                    "percentage": 0.1
+                }
             ]
         },
         {
@@ -736,7 +1620,59 @@
             "name": "Dana-Farber Cancer Institute",
             "latitude": 42.33757285,
             "longitude": -71.1077818722085,
-            "topCommunities": []
+            "topCommunities": [],
+            "topDRGs": [
+                {
+                    "name": null,
+                    "patients": null,
+                    "percentage": null
+                },
+                {
+                    "name": null,
+                    "patients": null,
+                    "percentage": null
+                },
+                {
+                    "name": null,
+                    "patients": null,
+                    "percentage": null
+                },
+                {
+                    "name": null,
+                    "patients": null,
+                    "percentage": null
+                },
+                {
+                    "name": null,
+                    "patients": null,
+                    "percentage": null
+                },
+                {
+                    "name": null,
+                    "patients": null,
+                    "percentage": null
+                },
+                {
+                    "name": null,
+                    "patients": null,
+                    "percentage": null
+                },
+                {
+                    "name": null,
+                    "patients": null,
+                    "percentage": null
+                },
+                {
+                    "name": null,
+                    "patients": null,
+                    "percentage": null
+                },
+                {
+                    "name": null,
+                    "patients": null,
+                    "percentage": null
+                }
+            ]
         },
         {
             "id": 18,
@@ -794,6 +1730,58 @@
                     "percentage": 0.1948764867337603,
                     "id_town": 121
                 }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Delivery DRGs",
+                    "patients": 2176,
+                    "percentage": 0.22
+                },
+                {
+                    "name": "Alcohol Abuse & Dependence",
+                    "patients": 376,
+                    "percentage": 0.58
+                },
+                {
+                    "name": "Bipolar Disorders",
+                    "patients": 237,
+                    "percentage": 0.93
+                },
+                {
+                    "name": "Card Arrth & Cond Dis",
+                    "patients": 223,
+                    "percentage": 0.16
+                },
+                {
+                    "name": "Maj Dep& Oth/Unsp Psychoses",
+                    "patients": 220,
+                    "percentage": 0.86
+                },
+                {
+                    "name": "Opioid Abuse & Dependence",
+                    "patients": 216,
+                    "percentage": 0.88
+                },
+                {
+                    "name": "Knee Joint Replacement",
+                    "patients": 197,
+                    "percentage": 0.13
+                },
+                {
+                    "name": "Sepsis & Dissem Inf",
+                    "patients": 187,
+                    "percentage": 0.11
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 176,
+                    "percentage": 0.09
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 148,
+                    "percentage": 0.08
+                }
             ]
         },
         {
@@ -847,6 +1835,58 @@
                     "percentage": 0.58,
                     "id_town": 355
                 }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Delivery DRGs",
+                    "patients": 275,
+                    "percentage": 0.13
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 74,
+                    "percentage": 0.16
+                },
+                {
+                    "name": "Card Arrth & Cond Dis",
+                    "patients": 51,
+                    "percentage": 0.12
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 39,
+                    "percentage": 0.09
+                },
+                {
+                    "name": "Kidney & UT Infections",
+                    "patients": 39,
+                    "percentage": 0.16
+                },
+                {
+                    "name": "COPD",
+                    "patients": 31,
+                    "percentage": 0.12
+                },
+                {
+                    "name": "Knee Joint Replacement",
+                    "patients": 29,
+                    "percentage": 0.09
+                },
+                {
+                    "name": null,
+                    "patients": null,
+                    "percentage": null
+                },
+                {
+                    "name": null,
+                    "patients": null,
+                    "percentage": null
+                },
+                {
+                    "name": null,
+                    "patients": null,
+                    "percentage": null
+                }
             ]
         },
         {
@@ -879,6 +1919,58 @@
                     "patients": 90,
                     "percentage": 0.21479713603818615,
                     "id_town": 54
+                }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Delivery DRGs",
+                    "patients": 948,
+                    "percentage": 0.32
+                },
+                {
+                    "name": "Sepsis & Dissem Inf",
+                    "patients": 558,
+                    "percentage": 0.47
+                },
+                {
+                    "name": "Knee Joint Replacement",
+                    "patients": 278,
+                    "percentage": 0.49
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 239,
+                    "percentage": 0.29
+                },
+                {
+                    "name": "Hip Joint Replacement",
+                    "patients": 213,
+                    "percentage": 0.42
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 188,
+                    "percentage": 0.3
+                },
+                {
+                    "name": "Pulm Edema & Resp Failure",
+                    "patients": 164,
+                    "percentage": 0.44
+                },
+                {
+                    "name": "Renal Failure",
+                    "patients": 164,
+                    "percentage": 0.3
+                },
+                {
+                    "name": "COPD",
+                    "patients": 152,
+                    "percentage": 0.28
+                },
+                {
+                    "name": "Cellulitis, Oth Bact Skn Inf",
+                    "patients": 151,
+                    "percentage": 0.36
                 }
             ]
         },
@@ -938,6 +2030,58 @@
                     "percentage": 0.03908355795148248,
                     "id_town": 231
                 }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Delivery DRGs",
+                    "patients": 1962,
+                    "percentage": 0.04
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 566,
+                    "percentage": 0.1
+                },
+                {
+                    "name": "Bipolar Disorders",
+                    "patients": 446,
+                    "percentage": 0.13
+                },
+                {
+                    "name": "Maj Dep& Oth/Unsp Psychoses",
+                    "patients": 419,
+                    "percentage": 0.14
+                },
+                {
+                    "name": "Sepsis & Dissem Inf",
+                    "patients": 412,
+                    "percentage": 0.09
+                },
+                {
+                    "name": "COPD",
+                    "patients": 404,
+                    "percentage": 0.11
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 388,
+                    "percentage": 0.07
+                },
+                {
+                    "name": "Card Arrth & Cond Dis",
+                    "patients": 362,
+                    "percentage": 0.09
+                },
+                {
+                    "name": "Renal Failure",
+                    "patients": 335,
+                    "percentage": 0.1
+                },
+                {
+                    "name": "Degen Nrvs Syst exc MS ",
+                    "patients": 299,
+                    "percentage": 0.28
+                }
             ]
         },
         {
@@ -990,6 +2134,58 @@
                     "patients": 94,
                     "percentage": 0.22065727699530516,
                     "id_town": 100
+                }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Delivery DRGs",
+                    "patients": 594,
+                    "percentage": 0.04
+                },
+                {
+                    "name": "COPD",
+                    "patients": 260,
+                    "percentage": 0.14
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 212,
+                    "percentage": 0.09
+                },
+                {
+                    "name": "Bipolar Disorders",
+                    "patients": 206,
+                    "percentage": 0.17
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 142,
+                    "percentage": 0.07
+                },
+                {
+                    "name": "Card Arrth & Cond Dis",
+                    "patients": 139,
+                    "percentage": 0.09
+                },
+                {
+                    "name": "Maj Dep& Oth/Unsp Psychoses",
+                    "patients": 129,
+                    "percentage": 0.12
+                },
+                {
+                    "name": "Asthma",
+                    "patients": 126,
+                    "percentage": 0.18
+                },
+                {
+                    "name": "Kidney & UT Infections",
+                    "patients": 112,
+                    "percentage": 0.09
+                },
+                {
+                    "name": "Sepsis & Dissem Inf",
+                    "patients": 110,
+                    "percentage": 0.05
                 }
             ]
         },
@@ -1049,6 +2245,58 @@
                     "percentage": 0.16071428571428573,
                     "id_town": 279
                 }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Delivery DRGs",
+                    "patients": 1847,
+                    "percentage": 0.13
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 333,
+                    "percentage": 0.15
+                },
+                {
+                    "name": "COPD",
+                    "patients": 288,
+                    "percentage": 0.16
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 277,
+                    "percentage": 0.13
+                },
+                {
+                    "name": "Sepsis & Dissem Inf",
+                    "patients": 231,
+                    "percentage": 0.1
+                },
+                {
+                    "name": "Pulm Edema & Resp Failure",
+                    "patients": 205,
+                    "percentage": 0.22
+                },
+                {
+                    "name": "Card Arrth & Cond Dis",
+                    "patients": 199,
+                    "percentage": 0.13
+                },
+                {
+                    "name": "Kidney & UT Infections",
+                    "patients": 163,
+                    "percentage": 0.14
+                },
+                {
+                    "name": "Knee Joint Replacement",
+                    "patients": 132,
+                    "percentage": 0.12
+                },
+                {
+                    "name": "Renal Failure",
+                    "patients": 127,
+                    "percentage": 0.09
+                }
             ]
         },
         {
@@ -1101,6 +2349,58 @@
                     "patients": 120,
                     "percentage": 0.3076923076923077,
                     "id_town": 69
+                }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Delivery DRGs",
+                    "patients": 975,
+                    "percentage": 0.07
+                },
+                {
+                    "name": "Bipolar Disorders",
+                    "patients": 237,
+                    "percentage": 0.19
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 235,
+                    "percentage": 0.1
+                },
+                {
+                    "name": "Maj Dep& Oth/Unsp Psychoses",
+                    "patients": 225,
+                    "percentage": 0.21
+                },
+                {
+                    "name": "Schizophrenia",
+                    "patients": 182,
+                    "percentage": 0.25
+                },
+                {
+                    "name": "Org Mental Hlth Disturb",
+                    "patients": 153,
+                    "percentage": 0.37
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 152,
+                    "percentage": 0.07
+                },
+                {
+                    "name": "Renal Failure",
+                    "patients": 128,
+                    "percentage": 0.09
+                },
+                {
+                    "name": "COPD",
+                    "patients": 125,
+                    "percentage": 0.07
+                },
+                {
+                    "name": "Sepsis & Dissem Inf",
+                    "patients": 120,
+                    "percentage": 0.05
                 }
             ]
         },
@@ -1160,6 +2460,58 @@
                     "percentage": 0.04265041888804265,
                     "id_town": 35
                 }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Delivery DRGs",
+                    "patients": 764,
+                    "percentage": 0.06
+                },
+                {
+                    "name": "COPD",
+                    "patients": 329,
+                    "percentage": 0.16
+                },
+                {
+                    "name": "Maj Dep& Oth/Unsp Psychoses",
+                    "patients": 247,
+                    "percentage": 0.13
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 220,
+                    "percentage": 0.11
+                },
+                {
+                    "name": "Renal Failure",
+                    "patients": 210,
+                    "percentage": 0.15
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 205,
+                    "percentage": 0.09
+                },
+                {
+                    "name": "Cellulitis, Oth Bact Skn Inf",
+                    "patients": 190,
+                    "percentage": 0.12
+                },
+                {
+                    "name": "Sepsis & Dissem Inf",
+                    "patients": 190,
+                    "percentage": 0.11
+                },
+                {
+                    "name": "Card Arrth & Cond Dis",
+                    "patients": 166,
+                    "percentage": 0.12
+                },
+                {
+                    "name": "Bipolar Disorders",
+                    "patients": 160,
+                    "percentage": 0.1
+                }
             ]
         },
         {
@@ -1218,6 +2570,58 @@
                     "percentage": 0.4852941176470588,
                     "id_town": 255
                 }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Delivery DRGs",
+                    "patients": 1103,
+                    "percentage": 0.15
+                },
+                {
+                    "name": "COPD",
+                    "patients": 378,
+                    "percentage": 0.3
+                },
+                {
+                    "name": "Degen Nrvs Syst exc MS ",
+                    "patients": 336,
+                    "percentage": 0.64
+                },
+                {
+                    "name": "Card Arrth & Cond Dis",
+                    "patients": 308,
+                    "percentage": 0.33
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 307,
+                    "percentage": 0.23
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 251,
+                    "percentage": 0.2
+                },
+                {
+                    "name": "Knee Joint Replacement",
+                    "patients": 250,
+                    "percentage": 0.3
+                },
+                {
+                    "name": "Kidney & UT Infections",
+                    "patients": 222,
+                    "percentage": 0.21
+                },
+                {
+                    "name": "Renal Failure",
+                    "patients": 209,
+                    "percentage": 0.28
+                },
+                {
+                    "name": "Sepsis & Dissem Inf",
+                    "patients": 197,
+                    "percentage": 0.29
+                }
             ]
         },
         {
@@ -1225,14 +2629,118 @@
             "name": "Kindred Hospital - Boston",
             "latitude": 42.3466009,
             "longitude": -71.1419091,
-            "topCommunities": []
+            "topCommunities": [],
+            "topDRGs": [
+                {
+                    "name": null,
+                    "patients": null,
+                    "percentage": null
+                },
+                {
+                    "name": null,
+                    "patients": null,
+                    "percentage": null
+                },
+                {
+                    "name": null,
+                    "patients": null,
+                    "percentage": null
+                },
+                {
+                    "name": null,
+                    "patients": null,
+                    "percentage": null
+                },
+                {
+                    "name": null,
+                    "patients": null,
+                    "percentage": null
+                },
+                {
+                    "name": null,
+                    "patients": null,
+                    "percentage": null
+                },
+                {
+                    "name": null,
+                    "patients": null,
+                    "percentage": null
+                },
+                {
+                    "name": null,
+                    "patients": null,
+                    "percentage": null
+                },
+                {
+                    "name": null,
+                    "patients": null,
+                    "percentage": null
+                },
+                {
+                    "name": null,
+                    "patients": null,
+                    "percentage": null
+                }
+            ]
         },
         {
             "id": 28,
             "name": "Kindred Hospital - Boston North Shore",
             "latitude": 42.5289964,
             "longitude": -70.9376782,
-            "topCommunities": []
+            "topCommunities": [],
+            "topDRGs": [
+                {
+                    "name": null,
+                    "patients": null,
+                    "percentage": null
+                },
+                {
+                    "name": null,
+                    "patients": null,
+                    "percentage": null
+                },
+                {
+                    "name": null,
+                    "patients": null,
+                    "percentage": null
+                },
+                {
+                    "name": null,
+                    "patients": null,
+                    "percentage": null
+                },
+                {
+                    "name": null,
+                    "patients": null,
+                    "percentage": null
+                },
+                {
+                    "name": null,
+                    "patients": null,
+                    "percentage": null
+                },
+                {
+                    "name": null,
+                    "patients": null,
+                    "percentage": null
+                },
+                {
+                    "name": null,
+                    "patients": null,
+                    "percentage": null
+                },
+                {
+                    "name": null,
+                    "patients": null,
+                    "percentage": null
+                },
+                {
+                    "name": null,
+                    "patients": null,
+                    "percentage": null
+                }
+            ]
         },
         {
             "id": 29,
@@ -1289,6 +2797,58 @@
                     "patients": 400,
                     "percentage": 0.27739251040221913,
                     "id_town": 357
+                }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Sepsis & Dissem Inf",
+                    "patients": 707,
+                    "percentage": 0.4
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 588,
+                    "percentage": 0.31
+                },
+                {
+                    "name": "Knee Joint Replacement",
+                    "patients": 570,
+                    "percentage": 0.37
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 524,
+                    "percentage": 0.27
+                },
+                {
+                    "name": "Maj Sml & Lrg Bowel Procs",
+                    "patients": 513,
+                    "percentage": 0.54
+                },
+                {
+                    "name": "Hip Joint Replacement",
+                    "patients": 461,
+                    "percentage": 0.42
+                },
+                {
+                    "name": "Card Arrth & Cond Dis",
+                    "patients": 434,
+                    "percentage": 0.31
+                },
+                {
+                    "name": "Renal Failure",
+                    "patients": 398,
+                    "percentage": 0.34
+                },
+                {
+                    "name": "Cellulitis, Oth Bact Skn Inf",
+                    "patients": 378,
+                    "percentage": 0.3
+                },
+                {
+                    "name": "Kidney & UT Infections",
+                    "patients": 365,
+                    "percentage": 0.29
                 }
             ]
         },
@@ -1348,6 +2908,58 @@
                     "percentage": 0.013509787703336091,
                     "id_town": 227
                 }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Delivery DRGs",
+                    "patients": 2809,
+                    "percentage": 0.6
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 394,
+                    "percentage": 0.48
+                },
+                {
+                    "name": "Cellulitis, Oth Bact Skn Inf",
+                    "patients": 353,
+                    "percentage": 0.54
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 348,
+                    "percentage": 0.45
+                },
+                {
+                    "name": "COPD",
+                    "patients": 319,
+                    "percentage": 0.39
+                },
+                {
+                    "name": "Card Arrth & Cond Dis",
+                    "patients": 299,
+                    "percentage": 0.48
+                },
+                {
+                    "name": "Kidney & UT Infections",
+                    "patients": 269,
+                    "percentage": 0.49
+                },
+                {
+                    "name": "Sepsis & Dissem Inf",
+                    "patients": 238,
+                    "percentage": 0.43
+                },
+                {
+                    "name": "NBact Gastro, Naus, Vom ",
+                    "patients": 196,
+                    "percentage": 0.47
+                },
+                {
+                    "name": "Card Cath – Isch Hrt Dis",
+                    "patients": 172,
+                    "percentage": 0.59
+                }
             ]
         },
         {
@@ -1400,6 +3012,58 @@
                     "patients": 267,
                     "percentage": 0.023191175193259795,
                     "id_town": 222
+                }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Delivery DRGs",
+                    "patients": 4338,
+                    "percentage": 0.43
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 419,
+                    "percentage": 0.22
+                },
+                {
+                    "name": "Procedures for Obesity",
+                    "patients": 407,
+                    "percentage": 0.58
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 402,
+                    "percentage": 0.21
+                },
+                {
+                    "name": "Sepsis & Dissem Inf",
+                    "patients": 353,
+                    "percentage": 0.2
+                },
+                {
+                    "name": "NBact Gastro, Naus, Vom ",
+                    "patients": 311,
+                    "percentage": 0.27
+                },
+                {
+                    "name": "Renal Failure",
+                    "patients": 294,
+                    "percentage": 0.25
+                },
+                {
+                    "name": "COPD",
+                    "patients": 284,
+                    "percentage": 0.19
+                },
+                {
+                    "name": "Knee Joint Replacement",
+                    "patients": 267,
+                    "percentage": 0.17
+                },
+                {
+                    "name": "Card Arrth & Cond Dis",
+                    "patients": 264,
+                    "percentage": 0.19
                 }
             ]
         },
@@ -1459,6 +3123,58 @@
                     "percentage": 0.023977433004231313,
                     "id_town": 282
                 }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Bipolar Disorders",
+                    "patients": 288,
+                    "percentage": 0.29
+                },
+                {
+                    "name": "Maj Dep& Oth/Unsp Psychoses",
+                    "patients": 256,
+                    "percentage": 0.43
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 140,
+                    "percentage": 0.2
+                },
+                {
+                    "name": "Sepsis & Dissem Inf",
+                    "patients": 140,
+                    "percentage": 0.18
+                },
+                {
+                    "name": "Schizophrenia",
+                    "patients": 131,
+                    "percentage": 0.6
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 120,
+                    "percentage": 0.15
+                },
+                {
+                    "name": "COPD",
+                    "patients": 109,
+                    "percentage": 0.17
+                },
+                {
+                    "name": "Kidney & UT Infections",
+                    "patients": 90,
+                    "percentage": 0.15
+                },
+                {
+                    "name": "Card Arrth & Cond Dis",
+                    "patients": 89,
+                    "percentage": 0.15
+                },
+                {
+                    "name": "Renal Failure",
+                    "patients": 80,
+                    "percentage": 0.15
+                }
             ]
         },
         {
@@ -1492,6 +3208,58 @@
                     "percentage": 0.5396825396825397,
                     "id_town": 111
                 }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Delivery DRGs",
+                    "patients": 221,
+                    "percentage": 0.07
+                },
+                {
+                    "name": "Rehabilitation",
+                    "patients": 53,
+                    "percentage": 0.51
+                },
+                {
+                    "name": "Kidney & UT Infections",
+                    "patients": 49,
+                    "percentage": 0.09
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 48,
+                    "percentage": 0.08
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 44,
+                    "percentage": 0.05
+                },
+                {
+                    "name": "Oth Muscskel & ConnTis Dx",
+                    "patients": 37,
+                    "percentage": 0.26
+                },
+                {
+                    "name": "Cellulitis, Oth Bact Skn Inf",
+                    "patients": 36,
+                    "percentage": 0.09
+                },
+                {
+                    "name": "COPD",
+                    "patients": 32,
+                    "percentage": 0.06
+                },
+                {
+                    "name": "Oth Bck & Nck, Fx and Inj Dx",
+                    "patients": 29,
+                    "percentage": 0.12
+                },
+                {
+                    "name": null,
+                    "patients": null,
+                    "percentage": null
+                }
             ]
         },
         {
@@ -1509,6 +3277,58 @@
                     "patients": 37,
                     "percentage": 0.002995466321243523,
                     "id_town": 2
+                }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Eye Procs except Orbit",
+                    "patients": 158,
+                    "percentage": 0.75
+                },
+                {
+                    "name": "Thyr/Pthyr &  Thyrglos Procs",
+                    "patients": 139,
+                    "percentage": 0.09
+                },
+                {
+                    "name": "Other ENT Procedures",
+                    "patients": 115,
+                    "percentage": 0.18
+                },
+                {
+                    "name": "Othr Maj Head/Neck procs",
+                    "patients": 81,
+                    "percentage": 0.41
+                },
+                {
+                    "name": "Oth OR Proc-Lymph/Heme/Oth Neo",
+                    "patients": 78,
+                    "percentage": 0.16
+                },
+                {
+                    "name": "Other ENT & Cranial Dxs",
+                    "patients": 76,
+                    "percentage": 0.11
+                },
+                {
+                    "name": "Maj Cranial/Fac Bone Pro",
+                    "patients": 68,
+                    "percentage": 0.16
+                },
+                {
+                    "name": "Pst-Op, Pst Trau Oth Device Inf",
+                    "patients": 56,
+                    "percentage": 0.03
+                },
+                {
+                    "name": "Oth Skn, SubQTis & Rel Proc",
+                    "patients": 46,
+                    "percentage": 0.07
+                },
+                {
+                    "name": "Other Nervous Syst Procs",
+                    "patients": 38,
+                    "percentage": 0.08
                 }
             ]
         },
@@ -1563,6 +3383,58 @@
                     "percentage": 0.13328785811732605,
                     "id_town": 206
                 }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Delivery DRGs",
+                    "patients": 6729,
+                    "percentage": 0.13
+                },
+                {
+                    "name": "Craniotomy; exc Trauma",
+                    "patients": 1026,
+                    "percentage": 0.4
+                },
+                {
+                    "name": "Chemotherapy",
+                    "patients": 947,
+                    "percentage": 0.33
+                },
+                {
+                    "name": "Percut Card proc w/o AMI",
+                    "patients": 887,
+                    "percentage": 0.27
+                },
+                {
+                    "name": "Maj Sml & Lrg Bowel Procs",
+                    "patients": 863,
+                    "percentage": 0.24
+                },
+                {
+                    "name": "Knee Joint Replacement",
+                    "patients": 813,
+                    "percentage": 0.12
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 803,
+                    "percentage": 0.14
+                },
+                {
+                    "name": "Hip Joint Replacement",
+                    "patients": 802,
+                    "percentage": 0.14
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 788,
+                    "percentage": 0.15
+                },
+                {
+                    "name": "Card Arrth & Cond Dis",
+                    "patients": 709,
+                    "percentage": 0.18
+                }
             ]
         },
         {
@@ -1610,6 +3482,58 @@
                     "patients": 420,
                     "percentage": 0.2107375815353738,
                     "id_town": 223
+                }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Delivery DRGs",
+                    "patients": 2348,
+                    "percentage": 0.18
+                },
+                {
+                    "name": "Alc & Drg Dx-Rehab w/wo Detox",
+                    "patients": 1270,
+                    "percentage": 1
+                },
+                {
+                    "name": "Drug/Alcohol Abuse, LAMA",
+                    "patients": 772,
+                    "percentage": 0.95
+                },
+                {
+                    "name": "Maj Dep& Oth/Unsp Psychoses",
+                    "patients": 500,
+                    "percentage": 0.25
+                },
+                {
+                    "name": "Rehabilitation",
+                    "patients": 494,
+                    "percentage": 0.6
+                },
+                {
+                    "name": "Bipolar Disorders",
+                    "patients": 491,
+                    "percentage": 0.31
+                },
+                {
+                    "name": "COPD",
+                    "patients": 391,
+                    "percentage": 0.19
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 345,
+                    "percentage": 0.17
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 333,
+                    "percentage": 0.14
+                },
+                {
+                    "name": "Renal Failure",
+                    "patients": 307,
+                    "percentage": 0.23
                 }
             ]
         },
@@ -1669,6 +3593,58 @@
                     "percentage": 0.003717965741601381,
                     "id_town": 211
                 }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Org Mental Hlth Disturb",
+                    "patients": 334,
+                    "percentage": 0.93
+                },
+                {
+                    "name": "COPD",
+                    "patients": 242,
+                    "percentage": 0.3
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 151,
+                    "percentage": 0.19
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 128,
+                    "percentage": 0.17
+                },
+                {
+                    "name": "Cellulitis, Oth Bact Skn Inf",
+                    "patients": 101,
+                    "percentage": 0.16
+                },
+                {
+                    "name": "Renal Failure",
+                    "patients": 101,
+                    "percentage": 0.26
+                },
+                {
+                    "name": "Degen Nrvs Syst exc MS ",
+                    "patients": 84,
+                    "percentage": 0.62
+                },
+                {
+                    "name": "Card Arrth & Cond Dis",
+                    "patients": 84,
+                    "percentage": 0.13
+                },
+                {
+                    "name": "Kidney & UT Infections",
+                    "patients": 81,
+                    "percentage": 0.15
+                },
+                {
+                    "name": "Sepsis & Dissem Inf",
+                    "patients": 77,
+                    "percentage": 0.14
+                }
             ]
         },
         {
@@ -1727,6 +3703,58 @@
                     "percentage": 0.28823529411764703,
                     "id_town": 291
                 }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Delivery DRGs",
+                    "patients": 1667,
+                    "percentage": 0.48
+                },
+                {
+                    "name": "Bipolar Disorders",
+                    "patients": 702,
+                    "percentage": 0.71
+                },
+                {
+                    "name": "Sepsis & Dissem Inf",
+                    "patients": 477,
+                    "percentage": 0.6
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 434,
+                    "percentage": 0.53
+                },
+                {
+                    "name": "Card Arrth & Cond Dis",
+                    "patients": 341,
+                    "percentage": 0.56
+                },
+                {
+                    "name": "Maj Dep& Oth/Unsp Psychoses",
+                    "patients": 339,
+                    "percentage": 0.57
+                },
+                {
+                    "name": "Renal Failure",
+                    "patients": 333,
+                    "percentage": 0.62
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 277,
+                    "percentage": 0.39
+                },
+                {
+                    "name": "Kidney & UT Infections",
+                    "patients": 261,
+                    "percentage": 0.45
+                },
+                {
+                    "name": "Cellulitis, Oth Bact Skn Inf",
+                    "patients": 247,
+                    "percentage": 0.57
+                }
             ]
         },
         {
@@ -1779,6 +3807,58 @@
                     "patients": 238,
                     "percentage": 0.5446224256292906,
                     "id_town": 84
+                }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Delivery DRGs",
+                    "patients": 1783,
+                    "percentage": 0.52
+                },
+                {
+                    "name": "COPD",
+                    "patients": 298,
+                    "percentage": 0.47
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 294,
+                    "percentage": 0.41
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 260,
+                    "percentage": 0.32
+                },
+                {
+                    "name": "Kidney & UT Infections",
+                    "patients": 233,
+                    "percentage": 0.4
+                },
+                {
+                    "name": "Sepsis & Dissem Inf",
+                    "patients": 182,
+                    "percentage": 0.23
+                },
+                {
+                    "name": "Card Arrth & Cond Dis",
+                    "patients": 174,
+                    "percentage": 0.29
+                },
+                {
+                    "name": "Maj Resp Infect & Inflam",
+                    "patients": 166,
+                    "percentage": 0.53
+                },
+                {
+                    "name": "Syncope & Collapse",
+                    "patients": 140,
+                    "percentage": 0.44
+                },
+                {
+                    "name": "Knee Joint Replacement",
+                    "patients": 127,
+                    "percentage": 0.43
                 }
             ]
         },
@@ -1833,6 +3913,58 @@
                     "percentage": 0.004638472032742156,
                     "id_town": 216
                 }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Delivery DRGs",
+                    "patients": 808,
+                    "percentage": 0.18
+                },
+                {
+                    "name": "COPD",
+                    "patients": 310,
+                    "percentage": 0.26
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 271,
+                    "percentage": 0.28
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 247,
+                    "percentage": 0.26
+                },
+                {
+                    "name": "Sepsis & Dissem Inf",
+                    "patients": 233,
+                    "percentage": 0.22
+                },
+                {
+                    "name": "Card Arrth & Cond Dis",
+                    "patients": 229,
+                    "percentage": 0.26
+                },
+                {
+                    "name": "Degen Nrvs Syst exc MS ",
+                    "patients": 211,
+                    "percentage": 0.41
+                },
+                {
+                    "name": "Cellulitis, Oth Bact Skn Inf",
+                    "patients": 180,
+                    "percentage": 0.19
+                },
+                {
+                    "name": "Renal Failure",
+                    "patients": 169,
+                    "percentage": 0.25
+                },
+                {
+                    "name": "Knee Joint Replacement",
+                    "patients": 154,
+                    "percentage": 0.29
+                }
             ]
         },
         {
@@ -1886,6 +4018,58 @@
                     "percentage": 0.1607006854531607,
                     "id_town": 180
                 }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Delivery DRGs",
+                    "patients": 4545,
+                    "percentage": 0.08
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 413,
+                    "percentage": 0.08
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 307,
+                    "percentage": 0.05
+                },
+                {
+                    "name": "Card Arrth & Cond Dis",
+                    "patients": 265,
+                    "percentage": 0.07
+                },
+                {
+                    "name": "Kidney & UT Infections",
+                    "patients": 226,
+                    "percentage": 0.06
+                },
+                {
+                    "name": "Knee Joint Replacement",
+                    "patients": 217,
+                    "percentage": 0.03
+                },
+                {
+                    "name": "COPD",
+                    "patients": 207,
+                    "percentage": 0.06
+                },
+                {
+                    "name": "Percut Card proc w/o AMI",
+                    "patients": 191,
+                    "percentage": 0.06
+                },
+                {
+                    "name": "Sepsis & Dissem Inf",
+                    "patients": 185,
+                    "percentage": 0.04
+                },
+                {
+                    "name": "Cellulitis, Oth Bact Skn Inf",
+                    "patients": 174,
+                    "percentage": 0.04
+                }
             ]
         },
         {
@@ -1898,6 +4082,58 @@
                     "patients": 468,
                     "percentage": 0.4785276073619632,
                     "id_town": 76
+                }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Delivery DRGs",
+                    "patients": 237,
+                    "percentage": 0.08
+                },
+                {
+                    "name": "Rehabilitation",
+                    "patients": 50,
+                    "percentage": 0.49
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 30,
+                    "percentage": 0.05
+                },
+                {
+                    "name": null,
+                    "patients": null,
+                    "percentage": null
+                },
+                {
+                    "name": null,
+                    "patients": null,
+                    "percentage": null
+                },
+                {
+                    "name": null,
+                    "patients": null,
+                    "percentage": null
+                },
+                {
+                    "name": null,
+                    "patients": null,
+                    "percentage": null
+                },
+                {
+                    "name": null,
+                    "patients": null,
+                    "percentage": null
+                },
+                {
+                    "name": null,
+                    "patients": null,
+                    "percentage": null
+                },
+                {
+                    "name": null,
+                    "patients": null,
+                    "percentage": null
                 }
             ]
         },
@@ -1957,6 +4193,58 @@
                     "percentage": 0.12112676056338029,
                     "id_town": 162
                 }
+            ],
+            "topDRGs": [
+                {
+                    "name": "COPD",
+                    "patients": 159,
+                    "percentage": 0.1
+                },
+                {
+                    "name": "Kidney & UT Infections",
+                    "patients": 130,
+                    "percentage": 0.1
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 114,
+                    "percentage": 0.06
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 91,
+                    "percentage": 0.05
+                },
+                {
+                    "name": "Card Arrth & Cond Dis",
+                    "patients": 68,
+                    "percentage": 0.05
+                },
+                {
+                    "name": "Cellulitis, Oth Bact Skn Inf",
+                    "patients": 61,
+                    "percentage": 0.05
+                },
+                {
+                    "name": "Renal Failure",
+                    "patients": 57,
+                    "percentage": 0.05
+                },
+                {
+                    "name": "Diverticulitis/osis",
+                    "patients": 51,
+                    "percentage": 0.07
+                },
+                {
+                    "name": "CVA Occlusion w/ Infarct",
+                    "patients": 40,
+                    "percentage": 0.05
+                },
+                {
+                    "name": "NBact Gastro, Naus, Vom ",
+                    "patients": 39,
+                    "percentage": 0.03
+                }
             ]
         },
         {
@@ -2010,6 +4298,58 @@
                     "percentage": 0.011391850445450562,
                     "id_town": 254
                 }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Knee Joint Replacement",
+                    "patients": 2905,
+                    "percentage": 0.44
+                },
+                {
+                    "name": "Hip Joint Replacement",
+                    "patients": 2473,
+                    "percentage": 0.44
+                },
+                {
+                    "name": "Dors&Lum Fus exc Curv",
+                    "patients": 669,
+                    "percentage": 0.29
+                },
+                {
+                    "name": "CervFus, Oth Bck/Nck Ex Dis Ex/Dcmp",
+                    "patients": 306,
+                    "percentage": 0.2
+                },
+                {
+                    "name": "Shldr & Upp/ForeArm Proc",
+                    "patients": 241,
+                    "percentage": 0.14
+                },
+                {
+                    "name": "Intervert Disc Excis&Dcmpr",
+                    "patients": 176,
+                    "percentage": 0.09
+                },
+                {
+                    "name": "Knee & LowLeg Exc Foot",
+                    "patients": 116,
+                    "percentage": 0.06
+                },
+                {
+                    "name": "Oth Muscskel & ConnTis Proc",
+                    "patients": 67,
+                    "percentage": 0.12
+                },
+                {
+                    "name": "Dors&Lumb Fus- Curv",
+                    "patients": 59,
+                    "percentage": 0.16
+                },
+                {
+                    "name": "Tndn, Musc, OthSoft Tis Proc",
+                    "patients": 29,
+                    "percentage": 0.05
+                }
             ]
         },
         {
@@ -2052,6 +4392,58 @@
                     "patients": 419,
                     "percentage": 0.11173333333333334,
                     "id_town": 334
+                }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Delivery DRGs",
+                    "patients": 7828,
+                    "percentage": 0.15
+                },
+                {
+                    "name": "Hip Joint Replacement",
+                    "patients": 666,
+                    "percentage": 0.12
+                },
+                {
+                    "name": "Bipolar Disorders",
+                    "patients": 486,
+                    "percentage": 0.15
+                },
+                {
+                    "name": "Sepsis & Dissem Inf",
+                    "patients": 424,
+                    "percentage": 0.09
+                },
+                {
+                    "name": "Knee Joint Replacement",
+                    "patients": 376,
+                    "percentage": 0.06
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 325,
+                    "percentage": 0.06
+                },
+                {
+                    "name": "Card Arrth & Cond Dis",
+                    "patients": 310,
+                    "percentage": 0.08
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 299,
+                    "percentage": 0.06
+                },
+                {
+                    "name": "Dors&Lum Fus exc Curv",
+                    "patients": 277,
+                    "percentage": 0.12
+                },
+                {
+                    "name": "Schizophrenia",
+                    "patients": 253,
+                    "percentage": 0.13
                 }
             ]
         },
@@ -2106,6 +4498,58 @@
                     "percentage": 0.20068027210884354,
                     "id_town": 127
                 }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Rehabilitation",
+                    "patients": 332,
+                    "percentage": 0.4
+                },
+                {
+                    "name": "Maj Dep& Oth/Unsp Psychoses",
+                    "patients": 216,
+                    "percentage": 0.11
+                },
+                {
+                    "name": "COPD",
+                    "patients": 203,
+                    "percentage": 0.1
+                },
+                {
+                    "name": "Bipolar Disorders",
+                    "patients": 149,
+                    "percentage": 0.09
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 132,
+                    "percentage": 0.07
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 125,
+                    "percentage": 0.05
+                },
+                {
+                    "name": "Renal Failure",
+                    "patients": 125,
+                    "percentage": 0.09
+                },
+                {
+                    "name": "Card Arrth & Cond Dis",
+                    "patients": 109,
+                    "percentage": 0.08
+                },
+                {
+                    "name": "Dep exc Maj Dep",
+                    "patients": 99,
+                    "percentage": 0.15
+                },
+                {
+                    "name": "Kidney & UT Infections",
+                    "patients": 92,
+                    "percentage": 0.07
+                }
             ]
         },
         {
@@ -2153,6 +4597,58 @@
                     "patients": 32,
                     "percentage": 0.3018867924528302,
                     "id_town": 361
+                }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Delivery DRGs",
+                    "patients": 441,
+                    "percentage": 0.21
+                },
+                {
+                    "name": "Sepsis & Dissem Inf",
+                    "patients": 302,
+                    "percentage": 0.42
+                },
+                {
+                    "name": "Bipolar Disorders",
+                    "patients": 118,
+                    "percentage": 0.18
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 108,
+                    "percentage": 0.24
+                },
+                {
+                    "name": "Maj Dep& Oth/Unsp Psychoses",
+                    "patients": 98,
+                    "percentage": 0.21
+                },
+                {
+                    "name": "Pulm Edema & Resp Failure",
+                    "patients": 88,
+                    "percentage": 0.27
+                },
+                {
+                    "name": "Schizophrenia",
+                    "patients": 84,
+                    "percentage": 0.27
+                },
+                {
+                    "name": "Knee Joint Replacement",
+                    "patients": 78,
+                    "percentage": 0.24
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 75,
+                    "percentage": 0.17
+                },
+                {
+                    "name": "Adj Dis/Neur exc Dep ",
+                    "patients": 72,
+                    "percentage": 0.59
                 }
             ]
         },
@@ -2212,6 +4708,58 @@
                     "percentage": 0.5827338129496403,
                     "id_town": 201
                 }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Delivery DRGs",
+                    "patients": 2561,
+                    "percentage": 0.39
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 645,
+                    "percentage": 0.59
+                },
+                {
+                    "name": "Sepsis & Dissem Inf",
+                    "patients": 637,
+                    "percentage": 0.58
+                },
+                {
+                    "name": "COPD",
+                    "patients": 567,
+                    "percentage": 0.55
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 563,
+                    "percentage": 0.49
+                },
+                {
+                    "name": "Card Arrth & Cond Dis",
+                    "patients": 517,
+                    "percentage": 0.54
+                },
+                {
+                    "name": "Kidney & UT Infections",
+                    "patients": 485,
+                    "percentage": 0.57
+                },
+                {
+                    "name": "Knee Joint Replacement",
+                    "patients": 480,
+                    "percentage": 0.55
+                },
+                {
+                    "name": "Bipolar Disorders",
+                    "patients": 460,
+                    "percentage": 0.28
+                },
+                {
+                    "name": "Cellulitis, Oth Bact Skn Inf",
+                    "patients": 434,
+                    "percentage": 0.52
+                }
             ]
         },
         {
@@ -2270,6 +4818,58 @@
                     "percentage": 0.5589459084604715,
                     "id_town": 339
                 }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Delivery DRGs",
+                    "patients": 4038,
+                    "percentage": 0.61
+                },
+                {
+                    "name": "Bipolar Disorders",
+                    "patients": 1203,
+                    "percentage": 0.72
+                },
+                {
+                    "name": "Maj Dep& Oth/Unsp Psychoses",
+                    "patients": 620,
+                    "percentage": 0.68
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 586,
+                    "percentage": 0.51
+                },
+                {
+                    "name": "Schizophrenia",
+                    "patients": 505,
+                    "percentage": 0.76
+                },
+                {
+                    "name": "Alcohol Abuse & Dependence",
+                    "patients": 487,
+                    "percentage": 0.71
+                },
+                {
+                    "name": "COPD",
+                    "patients": 472,
+                    "percentage": 0.45
+                },
+                {
+                    "name": "Sepsis & Dissem Inf",
+                    "patients": 458,
+                    "percentage": 0.42
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 449,
+                    "percentage": 0.41
+                },
+                {
+                    "name": "Card Arrth & Cond Dis",
+                    "patients": 445,
+                    "percentage": 0.46
+                }
             ]
         },
         {
@@ -2312,6 +4912,58 @@
                     "patients": 51,
                     "percentage": 0.004586330935251798,
                     "id_town": 56
+                }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Knee Joint Replacement",
+                    "patients": 219,
+                    "percentage": 0.27
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 204,
+                    "percentage": 0.16
+                },
+                {
+                    "name": "COPD",
+                    "patients": 196,
+                    "percentage": 0.15
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 185,
+                    "percentage": 0.14
+                },
+                {
+                    "name": "Cellulitis, Oth Bact Skn Inf",
+                    "patients": 181,
+                    "percentage": 0.21
+                },
+                {
+                    "name": "Kidney & UT Infections",
+                    "patients": 168,
+                    "percentage": 0.16
+                },
+                {
+                    "name": "Sepsis & Dissem Inf",
+                    "patients": 152,
+                    "percentage": 0.23
+                },
+                {
+                    "name": "Pulm Edema & Resp Failure",
+                    "patients": 151,
+                    "percentage": 0.46
+                },
+                {
+                    "name": "Degen Nrvs Syst exc MS ",
+                    "patients": 136,
+                    "percentage": 0.26
+                },
+                {
+                    "name": "Alcohol Abuse & Dependence",
+                    "patients": 129,
+                    "percentage": 0.32
                 }
             ]
         },
@@ -2371,6 +5023,58 @@
                     "percentage": 0.1625269978401728,
                     "id_town": 120
                 }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Delivery DRGs",
+                    "patients": 3662,
+                    "percentage": 0.26
+                },
+                {
+                    "name": "Sepsis & Dissem Inf",
+                    "patients": 817,
+                    "percentage": 0.37
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 606,
+                    "percentage": 0.29
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 491,
+                    "percentage": 0.22
+                },
+                {
+                    "name": "Cellulitis, Oth Bact Skn Inf",
+                    "patients": 466,
+                    "percentage": 0.31
+                },
+                {
+                    "name": "Card Arrth & Cond Dis",
+                    "patients": 462,
+                    "percentage": 0.3
+                },
+                {
+                    "name": "Knee Joint Replacement",
+                    "patients": 415,
+                    "percentage": 0.36
+                },
+                {
+                    "name": "COPD",
+                    "patients": 391,
+                    "percentage": 0.21
+                },
+                {
+                    "name": "Pulm Edema & Resp Failure",
+                    "patients": 365,
+                    "percentage": 0.39
+                },
+                {
+                    "name": "Renal Failure",
+                    "patients": 343,
+                    "percentage": 0.25
+                }
             ]
         },
         {
@@ -2418,6 +5122,58 @@
                     "patients": 50,
                     "percentage": 0.02824858757062147,
                     "id_town": 17
+                }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Sepsis & Dissem Inf",
+                    "patients": 313,
+                    "percentage": 0.18
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 312,
+                    "percentage": 0.16
+                },
+                {
+                    "name": "COPD",
+                    "patients": 266,
+                    "percentage": 0.17
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 215,
+                    "percentage": 0.11
+                },
+                {
+                    "name": "Knee Joint Replacement",
+                    "patients": 189,
+                    "percentage": 0.12
+                },
+                {
+                    "name": "Card Arrth & Cond Dis",
+                    "patients": 175,
+                    "percentage": 0.13
+                },
+                {
+                    "name": "Cellulitis, Oth Bact Skn Inf",
+                    "patients": 156,
+                    "percentage": 0.12
+                },
+                {
+                    "name": "Renal Failure",
+                    "patients": 155,
+                    "percentage": 0.13
+                },
+                {
+                    "name": "Kidney & UT Infections",
+                    "patients": 152,
+                    "percentage": 0.12
+                },
+                {
+                    "name": "NBact Gastro, Naus, Vom ",
+                    "patients": 118,
+                    "percentage": 0.1
                 }
             ]
         },
@@ -2477,6 +5233,58 @@
                     "percentage": 0.3069395017793594,
                     "id_town": 16
                 }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Delivery DRGs",
+                    "patients": 1899,
+                    "percentage": 0.43
+                },
+                {
+                    "name": "Rehabilitation",
+                    "patients": 668,
+                    "percentage": 1
+                },
+                {
+                    "name": "COPD",
+                    "patients": 455,
+                    "percentage": 0.38
+                },
+                {
+                    "name": "Cellulitis, Oth Bact Skn Inf",
+                    "patients": 396,
+                    "percentage": 0.43
+                },
+                {
+                    "name": "Bipolar Disorders",
+                    "patients": 340,
+                    "percentage": 0.87
+                },
+                {
+                    "name": "Card Arrth & Cond Dis",
+                    "patients": 322,
+                    "percentage": 0.36
+                },
+                {
+                    "name": "Sepsis & Dissem Inf",
+                    "patients": 318,
+                    "percentage": 0.3
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 296,
+                    "percentage": 0.31
+                },
+                {
+                    "name": "Renal Failure",
+                    "patients": 240,
+                    "percentage": 0.35
+                },
+                {
+                    "name": "Chest Pain",
+                    "patients": 238,
+                    "percentage": 0.52
+                }
             ]
         },
         {
@@ -2524,6 +5332,58 @@
                     "patients": 941,
                     "percentage": 0.49630801687763715,
                     "id_town": 239
+                }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Delivery DRGs",
+                    "patients": 6330,
+                    "percentage": 0.85
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 829,
+                    "percentage": 0.63
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 791,
+                    "percentage": 0.63
+                },
+                {
+                    "name": "COPD",
+                    "patients": 705,
+                    "percentage": 0.55
+                },
+                {
+                    "name": "Kidney & UT Infections",
+                    "patients": 650,
+                    "percentage": 0.63
+                },
+                {
+                    "name": "Cellulitis, Oth Bact Skn Inf",
+                    "patients": 535,
+                    "percentage": 0.61
+                },
+                {
+                    "name": "Card Arrth & Cond Dis",
+                    "patients": 497,
+                    "percentage": 0.53
+                },
+                {
+                    "name": "NBact Gastro, Naus, Vom ",
+                    "patients": 458,
+                    "percentage": 0.66
+                },
+                {
+                    "name": "Renal Failure",
+                    "patients": 422,
+                    "percentage": 0.57
+                },
+                {
+                    "name": "Other Digestive System Dx",
+                    "patients": 380,
+                    "percentage": 0.68
                 }
             ]
         },
@@ -2578,6 +5438,58 @@
                     "percentage": 0.8191094619666048,
                     "id_town": 114
                 }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Delivery DRGs",
+                    "patients": 6516,
+                    "percentage": 1
+                },
+                {
+                    "name": "COPD",
+                    "patients": 1824,
+                    "percentage": 1
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 1321,
+                    "percentage": 1
+                },
+                {
+                    "name": "Sepsis & Dissem Inf",
+                    "patients": 1288,
+                    "percentage": 1
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 1245,
+                    "percentage": 1
+                },
+                {
+                    "name": "Cellulitis, Oth Bact Skn Inf",
+                    "patients": 992,
+                    "percentage": 1
+                },
+                {
+                    "name": "Card Arrth & Cond Dis",
+                    "patients": 916,
+                    "percentage": 1
+                },
+                {
+                    "name": "Kidney & UT Infections",
+                    "patients": 790,
+                    "percentage": 1
+                },
+                {
+                    "name": "Maj Resp Infect & Inflam",
+                    "patients": 632,
+                    "percentage": 1
+                },
+                {
+                    "name": "Acute Myocardial Infarct.",
+                    "patients": 609,
+                    "percentage": 1
+                }
             ]
         },
         {
@@ -2615,6 +5527,58 @@
                     "patients": 92,
                     "percentage": 0.005414312617702448,
                     "id_town": 42
+                }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Bipolar Disorders",
+                    "patients": 317,
+                    "percentage": 0.1
+                },
+                {
+                    "name": "Maj Dep& Oth/Unsp Psychoses",
+                    "patients": 305,
+                    "percentage": 0.1
+                },
+                {
+                    "name": "Schizophrenia",
+                    "patients": 267,
+                    "percentage": 0.14
+                },
+                {
+                    "name": "COPD",
+                    "patients": 225,
+                    "percentage": 0.06
+                },
+                {
+                    "name": "Sepsis & Dissem Inf",
+                    "patients": 158,
+                    "percentage": 0.03
+                },
+                {
+                    "name": "Cellulitis, Oth Bact Skn Inf",
+                    "patients": 156,
+                    "percentage": 0.04
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 154,
+                    "percentage": 0.03
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 104,
+                    "percentage": 0.02
+                },
+                {
+                    "name": "NBact Gastro, Naus, Vom ",
+                    "patients": 97,
+                    "percentage": 0.03
+                },
+                {
+                    "name": "Card Arrth & Cond Dis",
+                    "patients": 91,
+                    "percentage": 0.02
                 }
             ]
         },
@@ -2668,6 +5632,58 @@
                     "patients": 325,
                     "percentage": 0.1678719008264463,
                     "id_town": 234
+                }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Delivery DRGs",
+                    "patients": 1688,
+                    "percentage": 0.38
+                },
+                {
+                    "name": "Opioid Abuse & Dependence",
+                    "patients": 1572,
+                    "percentage": 0.99
+                },
+                {
+                    "name": "Alcohol Abuse & Dependence",
+                    "patients": 734,
+                    "percentage": 0.87
+                },
+                {
+                    "name": "Drug/Alcohol Abuse, LAMA",
+                    "patients": 550,
+                    "percentage": 0.96
+                },
+                {
+                    "name": "Sepsis & Dissem Inf",
+                    "patients": 496,
+                    "percentage": 0.47
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 451,
+                    "percentage": 0.47
+                },
+                {
+                    "name": "COPD",
+                    "patients": 448,
+                    "percentage": 0.37
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 406,
+                    "percentage": 0.43
+                },
+                {
+                    "name": "Cellulitis, Oth Bact Skn Inf",
+                    "patients": 348,
+                    "percentage": 0.38
+                },
+                {
+                    "name": "Card Arrth & Cond Dis",
+                    "patients": 336,
+                    "percentage": 0.38
                 }
             ]
         },
@@ -2727,6 +5743,58 @@
                     "percentage": 0.22,
                     "id_town": 363
                 }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Delivery DRGs",
+                    "patients": 1909,
+                    "percentage": 0.4
+                },
+                {
+                    "name": "Maj Dep& Oth/Unsp Psychoses",
+                    "patients": 594,
+                    "percentage": 0.95
+                },
+                {
+                    "name": "Bipolar Disorders",
+                    "patients": 492,
+                    "percentage": 0.96
+                },
+                {
+                    "name": "Rehabilitation",
+                    "patients": 465,
+                    "percentage": 1
+                },
+                {
+                    "name": "Schizophrenia",
+                    "patients": 305,
+                    "percentage": 0.91
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 292,
+                    "percentage": 0.38
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 271,
+                    "percentage": 0.33
+                },
+                {
+                    "name": "COPD",
+                    "patients": 259,
+                    "percentage": 0.32
+                },
+                {
+                    "name": "Knee Joint Replacement",
+                    "patients": 257,
+                    "percentage": 0.76
+                },
+                {
+                    "name": "Card Arrth & Cond Dis",
+                    "patients": 243,
+                    "percentage": 0.39
+                }
             ]
         },
         {
@@ -2784,6 +5852,58 @@
                     "patients": 305,
                     "percentage": 0.07267095544436503,
                     "id_town": 280
+                }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Delivery DRGs",
+                    "patients": 831,
+                    "percentage": 0.35
+                },
+                {
+                    "name": "Maj Dep& Oth/Unsp Psychoses",
+                    "patients": 802,
+                    "percentage": 1
+                },
+                {
+                    "name": "Bipolar Disorders",
+                    "patients": 415,
+                    "percentage": 1
+                },
+                {
+                    "name": "Org Mental Hlth Disturb",
+                    "patients": 412,
+                    "percentage": 1
+                },
+                {
+                    "name": "Card Arrth & Cond Dis",
+                    "patients": 370,
+                    "percentage": 0.76
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 353,
+                    "percentage": 0.61
+                },
+                {
+                    "name": "COPD",
+                    "patients": 299,
+                    "percentage": 0.45
+                },
+                {
+                    "name": "Cellulitis, Oth Bact Skn Inf",
+                    "patients": 266,
+                    "percentage": 0.65
+                },
+                {
+                    "name": "Kidney & UT Infections",
+                    "patients": 259,
+                    "percentage": 0.59
+                },
+                {
+                    "name": "NBact Gastro, Naus, Vom ",
+                    "patients": 252,
+                    "percentage": 0.73
                 }
             ]
         },
@@ -2843,6 +5963,58 @@
                     "percentage": 0.23,
                     "id_town": 360
                 }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 344,
+                    "percentage": 1
+                },
+                {
+                    "name": "COPD",
+                    "patients": 289,
+                    "percentage": 1
+                },
+                {
+                    "name": "Cellulitis, Oth Bact Skn Inf",
+                    "patients": 288,
+                    "percentage": 1
+                },
+                {
+                    "name": "Knee Joint Replacement",
+                    "patients": 241,
+                    "percentage": 1
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 236,
+                    "percentage": 1
+                },
+                {
+                    "name": "Kidney & UT Infections",
+                    "patients": 202,
+                    "percentage": 1
+                },
+                {
+                    "name": "Renal Failure",
+                    "patients": 178,
+                    "percentage": 1
+                },
+                {
+                    "name": "Sepsis & Dissem Inf",
+                    "patients": 173,
+                    "percentage": 1
+                },
+                {
+                    "name": "Degen Nrvs Syst exc MS ",
+                    "patients": 161,
+                    "percentage": 1
+                },
+                {
+                    "name": "Card Arrth & Cond Dis",
+                    "patients": 147,
+                    "percentage": 1
+                }
             ]
         },
         {
@@ -2890,6 +6062,58 @@
                     "patients": 223,
                     "percentage": 0.03175733409285104,
                     "id_town": 323
+                }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Delivery DRGs",
+                    "patients": 1675,
+                    "percentage": 0.03
+                },
+                {
+                    "name": "Maj Dep& Oth/Unsp Psychoses",
+                    "patients": 475,
+                    "percentage": 0.15
+                },
+                {
+                    "name": "Alc & Drg Dx-Rehab w/wo Detox",
+                    "patients": 434,
+                    "percentage": 0.58
+                },
+                {
+                    "name": "Bipolar Disorders",
+                    "patients": 421,
+                    "percentage": 0.13
+                },
+                {
+                    "name": "Opioid Abuse & Dependence",
+                    "patients": 353,
+                    "percentage": 0.36
+                },
+                {
+                    "name": "Schizophrenia",
+                    "patients": 304,
+                    "percentage": 0.16
+                },
+                {
+                    "name": "Alcohol Abuse & Dependence",
+                    "patients": 302,
+                    "percentage": 0.14
+                },
+                {
+                    "name": "Maj Male Pelvic Procs",
+                    "patients": 274,
+                    "percentage": 0.22
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 258,
+                    "percentage": 0.05
+                },
+                {
+                    "name": "Sepsis & Dissem Inf",
+                    "patients": 257,
+                    "percentage": 0.05
                 }
             ]
         },
@@ -2944,6 +6168,58 @@
                     "percentage": 0.3395225464190981,
                     "id_town": 365
                 }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Delivery DRGs",
+                    "patients": 1550,
+                    "percentage": 0.65
+                },
+                {
+                    "name": "COPD",
+                    "patients": 363,
+                    "percentage": 0.55
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 283,
+                    "percentage": 0.54
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 225,
+                    "percentage": 0.39
+                },
+                {
+                    "name": "Knee Joint Replacement",
+                    "patients": 184,
+                    "percentage": 0.61
+                },
+                {
+                    "name": "Sepsis & Dissem Inf",
+                    "patients": 180,
+                    "percentage": 0.48
+                },
+                {
+                    "name": "Kidney & UT Infections",
+                    "patients": 178,
+                    "percentage": 0.41
+                },
+                {
+                    "name": "Cellulitis, Oth Bact Skn Inf",
+                    "patients": 146,
+                    "percentage": 0.35
+                },
+                {
+                    "name": "Card Arrth & Cond Dis",
+                    "patients": 119,
+                    "percentage": 0.24
+                },
+                {
+                    "name": "Maj Resp Infect & Inflam",
+                    "patients": 115,
+                    "percentage": 0.45
+                }
             ]
         },
         {
@@ -2996,6 +6272,58 @@
                     "patients": 361,
                     "percentage": 0.049249658935879945,
                     "id_town": 206
+                }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Delivery DRGs",
+                    "patients": 1866,
+                    "percentage": 0.03
+                },
+                {
+                    "name": "Percut Card proc w/o AMI",
+                    "patients": 489,
+                    "percentage": 0.15
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 319,
+                    "percentage": 0.06
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 311,
+                    "percentage": 0.06
+                },
+                {
+                    "name": "Cellulitis, Oth Bact Skn Inf",
+                    "patients": 297,
+                    "percentage": 0.07
+                },
+                {
+                    "name": "Seizure",
+                    "patients": 289,
+                    "percentage": 0.09
+                },
+                {
+                    "name": "Sepsis & Dissem Inf",
+                    "patients": 259,
+                    "percentage": 0.05
+                },
+                {
+                    "name": "Card Arrth & Cond Dis",
+                    "patients": 256,
+                    "percentage": 0.06
+                },
+                {
+                    "name": "Other Antepartum Dxs",
+                    "patients": 249,
+                    "percentage": 0.15
+                },
+                {
+                    "name": "NBact Gastro, Naus, Vom ",
+                    "patients": 246,
+                    "percentage": 0.09
                 }
             ]
         },
@@ -3055,6 +6383,58 @@
                     "percentage": 0.4941580756013746,
                     "id_town": 139
                 }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Delivery DRGs",
+                    "patients": 7202,
+                    "percentage": 0.5
+                },
+                {
+                    "name": "Sepsis & Dissem Inf",
+                    "patients": 887,
+                    "percentage": 0.4
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 877,
+                    "percentage": 0.39
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 810,
+                    "percentage": 0.39
+                },
+                {
+                    "name": "Cellulitis, Oth Bact Skn Inf",
+                    "patients": 705,
+                    "percentage": 0.46
+                },
+                {
+                    "name": "Card Arrth & Cond Dis",
+                    "patients": 637,
+                    "percentage": 0.41
+                },
+                {
+                    "name": "COPD",
+                    "patients": 616,
+                    "percentage": 0.34
+                },
+                {
+                    "name": "Bipolar Disorders",
+                    "patients": 612,
+                    "percentage": 0.49
+                },
+                {
+                    "name": "Renal Failure",
+                    "patients": 608,
+                    "percentage": 0.45
+                },
+                {
+                    "name": "Percut Card proc w/ AMI",
+                    "patients": 579,
+                    "percentage": 0.74
+                }
             ]
         },
         {
@@ -3113,6 +6493,58 @@
                     "percentage": 0.17364085667215814,
                     "id_town": 311
                 }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Delivery DRGs",
+                    "patients": 3476,
+                    "percentage": 0.35
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 505,
+                    "percentage": 0.26
+                },
+                {
+                    "name": "COPD",
+                    "patients": 381,
+                    "percentage": 0.25
+                },
+                {
+                    "name": "Cellulitis, Oth Bact Skn Inf",
+                    "patients": 343,
+                    "percentage": 0.27
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 340,
+                    "percentage": 0.18
+                },
+                {
+                    "name": "Knee Joint Replacement",
+                    "patients": 289,
+                    "percentage": 0.19
+                },
+                {
+                    "name": "NBact Gastro, Naus, Vom ",
+                    "patients": 275,
+                    "percentage": 0.24
+                },
+                {
+                    "name": "Kidney & UT Infections",
+                    "patients": 259,
+                    "percentage": 0.2
+                },
+                {
+                    "name": "Card Arrth & Cond Dis",
+                    "patients": 230,
+                    "percentage": 0.16
+                },
+                {
+                    "name": "Syncope & Collapse",
+                    "patients": 205,
+                    "percentage": 0.26
+                }
             ]
         },
         {
@@ -3165,6 +6597,58 @@
                     "patients": 93,
                     "percentage": 0.21830985915492956,
                     "id_town": 100
+                }
+            ],
+            "topDRGs": [
+                {
+                    "name": "Maj Dep& Oth/Unsp Psychoses",
+                    "patients": 286,
+                    "percentage": 0.15
+                },
+                {
+                    "name": "Bipolar Disorders",
+                    "patients": 232,
+                    "percentage": 0.15
+                },
+                {
+                    "name": "Other Pneumonia",
+                    "patients": 215,
+                    "percentage": 0.11
+                },
+                {
+                    "name": "Org Mental Hlth Disturb",
+                    "patients": 176,
+                    "percentage": 0.48
+                },
+                {
+                    "name": "COPD",
+                    "patients": 156,
+                    "percentage": 0.07
+                },
+                {
+                    "name": "Heart Failure",
+                    "patients": 131,
+                    "percentage": 0.06
+                },
+                {
+                    "name": "Cellulitis, Oth Bact Skn Inf",
+                    "patients": 122,
+                    "percentage": 0.08
+                },
+                {
+                    "name": "Kidney & UT Infections",
+                    "patients": 101,
+                    "percentage": 0.08
+                },
+                {
+                    "name": "Schizophrenia",
+                    "patients": 95,
+                    "percentage": 0.1
+                },
+                {
+                    "name": "Card Arrth & Cond Dis",
+                    "patients": 87,
+                    "percentage": 0.06
                 }
             ]
         }

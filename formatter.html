@@ -168,36 +168,61 @@
         
         
         //Create the topHospitals
-        var topHospital = [];
-        d3.json("data/urban_areas.json", function(error, urbanArea) {
+//        var topHospital = [];
+//        d3.json("data/urban_areas.json", function(error, urbanArea) {
+//            d3.json("data/hospitals.json", function(error, hospitals) {
+//                urbanArea.features.forEach(function(feature) {
+//                    var id = feature.properties.id;
+//                    var town = [];
+//                    
+//                    hospitals.hospitals.forEach(function(hospital) {
+//                        var element = {};
+//                        var totalPatients = 0;
+//                        
+//                        hospital.topCommunities.forEach(function(community) {
+//                            if(community.id_town === id) {
+//                                element.id_hospital = hospital.id;
+//                                element.patients = community.patients;
+//                            }
+//                            totalPatients += community.patients;
+//                        });
+//                        
+//                        //Found
+//                        if(element.id_hospital !== null && element.id_hospital !== undefined) {
+//                            element.percentage = element.patients / totalPatients;
+//                            town.push(element);
+//                        }
+//                    });
+//                    
+//                    town.sort(function(a, b) {return b.patients - a.patients;});
+//                    feature.properties.topHospitals = town;
+//                });
+//                document.body.appendChild(document.createElement('pre')).innerHTML = JSON.stringify(urbanArea, undefined, 4);
+//            });
+//        });        
+        
+        //Import the top DRGs
+        d3.json("data/excel.json", function(error, excel) {
             d3.json("data/hospitals.json", function(error, hospitals) {
-                urbanArea.features.forEach(function(feature) {
-                    var id = feature.properties.id;
-                    var town = [];
-                    
-                    hospitals.hospitals.forEach(function(hospital) {
+                var newHospitals = [];
+                excel.hospitals.forEach(function(row) {
+                    var topDRGs = [];
+                    row.topDRGs.forEach(function(drg) {
                         var element = {};
-                        var totalPatients = 0;
-                        
-                        hospital.topCommunities.forEach(function(community) {
-                            if(community.id_town === id) {
-                                element.id_hospital = hospital.id;
-                                element.patients = community.patients;
-                            }
-                            totalPatients += community.patients;
-                        });
-                        
-                        //Found
-                        if(element.id_hospital !== null && element.id_hospital !== undefined) {
-                            element.percentage = element.patients / totalPatients;
-                            town.push(element);
-                        }
+                        element.name = drg.name;
+                        element.patients = drg.patients;
+                        element.percentage = drg.percentage;
+
+                        topDRGs.push(JSON.parse(JSON.stringify(element)));
                     });
-                    
-                    town.sort(function(a, b) {return b.patients - a.patients;});
-                    feature.properties.topHospitals = town;
+
+                    hospitals.hospitals[row.id].topDRGs = JSON.parse(JSON.stringify(topDRGs));
+                    newHospitals.push(JSON.parse(JSON.stringify(hospitals.hospitals[row.id])));
                 });
-                document.body.appendChild(document.createElement('pre')).innerHTML = JSON.stringify(urbanArea, undefined, 4);
+                
+                var newObject = {};
+                newObject.hospitals = newHospitals;
+                document.body.appendChild(document.createElement('pre')).innerHTML = JSON.stringify(newObject, undefined, 4);
             });
         });
         
