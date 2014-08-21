@@ -97,6 +97,8 @@ var markerModule = (function() {
                     return 1;
                 return _config.hiddenMarkerOpacity;
             });
+        
+        app.setTitle(data.name);
 
         var totalPatients = 0;
         data.topCommunities.forEach(function(topCommunity) {
@@ -179,14 +181,15 @@ var markerModule = (function() {
             currentRow.append("td");
         }
 
-        menuModule.addContent(1, menuContent);
-        
-        menuModule.setNote(1, "<sup>1</sup> Only the top 10<sup>-</sup> communities are represented<br/>Data from the <a href='http://www.mass.gov/chia/researcher/hcf-data-resources/massachusetts-hospital-profiles/overiew-and-current-reports.html' target='_blank'>Center for Health Information and Analysis</a>");
+        sidebar.addcard(menuContent);
+//        menuModule.addContent(1, menuContent);
+//        
+//        menuModule.setNote(1, "<sup>1</sup> Only the top 10<sup>-</sup> communities are represented<br/>Data from the <a href='http://www.mass.gov/chia/researcher/hcf-data-resources/massachusetts-hospital-profiles/overiew-and-current-reports.html' target='_blank'>Center for Health Information and Analysis</a>");
 
-        menuModule.open(1, {
-            onQuit: urbanAreaModule.reset,
-            onQuitArguments: null
-        });
+//        menuModule.open(1, {
+//            onQuit: urbanAreaModule.reset,
+//            onQuitArguments: null
+//        });
         
         //Second pane
         menuContent = d3.select(document.createElement("table"));
@@ -259,8 +262,9 @@ var markerModule = (function() {
                 _closeBubble();
             })
             .on("click", function(d) {
+                app.hospitalClicked(d, this);
                 _markersSelected.push(this);
-                displayTopCommunities(d, this);
+//                displayTopCommunities(d, this);
             });
         
         updateMarkers();

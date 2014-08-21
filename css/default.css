@@ -5,8 +5,13 @@
     padding: 0;
 }
 
+html {
+    height: 100%;
+}
+
 body {
     width: 100%;
+    height: 100%;
     overflow: hidden;
 }
 
@@ -14,6 +19,7 @@ body {
 
 #map {
     width: 100%;
+    height: calc(100% - 60px);
     z-index: 100;
 }
 
@@ -30,35 +36,318 @@ svg .lines line {
     stroke: #dc254f;
 }
 
-/* ----- QUESTION STYLES ----- */
-#question {
+/* ----- NAV BAR ----- */
+nav {
     position: absolute;
-    top: 20px;
-    left: 20px;
+    top: 0;
+    left: 0;
+    z-index: 210;
+    width: 100%;
+    height: 60px;
+    background-color: #3D7399;
+    font-family: "PT Sans", sans-serif;
+    text-align: center;
+}
+
+nav #title {
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+    color: rgba(230, 230, 230, 1);
+    font-size: 17px;
+}
+
+nav select {
     z-index: 200;
-    padding: 20px 40px 20px 30px;
+    height: 60px;
+    padding: 0 20px;
     border: none;
     cursor: pointer;
     -webkit-appearance: none;
     -moz-appearance: none;
-    background: #fff;
-    border-radius: 3px;
-    box-shadow: 0 1px 2px rgba(0,0,0,.1);
-    background: url(../icons/arrow.svg) #fff no-repeat right 15px center;
+    background-color: transparent;
+    background: url(../icons/arrow.svg) no-repeat right center;
     font-family: "PT Sans", sans-serif;
-    font-size: 30px;
+    font-size: 20px;
+    color: #fff;
 }
 
-#question:focus {
+nav select:focus {
     outline: none;
+}
+
+/* ----- MESSAGE ----- */
+#message {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    z-index: 200;
+    width: calc(100% - 350px);
+    height: 30px;
+    background-color: rgba(23, 66, 96, 0.81);
+    border-bottom: 1px solid rgba(0, 0, 0, .2);
+    font-family: "PT Sans", sans-serif;
+    color: #fff;
+    text-align: center;
+    line-height: 30px;
+    -webkit-animation-duration: .5s;
+    -moz-animation-duration: .5s;
+    -ms-animation-duration: .5s;
+    animation-duration: .5s;
+}
+
+/* ----- SIDEBAR & COMPARE PANEL ----- */
+aside {
+    position: absolute;
+    top: 60px;
+    right: 0;
+    z-index: 200;
+    overflow: scroll;
+    width: 350px;
+    height: calc(100% - 60px);
+    background-color: rgba(238, 241, 244, .9);
+    font-family: "PT Sans", sans-serif;
+    border-left: 1px solid rgba(0, 0, 0, .2);
+    -webkit-transition: width .5s;
+    -moz-transition: width .5s;
+    transition: width .5s;
+}
+
+.panel, .compare-panel {
+    float: left;
+}
+
+.compare-panel {
+    position: static;
+    display: none;
+    padding-top: 0;
+}
+
+aside .toolbar {
+    position: fixed;
+    height: 35px;
+    width: inherit;
+    z-index: 200;
+    display: none;
+    background-color: #fff;
+    -webkit-box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, .1);
+    -moz-box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, .1);
+    box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, .1);
+}
+
+aside .toolbar i {
+    margin-left: 10px;
+    color: #848484;
+    vertical-align: middle;
+}
+
+aside .toolbar a {
+    display: block;
+    position: absolute;
+    top: 2px;
+    right: 10px;
+    margin-top: 3px;
+    padding: 2px 5px;
+    line-height: 20px;
+    text-decoration: none;
+    color: #848484;
+    cursor: pointer;
+    border-radius: 2px;
+    border: 1px solid rgba(132, 132, 132, .4);
+}
+
+aside .toolbar a.selected {
+    color: #454545;
+    background-color: rgba(132, 132, 132, .15);
+}
+
+aside .toolbar input {
+    width: 50%;
+    margin: 8px 0 0 5px;
+    border: none;
+    border-bottom: 1px solid rgba(132, 132, 132, .4);
+    background-color: transparent;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    font-family: "PT Sans", sans-serif;
+    font-size: 15px;
+    line-height: 21px;
+    color: #454545;
+}
+
+aside .toolbar input:focus {
+    outline: none;
+}
+
+aside .toolbar ::-webkit-input-placeholder {
+    color: #848484;
+}
+
+aside .toolbar ::-moz-placeholder {
+    color: #848484;
+}
+
+.card {
+    position: relative;
+    width: 310px;
+    padding: 5px 10px;
+    margin: 5px 0 15px 10px;
+    background-color: rgba(255, 255, 255, .9);
+    border-radius: 3px;
+    box-shadow: 0 1px 2px rgba(0,0,0,.1);
+    font-family: "PT Sans", sans-serif;
+    font-size: 13px;
+    animation-duration: .5s;
+    -webkit-animation-duration: .5s !important;
+    -moz-animation-duration: .5s !important;
+    -ms-animation-duration: .5s !important;
+}
+
+.card:first-child {
+    margin-top: 45px;
+}
+
+.card h1 {
+    display: block;
+    width: calc(100% - 30px);
+    margin-bottom: 10px;
+    font-weight: initial;
+    font-size: 17px;
+}
+
+.card h1 a {
+    color: inherit;
+    text-decoration: none;
+    font-size: 12px;
+}
+
+.card .control {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.card .two-columns {
+    color:#848484;
+    width: 100%;
+    -webkit-column-count: 2;
+    -moz-column-count: 2;
+    column-count: 2;
+    text-align: right;
+}
+
+.card .two-columns span {
+    display: inline-block;
+    width: 100%;
+    text-align: left;
+    color: #454545;
+}
+
+.card table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.card th {
+    border-bottom: 1px solid #000;
+    text-align: left;
+}
+
+.card th, .card td {
+    padding: 2px 0;
+    color: #454545;
+}
+
+.card tr:nth-child(odd) {
+    background-color: rgba(198, 198, 198, .15);
+}
+
+.card tr:first-of-type {
+    background-color: transparent;
+    cursor: auto;
+}
+
+.card table th {
+    color: #454545;
+    font-weight: normal;
+}
+
+.card table .number {
+    text-align: right;
+}
+
+/*
+.card tr:hover, .card tr.active {
+    background-color: #2b83ba;
+    color: #fff;
+    cursor: pointer;
+}
+*/
+
+.card .w40 {
+    width: 40%;
+}
+
+.card .w30 {
+    width: 30%;
+}
+
+.card .footnote {
+    position: relative;
+    top: 5px;
+    left: -10px;
+    width: 310px;
+    padding: 5px 10px;
+    font-size: 12px;
+    color: #848484;
+    border-radius: 0px 0px 3px 3px;
+    background-color: rgba(209, 209, 209, .3);
+    border-top: 1px solid rgba(132, 132, 132, .1);
+}
+
+.card .footnote a {
+    color: #848484;
+    text-decoration: none;
+}
+
+.card .footnote i {
+    font-size: 9px;
+}
+
+.card.hidden div div, .card.hidden table, .card.hidden .footnote {
+    display: none;
+}
+
+.card.hidden h1 {
+    margin-bottom: 0;
+}
+
+/* ----- CREDITS ----- */
+#credits {
+    position: absolute;
+    bottom: 5px;
+    right: 360px;
+    width: 330px;
+    z-index: 200;
+    font-size: 12px;
+    font-family: "PT Sans", sans-serif;
+    color: rgba(33, 33, 33, 1);
+    text-align: right;
+}
+
+#credits a {
+    text-decoration: none;
+    color: rgba(33, 33, 33, 1);
 }
 
 /* ----- MENU STYLES ----- */
 
 .first-pane, .second-pane {
     position: absolute;
-    width: 520px;
-    padding: 15px;
+    width: 310px;
+    padding: 10px;
     background: #fff;
     border-radius: 3px;
     box-shadow: 0 1px 2px rgba(0,0,0,.1);
@@ -71,12 +360,13 @@ svg .lines line {
 }
 
 .first-pane {
-    bottom: 15px;
-    left: 15px;
+    top: 70px;
+    right: 10px;
     z-index: 210;
 }
 
 .second-pane {
+    display: none;
     bottom: 15px;
     left: 580px;
     z-index: 200;

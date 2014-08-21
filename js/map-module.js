@@ -25,8 +25,8 @@ var mapModule = (function() {
                 urbanAreaModule.update();
             });
         
-        _map.addControl(L.control.attribution().setPrefix("By <a href='http://www.goinvo.com' target='_blank'>Involution Studios</a> and <a href='http://www.macadamian.com' target='_blank'>Macadamian</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='https://github.com/goinvo/pophealth' target='_blank'>Open Data + Code</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='mailto:pophealth-internal@goinvo.com'>Feedback</a>"))
-            .addControl(L.control.zoom({position: "bottomright"}));
+//        _map.addControl(L.control.attribution().setPrefix("By <a href='http://www.goinvo.com' target='_blank'>Involution Studios</a> and <a href='http://www.macadamian.com' target='_blank'>Macadamian</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='https://github.com/goinvo/pophealth' target='_blank'>Open Data + Code</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='mailto:pophealth-internal@goinvo.com'>Feedback</a>"))
+//            .addControl(L.control.zoom({position: "bottomright"}));
     };
     
     /*

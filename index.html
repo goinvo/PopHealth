@@ -5,23 +5,41 @@
         <meta charset="utf-8">
         <link rel="stylesheet" type="text/css" href="css/default.css">
         <link rel="stylesheet" type="text/css" href="css/animate.css">
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
         <script src="https://api.tiles.mapbox.com/mapbox.js/v1.6.4/mapbox.js"></script>
         <link href="https://api.tiles.mapbox.com/mapbox.js/v1.6.4/mapbox.css" rel="stylesheet" />
         <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
         <link href="http://fonts.googleapis.com/css?family=PT+Sans:400,700,400italic" rel="stylesheet" type="text/css" />
     </head>
     <body>
-        <select id="question">
-            <option>What hospitals do your neighbors go to?</option>
-            <option>What are the safest hospitals?</option>
-            <option>What are the most accident prone?</option>
-            <option>Where do most seniors get treated?</option>
-            <option>What hospitals are getting the best quality outcomes?</option>
-            <option>Where is the least healthcare access?</option>
-            <option>Where is the least expensive healthcare?</option>
-            <option>Where are the most complex care plans?</option>
-        </select>
+        <nav>
+            <select>
+                <option>What hospitals do your neighbors go to?</option>
+                <option>What are the safest hospitals?</option>
+                <option>What are the most accident prone?</option>
+                <option>Where do most seniors get treated?</option>
+                <option>What hospitals are getting the best quality outcomes?</option>
+                <option>Where is the least healthcare access?</option>
+                <option>Where is the least expensive healthcare?</option>
+                <option>Where are the most complex care plans?</option>
+            </select>
+            <div id="title"></div>
+        </nav>
+        <div id="message" class="animated" style="visibility: hidden"></div>
         <div id="map"></div>
+        <aside>
+            <div class="toolbar">
+                <i class="fa fa-search"></i><input type="text" placeholder="obesity, drg, ..." />
+                <a onclick="sidebar.compare()">Compare</a>
+            </div>
+            <div class="panel"></div>
+            <div class="compare-panel"></div>
+        </aside>
+        <div id="credits">
+            By <a href='http://www.goinvo.com' target='_blank'>Involution Studios</a> and <a href='http://www.macadamian.com' target='_blank'>Macadamian</a><br/><a href='https://github.com/goinvo/pophealth' target='_blank'>Open Data + Code</a> | <a href='mailto:pophealth-internal@goinvo.com'>Feedback</a>
+        </div>
+        <script src="js/app-module.js"></script>
+        <script src="js/sidebar-module.js"></script>
         <script src="js/map-module.js"></script>
         <script src="js/marker-module.js"></script>
         <script src="js/menu-module.js"></script>
