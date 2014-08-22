@@ -96,6 +96,7 @@ var app = (function() {
         _elementPicked = "hospital";
         
         urbanAreaModule.reset();
+        markerModule.reset();
         
         //We delete the lines
         urbanAreaModule.deleteLines();
@@ -251,6 +252,7 @@ var app = (function() {
         _elementPicked = "community";
         
         urbanAreaModule.reset();
+        markerModule.reset();
         
         //We hide all the markers
         markerModule.hideMarkers();
