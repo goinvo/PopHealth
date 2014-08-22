@@ -49,14 +49,6 @@ nav {
     text-align: center;
 }
 
-nav #title {
-    position: absolute;
-    bottom: 10px;
-    right: 20px;
-    color: rgba(230, 230, 230, 1);
-    font-size: 17px;
-}
-
 nav select {
     z-index: 200;
     height: 60px;

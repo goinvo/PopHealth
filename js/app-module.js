@@ -1,70 +1,71 @@
 var app = (function() {
     var _config = {
-        titleElem: "nav #title",
-        messageElem: "#message",
-        heatmapColorSchmeme: ["#565756", "#777877", "#999999", "#B8B8B8", "#D6D6D6"],
-        linesContainerClass: "lines",
+        messageElem: "#message", //The container of the message below the questions' div (at the top of the window)
+        heatmapColorSchmeme: ["#565756", "#777877", "#999999", "#B8B8B8", "#D6D6D6"], //Color of the heat map, the strongest is the first one
+        hiddenLineOpacity: .2, //Opacity of the lines when hidden
+        linesContainerClass: "lines", //Container of the lines displayed when a community is clicked
         svgContainer: "#map svg",
-        hiddenLineOpacity: .2,
-        markerClass: "marker"
+        markerClass: "marker" //Class of the markers on the map
     },
-        _elementPicked,
-        _compareMode = false;
+        _elementPicked, //Contains "hospital" or "community" depending on what has been clicked on the map
+        _compareMode = false; //Indicates if the compare mode is active
     
+    /*
+        init
+        Calls the the init functions of the modules which need an initialization
+    */
     var init = function() {
         sidebar.init();
     };
-    
-    var setTitle = function(title) {
-        d3.select(_config.titleElem)
-            .html(title);
-    };
-    
-    var _displayGeneralHospitalCard = function(d, target) {
-        sidebar.reset(target);
-        
-        var node = d3.select(document.createElement("div"));
 
-        node.append("h1")
-            .html(d.name+" <a href='#' target='_blank'><i class='fa fa-external-link'></i></a>");
-        node.append("div")
-            .classed("two-columns", true)
-            .html("Staffed bed<br/>Total occupancy<br/>Total revenue<br/><span>0</span><br/><span>0%</span><br/><span>$0</span>");
-        node.append("div")
-            .classed("footnote", true)
-            .html("Data from the <a href=\"http://www.mass.gov/chia/researcher/hcf-data-resources/massachusetts-hospital-profiles/overiew-and-current-reports.html\" target=\"_blank\">Center for Health Information and Analysis <i class='fa fa-external-link'></i></a>");
-        
-        sidebar.addcard(node, true, target);
-    };
-    
-    var _displayGeneralAreaCard = function(d, target) {
-        sidebar.reset(target);
-        
+    /*
+        _displayGeneralCard(d, target)
+        Displays the top card which contains general information about the element clicked
+        d contains the data to display and target the column in which the card will be
+    */
+    var _displayGeneralCard = function(d, target) {
         var node = d3.select(document.createElement("div"));
         
-        node.append("h1")
-            .html(d.town);
-        node.append("div")
-            .classed("two-columns", true)
-            .html("Some stuffs here<br/><span>...</span>");
+        if(_elementPicked === "hospital") {
+            node.append("h1").html(d.name+" <a href='#' target='_blank'><i class='fa fa-external-link'></i></a>");
+            node.append("div")
+                .classed("two-columns", true)
+                .html("Staffed bed<br/>Total occupancy<br/>Total revenue<br/><span>0</span><br/><span>0%</span><br/><span>$0</span>");
+        }
+        else {
+            node.append("h1").html(d.town);
+            node.append("div")
+                .classed("two-columns", true)
+                .html("Some stuffs here<br/><span>...</span>");
+        }
+        
         node.append("div")
             .classed("footnote", true)
             .html("Data from the <a href=\"http://www.mass.gov/chia/researcher/hcf-data-resources/massachusetts-hospital-profiles/overiew-and-current-reports.html\" target=\"_blank\">Center for Health Information and Analysis <i class='fa fa-external-link'></i></a>");
         
+        sidebar.reset(target);
         sidebar.addcard(node, true, target);
     };
     
+    /*
+        getUrbanArea(id)
+        Returns the record which id is id from the _urbanAreaData object
+    */
     var getUrbanArea = function(id) {
             return _urbanAreaData.features[id];  
     };
 
+    /*
+        getHospital(id)
+        Returns the record which id is id from the _hospitalData object
+    */
     var getHospital = function(id) {
             return _hospitalData.hospitals[id];  
     };
     
     /*
         _heatmapColor(ratio)
-        Returns the heatmap color for the ratio
+        Returns the heatmap color for the ratio given as argument
     */
     var _heatmapColor = function(ratio) {
         var color;
@@ -81,6 +82,11 @@ var app = (function() {
         return color;
     };
     
+    /*
+        hospitalClicked(d, marker)
+        Displays all the cards related to the selected hospital, and display a heat map based on patients' origin
+        d is the data of the selected hospital, and marker the one which was clicked
+    */
     var hospitalClicked = function(d, marker) {
         var target = "sidebar";
         if(_compareMode) {
@@ -109,7 +115,7 @@ var app = (function() {
                 return _config.hiddenMarkerOpacity;
             });
         
-        _displayGeneralHospitalCard(d, target);
+        _displayGeneralCard(d, target);
         
         /* Patients' origin */
         var node = d3.select(document.createElement("div"));
@@ -233,10 +239,11 @@ var app = (function() {
         sidebar.addcard(node, false, target);
     };
     
-    var displayTopCommunities = function(d, marker) {
-        
-    };
-    
+    /*
+        areaClicked(layerClicked, center)
+        Displays all the cards related to the selected community, and display a lines based on the patients' destination hospitals
+        layerClicked is the data of the selected community, and center is the calculated center of the community
+    */
     var areaClicked = function(layerClicked, center) {
         var target = "sidebar";
         if(_compareMode) {
@@ -260,7 +267,7 @@ var app = (function() {
         //We delete all the lines
         urbanAreaModule.deleteLines();
             
-        _displayGeneralAreaCard(layerClicked, target);
+        _displayGeneralCard(layerClicked, target);
         
         /* Patients' origin */
         var node = d3.select(document.createElement("div"));
@@ -369,7 +376,7 @@ var app = (function() {
                 .attr("y2", destinationCoords.y);
         });
         
-        //No data for the hospital
+        //No data for the community
         if(node.selectAll("tr").size() == 1) {
             currentRow = table.append("tr");
             currentRow.append("td")
@@ -381,6 +388,10 @@ var app = (function() {
         sidebar.addcard(node, true, target);
     };
     
+    /*
+        displayMessage
+        Displays the html content content below the questions selector, at the top of the window
+    */
     var displayMessage = function(content) {
         _isMessageDisplayed = true;
         
@@ -391,6 +402,10 @@ var app = (function() {
             .html(content);
     };
     
+    /*
+        hideMessage
+        Hides the message which is at the top of the window
+    */
     var hideMessage = function() {
         _isMessageDisplayed = false;
         
@@ -399,22 +414,29 @@ var app = (function() {
             .classed("fadeOutUp", true);
     };
     
+    /*
+        getMode
+        Returns "hospital" or "community" depending on the item which has been clicked on the map
+    */
     var getMode = function() {
         return _elementPicked;  
     };
     
+    /*
+        compareMode(isActivated)
+        Sets _compareMode to true if isActivated is true, false if isActivated is false
+        Useful to tell the module if the user is currently using the compare mode
+    */
     var compareMode = function(isActivated) {
         _compareMode = isActivated;
     };
     
     return {
         init: init,
-        setTitle: setTitle,
         getUrbanArea: getUrbanArea,
         getHospital: getHospital,
         hospitalClicked: hospitalClicked,
         areaClicked: areaClicked,
-        displayTopCommunities: displayTopCommunities,
         displayMessage: displayMessage,
         hideMessage: hideMessage,
         getMode: getMode,
