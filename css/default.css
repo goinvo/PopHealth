@@ -266,6 +266,11 @@ aside .toolbar ::-moz-placeholder {
     color: #454545;
 }
 
+.card tr.hovered td {
+    background-color: #FF5F40;
+    color: #fff;
+}
+
 .card tr:nth-child(odd) {
     background-color: rgba(198, 198, 198, .15);
 }
@@ -292,12 +297,20 @@ aside .toolbar ::-moz-placeholder {
 }
 */
 
-.card .w40 {
-    width: 40%;
+.card .w25 {
+    width: 25%;
 }
 
 .card .w30 {
     width: 30%;
+}
+
+.card .w40 {
+    width: 40%;
+}
+
+.card .w50 {
+    width: 50%;
 }
 
 .card .footnote {

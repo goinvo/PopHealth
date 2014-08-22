@@ -209,7 +209,10 @@ var urbanAreaModule = (function() {
         mapModule.getMap()._initPathRoot();
         _feature = L.geoJson(_urbanAreaData, {style: _config.style, onEachFeature: function(feature, layer) {
                 layer.on("click", function(e) {
-                    displayTopHospitals(e.target.feature.properties, this.getBounds().getCenter());});
+                    app.areaClicked(e.target.feature.properties, this.getBounds().getCenter());
+//                    displayTopHospitals(e.target.feature.properties, this.getBounds().getCenter());
+                
+                });
             }})
             .addTo(mapModule.getMap());
         
