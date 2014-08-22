@@ -5,18 +5,158 @@ var sidebar = (function() {
         comparePanelElem: ".compare-panel",
         cardClass: "card",
         toolbarElem: ".toolbar",
-        cardMarginTop: 5
+        cardMarginBottom: 15
     },
         _isCardVisible = {
         hospital: []
     },
         _sidebarDisplayed = false,
         _cardIndex = 0,
-        _compareMode = false;
+        _compareMode = false,
+        _dragBehavior,
+        _lastSidebarCardMoved = null,
+        _lastPanelCardMoved = null,
+        _cardMovement;
     
     
     var init = function() {
+        _dragBehavior = d3.behavior.drag()
+            .origin(function(d) {return {x: 0, y: d.y};})
+            .on("dragstart", _cardDragStarted)
+            .on("drag", _cardDragged)
+            .on("dragend", _cardDragEnded);
+    };
+    
+    var _cardDragStarted = function() {
+    };
+    
+    var _cardDragged = function(d) {
+        var id = d.id;
         
+        var panelCard = d3.selectAll(_config.comparePanelElem+" ."+_config.cardClass)
+            .filter(function(d) {return d.id === id;});
+       
+        var sidebarCard = d3.selectAll(_config.panelElem+" ."+_config.cardClass)
+            .filter(function(d) {return d.id === id;});
+        
+        panelCard
+            .classed("fadeInUp", false)
+            .classed("dragged", true)
+            .style("-webkit-transform", function(d) {d.y = d3.event.y; return "translateY("+d.y+"px)";})
+            .style("-moz-transform", function(d) {d.y = d3.event.y; return "translateY("+d.y+"px)";})
+            .style("-ms-transform", function(d) {d.y = d3.event.y; return "translateY("+d.y+"px)";})
+            .style("transform", function(d) {d.y = d3.event.y; return "translateY("+d.y+"px)";});      
+        
+        sidebarCard
+            .classed("fadeInUp", false)
+            .classed("dragged", true)
+            .style("-webkit-transform", function(d) {d.y = d3.event.y; return "translateY("+d.y+"px)";})
+            .style("-moz-transform", function(d) {d.y = d3.event.y; return "translateY("+d.y+"px)";})
+            .style("-ms-transform", function(d) {d.y = d3.event.y; return "translateY("+d.y+"px)";})
+            .style("transform", function(d) {d.y = d3.event.y; return "translateY("+d.y+"px)";});
+        
+        var cardPosition = sidebarCard.node().offsetTop;
+        var sidebarCardSibling = (d.y < 0) ? d3.select(sidebarCard.node().previousSibling) : d3.select(sidebarCard.node().nextSibling);
+        if(_compareMode)
+            var panelCardSibling = (d.y < 0) ? d3.select(panelCard.node().previousSibling) : d3.select(panelCard.node().nextSibling);
+        
+        while(!sidebarCardSibling.empty()) {
+            var cardSiblingPosition = sidebarCardSibling.node().offsetTop;
+            var cardSiblingHeight = sidebarCardSibling.node().offsetHeight;
+            var cardSiblingMarginBottom = parseInt(sidebarCardSibling.style("margin-bottom"));
+            
+            var cardHeight = sidebarCard.node().offsetHeight;
+            cardHeight += parseInt(sidebarCard.style("margin-bottom"));
+            
+            if(d.y < 0 && cardPosition + d.y < cardSiblingPosition + (cardSiblingHeight + cardSiblingMarginBottom) / 2) {
+                _lastSidebarCardMoved = sidebarCardSibling;
+                _cardMovement = "up";
+
+                sidebarCardSibling
+                    .classed("fadeInUp", false)
+                    .style("-webkit-transform", "translateY("+cardHeight+"px)")
+                    .style("-moz-transform", "translateY("+cardHeight+"px)")
+                    .style("-ms-transform", "translateY("+cardHeight+"px)")
+                    .style("transform", "translateY("+cardHeight+"px)");
+
+                if(_compareMode) {
+                    _lastPanelCardMoved = panelCardSibling;
+                    
+                    panelCardSibling
+                        .classed("fadeInUp", false)
+                        .style("-webkit-transform", "translateY("+cardHeight+"px)")
+                        .style("-moz-transform", "translateY("+cardHeight+"px)")
+                        .style("-ms-transform", "translateY("+cardHeight+"px)")
+                        .style("transform", "translateY("+cardHeight+"px)");
+                }
+            }
+            else if(d.y > 0 && cardPosition + d.y > cardSiblingPosition + (cardSiblingHeight + cardSiblingMarginBottom) / 2) {
+                _lastSidebarCardMoved = sidebarCardSibling;
+                _cardMovement = "down";
+
+                sidebarCardSibling
+                    .classed("fadeInUp", false)
+                    .style("-webkit-transform", "translateY(-"+cardHeight+"px)")
+                    .style("-moz-transform", "translateY(-"+cardHeight+"px)")
+                    .style("-ms-transform", "translateY(-"+cardHeight+"px)")
+                    .style("transform", "translateY(-"+cardHeight+"px)");
+
+                if(_compareMode) {
+                    _lastPanelCardMoved = panelCardSibling;
+                    
+                    panelCardSibling
+                        .classed("fadeInUp", false)
+                        .style("-webkit-transform", "translateY(-"+cardHeight+"px)")
+                        .style("-moz-transform", "translateY(-"+cardHeight+"px)")
+                        .style("-ms-transform", "translateY(-"+cardHeight+"px)")
+                        .style("transform", "translateY(-"+cardHeight+"px)");
+                }
+            }
+            
+            sidebarCardSibling = (d.y < 0) ? d3.select(sidebarCardSibling.node().previousSibling) : d3.select(sidebarCardSibling.node().nextSibling);
+            if(_compareMode)
+                panelCardSibling = (d.y < 0) ? d3.select(panelCardSibling.node().previousSibling) : d3.select(panelCardSibling.node().nextSibling);
+        }
+    };
+    
+    var _cardDragEnded = function(d) {
+        var id = d.id;
+        
+        d3.selectAll("."+_config.cardClass)
+            .style("-webkit-transform", "translateY(0)")
+            .style("-moz-transform", "translateY(0)")
+            .style("-ms-transform", "translateY(0)")
+            .style("transform", "translateY(0)");
+        
+        var sidebarCard = d3.selectAll(_config.panelElem+" ."+_config.cardClass)
+            .filter(function(d) {return d.id === id;});
+        
+        sidebarCard
+            .classed("dragged", false);
+        
+        //We move the card to the final position in the DOM
+        if(_cardMovement === "up")
+            sidebarCard.node().parentNode.insertBefore(sidebarCard.node(), _lastSidebarCardMoved.node());
+        else
+            sidebarCard.node().parentNode.insertBefore(_lastSidebarCardMoved.node(), sidebarCard.node());
+        
+        //We reinitialize d.y
+        var sidebarCardData = sidebarCard.datum();
+        sidebarCardData.y = 0;
+        sidebarCard.datum(sidebarCardData);
+        
+        if(_compareMode) {
+            var panelCard = d3.selectAll(_config.comparePanelElem+" ."+_config.cardClass)
+                .filter(function(d) {return d.id === id;});
+
+            panelCard
+                .classed("dragged", false);     
+            
+            if(_cardMovement === "up")
+                panelCard.node().parentNode.insertBefore(panelCard.node(), _lastPanelCardMoved.node());
+            else
+                panelCard.node().parentNode.insertBefore(_lastPanelCardMoved.node(), panelCard.node());
+        }
     };
     
     var addcard = function(node, isOpened, target) {
@@ -35,7 +175,8 @@ var sidebar = (function() {
         
         var card = d3.select(targetElem)
             .append("div")
-            .data([{id: _cardIndex, offset: 0}])
+            .data([{id: _cardIndex, offset: 0, y: 0}])
+            .call(_dragBehavior)
             .classed(_config.cardClass, true)
             .classed("animated fadeInUp", true)
             .style("animation-delay", "0s")
@@ -43,8 +184,8 @@ var sidebar = (function() {
             .style("-moz-animation-delay", "0s")
             .style("-ms-animation-delay", "0s");
         
-        if(_compareMode && _cardIndex !== 0)
-            _alignCards(_cardIndex);
+        if(_compareMode && _cardIndex - 1 >= 0)
+            _alignCards(_cardIndex - 1);
         
         if(_isCardVisible.hospital[_cardIndex] === undefined)
             _isCardVisible.hospital.push(isOpened);
@@ -82,20 +223,16 @@ var sidebar = (function() {
                 .filter(function(d) {return d.id === index;}),
 
             topOffset = {
-                sidebarCard: sidebarCard.node().offsetTop,
-                panelCard: panelCard.node().offsetTop
+                sidebarCard: sidebarCard.node().nextSibling.offsetTop,
+                panelCard: panelCard.node().nextSibling.offsetTop
             },
 
             gap = topOffset.sidebarCard - topOffset.panelCard;
 
-        if(gap < 0) {
-            sidebarCard
-                .classed("fadeInUp", false)
-                .style("margin-top", (3 * _config.cardMarginTop - gap)+"px");
-        }
-        else if(gap > 0) {
-            panelCard.style("margin-top", (3 * _config.cardMarginTop + gap)+"px");
-        }
+        if(gap < 0)
+            sidebarCard.style("margin-bottom", (_config.cardMarginBottom - gap)+"px");
+        else if(gap > 0)
+            panelCard.style("margin-bottom", (_config.cardMarginBottom + gap)+"px");
     };
     
     var _toggleContent = function(id) {
@@ -119,9 +256,9 @@ var sidebar = (function() {
                 .classed("fa-minus", isHidden);
 
             if(id + 1 < _cardIndex) {
-                d3.select(panelCard.node().nextSibling).style("margin-top", _config.cardMarginTop+"px");
-                d3.select(sidebarCard.node().nextSibling).style("margin-top", _config.cardMarginTop+"px");
-                _alignCards(id + 1);
+                panelCard.style("margin-bottom", _config.cardMarginBottom+"px");
+                sidebarCard.style("margin-bottom", _config.cardMarginBottom+"px");
+                _alignCards(id);
             }
         }
     };

@@ -7,7 +7,7 @@ var app = (function() {
         _compareMode = false;
     
     var init = function() {
-        
+        sidebar.init();
     };
     
     var setTitle = function(title) {
