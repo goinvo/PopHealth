@@ -2,12 +2,14 @@ var app = (function() {
     var _config = {
         messageElem: "#message", //The container of the message below the questions' div (at the top of the window)
         heatmapColorSchmeme: ["#565756", "#777877", "#999999", "#B8B8B8", "#D6D6D6"], //Color of the heat map, the strongest is the first one
+        heatlineColorSchmeme: ["#141414", "#3D3D3D", "#5E5E5E", "#808080", "#999999"], //Color of the heat map, the strongest is the first one
         hiddenLineOpacity: .2, //Opacity of the lines when hidden
         linesContainerClass: "lines", //Container of the lines displayed when a community is clicked
         svgContainer: "#map svg",
         markerClass: "marker" //Class of the markers on the map
     },
         _elementPicked, //Contains "hospital" or "community" depending on what has been clicked on the map
+        _idElementPicked, //Contains the id of the chosen element
         _compareMode = false, //Indicates if the compare mode is active
         _borderCommunities = [1,8,28,30,31,37,47,50,53,55,63,65,66,75,86,101,102,104,107,109,115,116,132,138,142,150,157,167,168,169,170,181,183,185,198,199,210,216,230,240,241,245,256,257,259,261,263,272,276,281,285,297,302,304,307,309,315,322,330,336,340,342,343,343,366,367];
     
@@ -91,7 +93,7 @@ var app = (function() {
     var hospitalClicked = function(d, marker) {
         var target = "sidebar";
         if(_compareMode) {
-            if(_elementPicked !== "hospital")
+            if(_elementPicked !== "hospital" || d.id === _idElementPicked)
                 return;
             hideMessage();
             target = "panel";
@@ -101,9 +103,13 @@ var app = (function() {
         }
         
         _elementPicked = "hospital";
+        _idElementPicked = d.id;
         
         urbanAreaModule.reset();
         markerModule.reset();
+        
+        //We highlight the marker
+        markerModule.highlightMarker(d.id);
         
         //We delete the lines
         urbanAreaModule.deleteLines();
@@ -149,25 +155,13 @@ var app = (function() {
                 .data([{id: topCommunity.id_town}])
                 .on("mouseover", function() {
                     var color = _heatmapColor(topCommunity.patients / totalPatients);
-                    urbanAreaModule.setFillOpacity(.3);
-                    urbanAreaModule.setAreaStyle(topCommunity.id_town, {
-                        color: color,
-                        fillOpacity: 1
-                    });
-                    
-                    d3.select(this)
-                        .classed("hovered", true);
+                    d3.select(urbanAreaModule.getAreaById(topCommunity.id_town)._path).classed("hovered", true);
+                    d3.select(this).classed("hovered", true);
                 })
                 .on("mouseout", function() {
                     urbanAreaModule.setFillOpacity(1);
-                    urbanAreaModule.setAreaStyle(topCommunity.id_town, {
-                        color: defaultStyle.color,
-                        opacity: defaultStyle.opacity,
-                        weight: defaultStyle.weight
-                    });
-                    
-                    d3.select(this)
-                        .classed("hovered", false);
+                    d3.select(urbanAreaModule.getAreaById(topCommunity.id_town)._path).classed("hovered", false);
+                    d3.select(this).classed("hovered", false);
                 });
             currentRow.append("td")
                 .text(getUrbanArea(topCommunity.id_town).properties.town);
@@ -256,7 +250,7 @@ var app = (function() {
     var areaClicked = function(layerClicked, center) {
         var target = "sidebar";
         if(_compareMode) {
-            if(_elementPicked !== "community")
+            if(_elementPicked !== "community" || layerClicked.id === _idElementPicked)
                 return;
             hideMessage();
             target = "panel";
@@ -266,6 +260,7 @@ var app = (function() {
         }
         
         _elementPicked = "community";
+        _idElementPicked = layerClicked.id;
         
         urbanAreaModule.reset();
         markerModule.reset();
@@ -302,6 +297,9 @@ var app = (function() {
         layerClicked.topHospitals.forEach(function(topHospital) {
             totalPatients += topHospital.patients;
         });
+        
+        //We highlight the community
+        d3.select(urbanAreaModule.getAreaById(layerClicked.id)._path).classed("hovered", true);
         
         layerClicked.topHospitals.forEach(function(topHospital) {
             var percentage = (topHospital.percentage === null) ? "–" : ((topHospital.percentage * 100 <= 1) ? "<1" : Math.round(topHospital.percentage * 100));
@@ -348,6 +346,7 @@ var app = (function() {
             d3.select(marker)
                 .style("opacity", 1);
             markerModule.addSelectedMarker(marker);
+            markerModule.highlightMarker(topHospital.id_hospital);
             
             //We add the line
             var originCoords = mapModule.getMap().latLngToLayerPoint([center.lat, center.lng]);
@@ -366,19 +365,31 @@ var app = (function() {
                     }
                 }])
                 .append("line")
+                .style("stroke", function() {
+                    var ratio = topHospital.patients / totalPatients;
+                    if(ratio > .5)
+                        return _config.heatlineColorSchmeme[0];
+                    if(ratio > .5)
+                         return _config.heatlineColorSchmeme[1];
+                    if(ratio > .3)
+                         return _config.heatlineColorSchmeme[2];
+                    if(ratio > .1)
+                         return _config.heatlineColorSchmeme[3];
+                    return _config.heatlineColorSchmeme[4];
+                })
                 .style("stroke-width", function() {
                     var ratio = topHospital.patients / totalPatients;
                     var thickness;
                     if(ratio > .6)
-                        thickness = 6;
+                        thickness = 7;
                     else if(ratio > .5)
-                        thickness = 5;
+                        thickness = 6;
                     else if(ratio > .3)
-                        thickness = 4;
+                        thickness = 5;
                     else if(ratio > .1)
-                        thickness = 3;
+                        thickness = 4;
                     else
-                        thickness = 2;
+                        thickness = 3;
                     return thickness+"px";
                 })
                 .attr("x1", originCoords.x)

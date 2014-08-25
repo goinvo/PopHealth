@@ -32,10 +32,10 @@ var urbanAreaModule = (function() {
     };
     
     /*
-        _getAreaById(id)
+        getAreaById(id)
        Returns the layer whose id is id
     */
-    var _getAreaById = function(id) {
+    var getAreaById = function(id) {
         var layers = _feature.getLayers();
         var result = null;
         for(var i = 0; i < layers.length; i++) {
@@ -232,6 +232,7 @@ var urbanAreaModule = (function() {
             layer["dataId"] = null;
             layer.removeEventListener("mouseover");
             layer.removeEventListener("mouseout");
+            d3.select(layer._path).classed("hovered", false);
         });
     };
     
@@ -283,7 +284,7 @@ var urbanAreaModule = (function() {
         Sets the style of the area whose id is id to style
     */
     var setAreaStyle = function(id, style) {
-        var layer = _getAreaById(id);
+        var layer = getAreaById(id);
         if(layer === null || layer === undefined) {
             console.log("urbanAreaModule.setAreaStyle: layer shouldn't be null or undefined");
             return;
@@ -323,7 +324,7 @@ var urbanAreaModule = (function() {
         If one of the arguments is actually a function, it is executed passing it as first and only parameter the event caught
     */
     var setAreaMouseover = function(id, callback, args) {
-        var layer = _getAreaById(id);
+        var layer = getAreaById(id);
         if(layer === null || layer === undefined) {
             console.log("urbanAreaModule.setAreaMouseover: layer shouldn't be null or undefined");
             return;
@@ -354,7 +355,7 @@ var urbanAreaModule = (function() {
         If one of the arguments is actually a function, it is executed passing it as first and only parameter the event caught
     */
     var setAreaMouseout = function(id, callback, args) {
-        var layer = _getAreaById(id);
+        var layer = getAreaById(id);
         if(layer === null || layer === undefined) {
             console.log("urbanAreaModule.setAreaMouseout: layer shouldn't be null or undefined");
             return;
@@ -422,6 +423,7 @@ var urbanAreaModule = (function() {
         setAreaMouseout: setAreaMouseout,
         getAreaData: getAreaData,
         getId: getId,
-        deleteLines: deleteLines
+        deleteLines: deleteLines,
+        getAreaById: getAreaById
     };
 })();

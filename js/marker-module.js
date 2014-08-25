@@ -2,10 +2,11 @@ var markerModule = (function() {
     var _config = {
         wrapper: "#map svg",
         icon: "icons/hospital.svg",
+        iconHovered: "icons/hospital-hovered.svg",
         containerClass: "markers",
         markerClass: "marker",
         heatmapColorSchmeme: ["#565756", "#777877", "#999999", "#B8B8B8", "#D6D6D6"],
-        hiddenMarkerOpacity: .2
+        hiddenMarkerOpacity: .5
     };
     
     var _markers,
@@ -17,7 +18,7 @@ var markerModule = (function() {
         Returns the size of the markers
     */
     var _getMarkerSize = function() {
-        return Math.round(mapModule.getMap().getZoom() * 30 / 14);
+        return Math.round(mapModule.getMap().getZoom() * 30 / (12 + (9 - mapModule.getMap().getZoom())));
     };
     
     /*
@@ -276,6 +277,7 @@ var markerModule = (function() {
     */
     var reset = function() {
         d3.selectAll("."+_config.markerClass)
+            .attr("xlink:href", _config.icon)
             .style("opacity", 1);
         
         _markersSelected = [];
@@ -334,6 +336,16 @@ var markerModule = (function() {
         _markersSelected.push(marker);  
     };
     
+    /*
+        highlightMaker(id)
+        Changes the icon of the marker whose id is id to the hover icon
+    */
+    var highlightMarker = function(id) {
+         d3.selectAll("."+_config.markerClass)
+            .filter(function(d) {return d.id === id;})
+            .attr("xlink:href", _config.iconHovered)
+    };
+    
     return {
         init: init,
         reset: reset,
@@ -342,6 +354,7 @@ var markerModule = (function() {
         getMarker: getMarker,
         hideMarkers: hideMarkers,
         restoreSelectedMarkers: restoreSelectedMarkers,
-        addSelectedMarker: addSelectedMarker
+        addSelectedMarker: addSelectedMarker,
+        highlightMarker: highlightMarker
     };
 })();

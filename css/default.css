@@ -36,6 +36,12 @@ svg .lines line {
     stroke: #dc254f;
 }
 
+path.hovered {
+    stroke: #CC1714;
+    stroke-width: 3;
+    stroke-opacity: 1;
+}
+
 /* ----- NAV BAR ----- */
 nav {
     position: absolute;
@@ -259,8 +265,9 @@ aside .toolbar ::-moz-placeholder {
 }
 
 .card tr.hovered td {
-    background-color: #FF5F40;
+    background-color: #CC1714;
     color: #fff;
+    cursor: default;
 }
 
 .card tr:nth-child(odd) {
