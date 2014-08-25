@@ -42,29 +42,19 @@ var sidebar = (function() {
         sidebarCard
             .classed("fadeInUp", false) //Needed to remove the animate.css effect
             .classed("dragged", true)
-            .style(function(d) {
-                d.y = d3.event.y;
-                return {
-                    "-webkit-transform": "translateY("+d.y+"px)",
-                    "-moz-transform": "translateY("+d.y+"px)",
-                    "-ms-transform": "translateY("+d.y+"px)",
-                    "transform": "translateY("+d.y+"px)"
-                };
-            });
+            .style("-webkit-transform", function(d) {d.y = d3.event.y; return "translateY("+d.y+"px)";})
+            .style("-moz-transform", function(d) {d.y = d3.event.y; return "translateY("+d.y+"px)";})
+            .style("-ms-transform", function(d) {d.y = d3.event.y; return "translateY("+d.y+"px)";})
+            .style("transform", function(d) {d.y = d3.event.y; return "translateY("+d.y+"px)";});
                 
         if(_compareMode) {
             panelCard
                 .classed("fadeInUp", false) //Needed to remove the animate.css effect
                 .classed("dragged", true)
-                .style(function(d) {
-                    d.y = d3.event.y;
-                    return {
-                        "-webkit-transform": "translateY("+d.y+"px)",
-                        "-moz-transform": "translateY("+d.y+"px)",
-                        "-ms-transform": "translateY("+d.y+"px)",
-                        "transform": "translateY("+d.y+"px)"
-                    };
-                });
+                .style("-webkit-transform", function(d) {d.y = d3.event.y; return "translateY("+d.y+"px)";})
+                .style("-moz-transform", function(d) {d.y = d3.event.y; return "translateY("+d.y+"px)";})
+                .style("-ms-transform", function(d) {d.y = d3.event.y; return "translateY("+d.y+"px)";})
+                .style("transform", function(d) {d.y = d3.event.y; return "translateY("+d.y+"px)";});
         }
         
         var cardPosition = sidebarCard.node().offsetTop;
