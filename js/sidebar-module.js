@@ -152,7 +152,7 @@ var sidebar = (function() {
         //We move the card to the final position in the DOM
         if(_cardMovement === "up")
             sidebarCard.node().parentNode.insertBefore(sidebarCard.node(), _lastSidebarCardMoved.node());
-        else
+        else if(_lastSidebarCardMoved !== null)
             sidebarCard.node().parentNode.insertBefore(_lastSidebarCardMoved.node(), sidebarCard.node());
         
         //We reinitialize d.y
@@ -169,7 +169,7 @@ var sidebar = (function() {
             
             if(_cardMovement === "up")
                 panelCard.node().parentNode.insertBefore(panelCard.node(), _lastPanelCardMoved.node());
-            else
+            else if(_lastPanelCardMoved !== null)
                 panelCard.node().parentNode.insertBefore(_lastPanelCardMoved.node(), panelCard.node());
             
             //We reinitialize d.y
@@ -245,8 +245,13 @@ var sidebar = (function() {
     */
     var _alignCards = function(index) {    
         var panelCard = d3.selectAll(_config.comparePanelElem+" ."+_config.cardClass).filter(function(d) {return d.id === index;}),    
-            sidebarCard = d3.selectAll(_config.panelElem+" ."+_config.cardClass).filter(function(d) {return d.id === index;}),
-            topOffset = {
+            sidebarCard = d3.selectAll(_config.panelElem+" ."+_config.cardClass).filter(function(d) {return d.id === index;});
+        
+        //We reset the margins
+        sidebarCard.style("margin-bottom", _config.cardMarginBottom+"px");
+        panelCard.style("margin-bottom", _config.cardMarginBottom+"px");
+        
+        var topOffset = {
                 sidebarCard: sidebarCard.node().nextSibling.offsetTop,
                 panelCard: panelCard.node().nextSibling.offsetTop
             },
@@ -279,7 +284,12 @@ var sidebar = (function() {
                 .classed("fa-toggle-down", !isHidden)
                 .classed("fa-minus", isHidden);
 
-            if(id + 1 < _cardIndex) {
+            console.log("id "+id);
+            console.log("_cardIndex "+_cardIndex);
+            console.log("***");
+            
+            if(id + 1 <= _cardIndex) {
+                console.log("hey hey");
                 panelCard.style("margin-bottom", _config.cardMarginBottom+"px");
                 sidebarCard.style("margin-bottom", _config.cardMarginBottom+"px");
                 _alignCards(id);
