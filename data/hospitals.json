@@ -152,31 +152,6 @@
                     "name": "Heart Failure",
                     "patients": 33,
                     "percentage": 0.02
-                },
-                {
-                    "name": null,
-                    "patients": null,
-                    "percentage": null
-                },
-                {
-                    "name": null,
-                    "patients": null,
-                    "percentage": null
-                },
-                {
-                    "name": null,
-                    "patients": null,
-                    "percentage": null
-                },
-                {
-                    "name": null,
-                    "patients": null,
-                    "percentage": null
-                },
-                {
-                    "name": null,
-                    "patients": null,
-                    "percentage": null
                 }
             ]
         },
@@ -1621,58 +1596,7 @@
             "latitude": 42.33757285,
             "longitude": -71.1077818722085,
             "topCommunities": [],
-            "topDRGs": [
-                {
-                    "name": null,
-                    "patients": null,
-                    "percentage": null
-                },
-                {
-                    "name": null,
-                    "patients": null,
-                    "percentage": null
-                },
-                {
-                    "name": null,
-                    "patients": null,
-                    "percentage": null
-                },
-                {
-                    "name": null,
-                    "patients": null,
-                    "percentage": null
-                },
-                {
-                    "name": null,
-                    "patients": null,
-                    "percentage": null
-                },
-                {
-                    "name": null,
-                    "patients": null,
-                    "percentage": null
-                },
-                {
-                    "name": null,
-                    "patients": null,
-                    "percentage": null
-                },
-                {
-                    "name": null,
-                    "patients": null,
-                    "percentage": null
-                },
-                {
-                    "name": null,
-                    "patients": null,
-                    "percentage": null
-                },
-                {
-                    "name": null,
-                    "patients": null,
-                    "percentage": null
-                }
-            ]
+            "topDRGs": []
         },
         {
             "id": 18,
@@ -1871,21 +1795,6 @@
                     "name": "Knee Joint Replacement",
                     "patients": 29,
                     "percentage": 0.09
-                },
-                {
-                    "name": null,
-                    "patients": null,
-                    "percentage": null
-                },
-                {
-                    "name": null,
-                    "patients": null,
-                    "percentage": null
-                },
-                {
-                    "name": null,
-                    "patients": null,
-                    "percentage": null
                 }
             ]
         },
@@ -2630,58 +2539,7 @@
             "latitude": 42.3466009,
             "longitude": -71.1419091,
             "topCommunities": [],
-            "topDRGs": [
-                {
-                    "name": null,
-                    "patients": null,
-                    "percentage": null
-                },
-                {
-                    "name": null,
-                    "patients": null,
-                    "percentage": null
-                },
-                {
-                    "name": null,
-                    "patients": null,
-                    "percentage": null
-                },
-                {
-                    "name": null,
-                    "patients": null,
-                    "percentage": null
-                },
-                {
-                    "name": null,
-                    "patients": null,
-                    "percentage": null
-                },
-                {
-                    "name": null,
-                    "patients": null,
-                    "percentage": null
-                },
-                {
-                    "name": null,
-                    "patients": null,
-                    "percentage": null
-                },
-                {
-                    "name": null,
-                    "patients": null,
-                    "percentage": null
-                },
-                {
-                    "name": null,
-                    "patients": null,
-                    "percentage": null
-                },
-                {
-                    "name": null,
-                    "patients": null,
-                    "percentage": null
-                }
-            ]
+            "topDRGs": []
         },
         {
             "id": 28,
@@ -2689,58 +2547,7 @@
             "latitude": 42.5289964,
             "longitude": -70.9376782,
             "topCommunities": [],
-            "topDRGs": [
-                {
-                    "name": null,
-                    "patients": null,
-                    "percentage": null
-                },
-                {
-                    "name": null,
-                    "patients": null,
-                    "percentage": null
-                },
-                {
-                    "name": null,
-                    "patients": null,
-                    "percentage": null
-                },
-                {
-                    "name": null,
-                    "patients": null,
-                    "percentage": null
-                },
-                {
-                    "name": null,
-                    "patients": null,
-                    "percentage": null
-                },
-                {
-                    "name": null,
-                    "patients": null,
-                    "percentage": null
-                },
-                {
-                    "name": null,
-                    "patients": null,
-                    "percentage": null
-                },
-                {
-                    "name": null,
-                    "patients": null,
-                    "percentage": null
-                },
-                {
-                    "name": null,
-                    "patients": null,
-                    "percentage": null
-                },
-                {
-                    "name": null,
-                    "patients": null,
-                    "percentage": null
-                }
-            ]
+            "topDRGs": []
         },
         {
             "id": 29,
@@ -3254,11 +3061,6 @@
                     "name": "Oth Bck & Nck, Fx and Inj Dx",
                     "patients": 29,
                     "percentage": 0.12
-                },
-                {
-                    "name": null,
-                    "patients": null,
-                    "percentage": null
                 }
             ]
         },
@@ -4099,41 +3901,6 @@
                     "name": "Other Pneumonia",
                     "patients": 30,
                     "percentage": 0.05
-                },
-                {
-                    "name": null,
-                    "patients": null,
-                    "percentage": null
-                },
-                {
-                    "name": null,
-                    "patients": null,
-                    "percentage": null
-                },
-                {
-                    "name": null,
-                    "patients": null,
-                    "percentage": null
-                },
-                {
-                    "name": null,
-                    "patients": null,
-                    "percentage": null
-                },
-                {
-                    "name": null,
-                    "patients": null,
-                    "percentage": null
-                },
-                {
-                    "name": null,
-                    "patients": null,
-                    "percentage": null
-                },
-                {
-                    "name": null,
-                    "patients": null,
-                    "percentage": null
                 }
             ]
         },

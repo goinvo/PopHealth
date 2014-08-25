@@ -237,7 +237,7 @@ var app = (function() {
         
         node.append("div")
             .classed("footnote", true)
-            .html("<sup>1</sup> Only the top 10 DRGs are represented");
+            .html("<sup>1</sup> Only the top 10<sup>-</sup> DRGs are represented");
         
         sidebar.addcard(node, true, target);
     };
