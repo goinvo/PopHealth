@@ -8,7 +8,8 @@ var app = (function() {
         markerClass: "marker" //Class of the markers on the map
     },
         _elementPicked, //Contains "hospital" or "community" depending on what has been clicked on the map
-        _compareMode = false; //Indicates if the compare mode is active
+        _compareMode = false, //Indicates if the compare mode is active
+        _borderCommunities = [1,8,28,30,31,37,47,50,53,55,63,65,66,75,86,101,102,104,107,109,115,116,132,138,142,150,157,167,168,169,170,181,183,185,198,199,210,216,230,240,241,245,256,257,259,261,263,272,276,281,285,297,302,304,307,309,315,322,330,336,340,342,343,343,366,367];
     
     /*
         init
@@ -126,14 +127,14 @@ var app = (function() {
         var currentRow = table.append("tr");
         currentRow.append("th")
             .classed("w40", true)
-            .html("Community");
+            .html("Community<sup>1</sup>");
         currentRow.append("th")
             .classed("w30", true)
             .style("text-align", "center")
             .text("Patients");
         currentRow.append("th")
             .style("text-align", "center")
-            .text("% of discharges");
+            .html("% of discharges<sup>2</sup>");
         
         var totalPatients = 0;
         d.topCommunities.forEach(function(topCommunity) {
@@ -194,6 +195,10 @@ var app = (function() {
             currentRow.append("td");
         }
         
+        node.append("div")
+            .classed("footnote", true)
+            .html("<sup>1</sup> Only the top 10<sup>-</sup> communities are represented<br><sup>2</sup> Percentage of the community discharges");
+        
         sidebar.addcard(node, true, target);
         
         /* DRGs */
@@ -205,7 +210,7 @@ var app = (function() {
         var currentRow = table.append("tr");
         currentRow.append("th")
             .classed("w40", true)
-            .html("Name");
+            .html("Name<sup>1</sup>");
         currentRow.append("th")
             .classed("w30", true)
             .style("text-align", "center")
@@ -236,7 +241,11 @@ var app = (function() {
             currentRow.append("td");
         }
         
-        sidebar.addcard(node, false, target);
+        node.append("div")
+            .classed("footnote", true)
+            .html("<sup>1</sup> Only the top 10 DRGs are represented");
+        
+        sidebar.addcard(node, true, target);
     };
     
     /*
@@ -268,6 +277,8 @@ var app = (function() {
         urbanAreaModule.deleteLines();
             
         _displayGeneralCard(layerClicked, target);
+                
+        var isBorderCommunity = (_borderCommunities.indexOf(layerClicked.id) !== -1) ? true : false;
         
         /* Patients' origin */
         var node = d3.select(document.createElement("div"));
@@ -278,7 +289,7 @@ var app = (function() {
         var currentRow = table.append("tr");
         currentRow.append("th")
             .classed("w50", true)
-            .html("Hospital");
+            .html("Hospital<sup>1</sup>"+((isBorderCommunity) ? "<sup>2</sup>" : ""));
         currentRow.append("th")
             .classed("w25", true)
             .style("text-align", "center")
@@ -384,6 +395,10 @@ var app = (function() {
             currentRow.append("td");
             currentRow.append("td");
         }
+        
+        node.append("div")
+            .classed("footnote", true)
+            .html("<sup>1</sup> These data only take into account the patients coming from the top 10<sup>-</sup> communities"+((isBorderCommunity) ? "<br/><sup>2</sup> No relevant data for people going to out-of-state hospitals": ""));
         
         sidebar.addcard(node, true, target);
     };
