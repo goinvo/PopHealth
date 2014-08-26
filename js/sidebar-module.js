@@ -350,13 +350,11 @@ var sidebar = (function() {
             app.displayMessage("Pick up another "+app.getMode()+".");
             sidebar.style("width", (sidebarWidth * 2 + offset)+"px");
             
-            //We apply specific styles to avoid the issues with the scrollbars
-            if(navigator.appVersion.indexOf("Win") !== -1) {
-                if(window.mozInnerScreenX === undefined) //For the browser on Windows except FF
-                    sidebar.select(_config.panelElem).style("width", sidebarWidth+"px");
-                else //Firefox
-                    sidebar.select(_config.panelElem).style("width", (sidebarWidth + offset)+"px");
-            }
+            //We apply specific styles to avoid the issues with the scrollbars on Firefox
+            if(navigator.appVersion.indexOf("Win") !== -1 && window.mozInnerScreenX !== undefined)
+                sidebar.select(_config.panelElem).style("width", (sidebarWidth + offset)+"px");
+            else
+                sidebar.select(_config.panelElem).style("width", sidebarWidth+"px");
         }
         else {
             app.hideMessage();
