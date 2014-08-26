@@ -5,7 +5,8 @@ var sidebar = (function() {
         comparePanelElem: ".compare-panel", //Second column displayed when the compare mode is active
         cardClass: "card",
         toolbarElem: ".toolbar", //The toolbar which contains the search field and compare button
-        cardMarginBottom: 15 //The default margin at the bottom of the cards
+        cardMarginBottom: 15, //The default margin at the bottom of the cards
+        sidebarInitialWidth: 350
     },
         _isCardVisible = { //Contains the card visible
             hospital: []
@@ -335,7 +336,6 @@ var sidebar = (function() {
         app.compareMode(_compareMode);
         
         var sidebar = d3.select(_config.sidebarElem);
-        var sidebarWidth = parseInt(sidebar.style("width")) + parseInt(sidebar.style("padding-right"));
         var offset = 0; //Offset for the scrollbar
         
         //We apply specific styles to avoid the issues with the scrollbars
@@ -347,21 +347,22 @@ var sidebar = (function() {
         }
         
         if(_compareMode) {
-            app.displayMessage("Pick up another "+app.getMode()+".");
-            sidebar.style("width", (sidebarWidth * 2 + offset)+"px");
+            sidebar.style("width", (_config.sidebarInitialWidth * 2 + offset)+"px");
             
             //We apply specific styles to avoid the issues with the scrollbars on Firefox
             if(navigator.appVersion.indexOf("Win") !== -1 && window.mozInnerScreenX !== undefined)
-                sidebar.select(_config.panelElem).style("width", (sidebarWidth + offset)+"px");
+                sidebar.select(_config.panelElem).style("width", (_config.sidebarInitialWidth + offset)+"px");
             else
-                sidebar.select(_config.panelElem).style("width", sidebarWidth+"px");
+                sidebar.select(_config.panelElem).style("width", _config.sidebarInitialWidth+"px");
+
+            setTimeout(function() {app.displayMessage("Pick up another "+app.getMode()+".");}, 500);
         }
         else {
             app.hideMessage();
             if(navigator.appVersion.indexOf("Win") !== -1 && window.mozInnerScreenX !== undefined) //For Firefox on Windows
-                sidebar.style("width", ((sidebarWidth - offset) / 2)+"px");
+                sidebar.style("width", (_config.sidebarInitialWidth - offset)+"px");
             else
-                sidebar.style("width", (sidebarWidth / 2 + offset)+"px");
+                sidebar.style("width", (_config.sidebarInitialWidth + offset)+"px");
             
             reset("panel");
             resetCardsOffset();
@@ -380,11 +381,20 @@ var sidebar = (function() {
             .style("margin-top", _config.cardMarginTop+"px");
     };
     
+    /*
+        getSidebarWidth
+        Returns the current width of the sidebar
+    */
+    var getSidebarWidth = function() {
+        return parseInt(d3.select(_config.sidebarElem).style("width"));
+    }
+    
     return {
         init: init,
         reset: reset,
         addcard: addcard,
         compare: compare,
-        resetCardsOffset: resetCardsOffset
+        resetCardsOffset: resetCardsOffset,
+        getSidebarWidth: getSidebarWidth
     };
 })();

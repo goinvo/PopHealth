@@ -433,6 +433,15 @@ var app = (function() {
             .classed("fadeInDown", true)
             .classed("fadeOutUp", false)
             .html(content);
+        
+        //We center the message in the available width
+        var sidebarWidth = sidebar.getSidebarWidth();
+        d3.select(_config.messageElem).style({"width": "calc(100% - "+sidebarWidth+"px)", "padding-right": sidebarWidth+"px"});
+        
+//        if(_compareMode)
+//            d3.select(_config.messageElem).style({"width": "calc(100% - 700px)", "padding-right": "700px"});
+//        else
+//            d3.select(_config.messageElem).style({"width": "calc(100% - 350px)", "padding-right": "350px"});
     };
     
     /*

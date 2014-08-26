@@ -100,7 +100,7 @@ aside {
     top: 60px;
     right: 0;
     z-index: 200;
-    overflow: scroll;
+    overflow-y: scroll;
     width: 350px;
     height: calc(100% - 60px);
     background-color: rgba(238, 241, 244, .9);
