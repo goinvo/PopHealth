@@ -300,7 +300,6 @@ var sidebar = (function() {
             console.log("***");
             
             if(id + 1 <= _cardIndex) {
-                console.log("hey hey");
                 panelCard.style("margin-bottom", _config.cardMarginBottom+"px");
                 sidebarCard.style("margin-bottom", _config.cardMarginBottom+"px");
                 _alignCards(id);
@@ -339,30 +338,17 @@ var sidebar = (function() {
         var offset = 0; //Offset for the scrollbar
         
         //We apply specific styles to avoid the issues with the scrollbars
-        if(navigator.appVersion.indexOf("Win") !== -1) {
-            if(window.mozInnerScreenX === undefined) //All browsers except FF
-                offset = 17;
-            else //Firefox
-                offset = -17;
-        }
+        if(navigator.appVersion.indexOf("Win") !== -1)
+            offset = 17;
         
         if(_compareMode) {
             sidebar.style("width", (_config.sidebarInitialWidth * 2 + offset)+"px");
-            
-            //We apply specific styles to avoid the issues with the scrollbars on Firefox
-            if(navigator.appVersion.indexOf("Win") !== -1 && window.mozInnerScreenX !== undefined)
-                sidebar.select(_config.panelElem).style("width", (_config.sidebarInitialWidth + offset)+"px");
-            else
-                sidebar.select(_config.panelElem).style("width", _config.sidebarInitialWidth+"px");
-
+            sidebar.select(_config.panelElem).style("width", _config.sidebarInitialWidth+"px");
             setTimeout(function() {app.displayMessage("Pick up another "+app.getMode()+".");}, 500);
         }
         else {
             app.hideMessage();
-            if(navigator.appVersion.indexOf("Win") !== -1 && window.mozInnerScreenX !== undefined) //For Firefox on Windows
-                sidebar.style("width", (_config.sidebarInitialWidth - offset)+"px");
-            else
-                sidebar.style("width", (_config.sidebarInitialWidth + offset)+"px");
+            sidebar.style("width", (_config.sidebarInitialWidth + offset)+"px");
             
             reset("panel");
             resetCardsOffset();
