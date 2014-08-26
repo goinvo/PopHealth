@@ -27,6 +27,12 @@ var sidebar = (function() {
             .origin(function(d) {return {x: 0, y: d.y};})
             .on("drag", _cardDragged)
             .on("dragend", _cardDragEnded);
+        
+        //We apply specific styles to avoid the issues with the scrollbars
+        if(navigator.appVersion.indexOf("Win") !== -1) {
+            d3.select(_config.sidebarElem).style("width", (parseInt(d3.select(_config.sidebarElem).style("width")) + 2 * 17)+"px");
+            d3.select(_config.sidebarElem+" "+_config.toolbarElem+" a").style("right", (parseInt(d3.select(_config.sidebarElem+" "+_config.toolbarElem+" a").style("right")) + 17)+"px");
+        }
     };
     
     /*
@@ -325,15 +331,22 @@ var sidebar = (function() {
         app.compareMode(_compareMode);
         
         var sidebar = d3.select(_config.sidebarElem);
-        var sidebarWidth = parseInt(sidebar.style("width"));
+        var sidebarWidth = parseInt(sidebar.style("width")) + parseInt(sidebar.style("padding-right"));
+        var offset = 0; //Offset for the scrollbar
+        
+        //We apply specific styles to avoid the issues with the scrollbars
+        if(navigator.appVersion.indexOf("Win") !== -1) {
+            offset = 17;
+        }
         
         if(_compareMode) {
             app.displayMessage("Pick up another "+app.getMode()+".");
-            sidebar.style("width", (sidebarWidth * 2)+"px");
+            sidebar.style("width", (sidebarWidth * 2 + offset)+"px");
+            sidebar.select(_config.panelElem).style("width", sidebarWidth+"px"); //For the browser on Windows
         }
         else {
             app.hideMessage();
-            sidebar.style("width", (sidebarWidth / 2)+"px");
+            sidebar.style("width", (sidebarWidth / 2 + offset)+"px");
             
             reset("panel");
             resetCardsOffset();
