@@ -30,7 +30,11 @@ var sidebar = (function() {
         
         //We apply specific styles to avoid the issues with the scrollbars
         if(navigator.appVersion.indexOf("Win") !== -1) {
-            d3.select(_config.sidebarElem).style("width", (parseInt(d3.select(_config.sidebarElem).style("width")) + 2 * 17)+"px");
+            if(window.mozInnerScreenX === undefined) //All browsers except FF
+                d3.select(_config.sidebarElem).style("width", (parseInt(d3.select(_config.sidebarElem).style("width")) + 2 * 17)+"px");
+            else //Firefox
+                d3.select(_config.sidebarElem).style("width", (parseInt(d3.select(_config.sidebarElem).style("width")) + 17)+"px");
+            
             d3.select(_config.sidebarElem+" "+_config.toolbarElem+" a").style("right", (parseInt(d3.select(_config.sidebarElem+" "+_config.toolbarElem+" a").style("right")) + 17)+"px");
         }
     };
@@ -336,17 +340,30 @@ var sidebar = (function() {
         
         //We apply specific styles to avoid the issues with the scrollbars
         if(navigator.appVersion.indexOf("Win") !== -1) {
-            offset = 17;
+            if(window.mozInnerScreenX === undefined) //All browsers except FF
+                offset = 17;
+            else //Firefox
+                offset = -17;
         }
         
         if(_compareMode) {
             app.displayMessage("Pick up another "+app.getMode()+".");
             sidebar.style("width", (sidebarWidth * 2 + offset)+"px");
-            sidebar.select(_config.panelElem).style("width", sidebarWidth+"px"); //For the browser on Windows
+            
+            //We apply specific styles to avoid the issues with the scrollbars
+            if(navigator.appVersion.indexOf("Win") !== -1) {
+                if(window.mozInnerScreenX === undefined) //For the browser on Windows except FF
+                    sidebar.select(_config.panelElem).style("width", sidebarWidth+"px");
+                else //Firefox
+                    sidebar.select(_config.panelElem).style("width", (sidebarWidth + offset)+"px");
+            }
         }
         else {
             app.hideMessage();
-            sidebar.style("width", (sidebarWidth / 2 + offset)+"px");
+            if(navigator.appVersion.indexOf("Win") !== -1 && window.mozInnerScreenX !== undefined) //For Firefox on Windows
+                sidebar.style("width", ((sidebarWidth - offset) / 2)+"px");
+            else
+                sidebar.style("width", (sidebarWidth / 2 + offset)+"px");
             
             reset("panel");
             resetCardsOffset();
