@@ -232,7 +232,15 @@ var urbanAreaModule = (function() {
             layer["dataId"] = null;
             layer.removeEventListener("mouseover");
             layer.removeEventListener("mouseout");
-            d3.select(layer._path).classed("hovered", false);
+            
+            if(layer._path !== undefined)
+                d3.select(layer._path).classed("hovered", false);
+            else {
+                var layers = layer._layers;
+                for(var key in layers) {
+                    d3.select(layers[key]._path).classed("hovered", false);
+                }
+            }
         });
     };
     

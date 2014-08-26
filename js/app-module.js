@@ -299,7 +299,14 @@ var app = (function() {
         });
         
         //We highlight the community
-        d3.select(urbanAreaModule.getAreaById(layerClicked.id)._path).classed("hovered", true);
+        if(urbanAreaModule.getAreaById(layerClicked.id)._path !== undefined)
+            d3.select(urbanAreaModule.getAreaById(layerClicked.id)._path).classed("hovered", true);
+        else {
+            var layers = urbanAreaModule.getAreaById(layerClicked.id)._layers;
+            for(var key in layers) {
+                d3.select(layers[key]._path).classed("hovered", true);
+            }
+        }
         
         layerClicked.topHospitals.forEach(function(topHospital) {
             var percentage = (topHospital.percentage === null) ? "–" : ((topHospital.percentage * 100 <= 1) ? "<1" : Math.round(topHospital.percentage * 100));
