@@ -29,6 +29,8 @@ var app = (function() {
     var _displayGeneralCard = function(d, target) {
         var node = d3.select(document.createElement("div"));
         
+        node.data([{id: 0}]);
+        
         if(_elementPicked === "hospital") {
             node.append("h1").html(d.name+" <a href='#' target='_blank'><i class='fa fa-external-link'></i></a>");
             node.append("div")

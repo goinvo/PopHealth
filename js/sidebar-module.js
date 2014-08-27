@@ -17,7 +17,13 @@ var sidebar = (function() {
         _dragBehavior, //The d3 function which contains the drag behavior
         _lastSidebarCardMoved = null, //The last dragged card of the first column
         _lastPanelCardMoved = null, //The one of the compare column
-        _cardMovement; //"up" or "down" depending of the movement the user does with the dragged card
+        _cardMovement, //"up" or "down" depending of the movement the user does with the dragged card
+        _cardsOrder = { //Contains the cards order
+            hospitals: [],
+            areas: []
+        },
+        _cardsTmpOrder = [], //Temporary cards' order
+        _cardsMoved = false;
     
     /*
         init
@@ -48,7 +54,9 @@ var sidebar = (function() {
     var _cardDragged = function(d) {
         var id = d.id;
         var panelCard = d3.selectAll(_config.comparePanelElem+" ."+_config.cardClass).filter(function(d) {return d.id === id;});
-        var sidebarCard = d3.selectAll(_config.panelElem+" ."+_config.cardClass).filter(function(d) {return d.id === id;});    
+        var sidebarCard = d3.selectAll(_config.panelElem+" ."+_config.cardClass).filter(function(d) {return d.id === id;});
+        
+        _cardsMoved = true;
         
         sidebarCard
             .classed("fadeInUp", false) //Needed to remove the animate.css effect
@@ -139,6 +147,40 @@ var sidebar = (function() {
     };
     
     /*
+        _insertElementBefore(array, index1, index2)
+        Moves the position of the element at index1 right before the element at position index2 in the array
+    */
+    var _insertElementBefore = function(array, index1, index2) {
+        var firstPartArray = (index2 !== 0) ? array.slice(0, index2) : [];
+        var secondPartArray = array.slice(index2, array.length);
+        firstPartArray.push(array[index1]);
+        secondPartArray.splice(secondPartArray.indexOf(array[index1]), 1);
+        for(var i = 0; i < firstPartArray.length; i++) {
+            array[i] = firstPartArray[i]; 
+        }
+        for(var i = 0; i < secondPartArray.length; i++) {
+            array[i + firstPartArray.length] = secondPartArray[i];
+        }
+    };
+    
+    /*
+        _insertElementAfter(array, index1, index2)
+        Moves the position of the element at index1 after the element at position index2 in the array
+    */
+    var _insertElementAfter = function(array, index1, index2) {
+        var firstPartArray = array.slice(0, index2 + 1);
+        var secondPartArray = (index2 + 1 === array.length) ? [] : array.slice(index2 + 1, array.length);
+        secondPartArray.unshift(array[index1]);
+        firstPartArray.splice(index1, 1);
+        for(var i = 0; i < firstPartArray.length; i++) {
+            array[i] = firstPartArray[i]; 
+        }
+        for(var i = 0; i < secondPartArray.length; i++) {
+            array[i + firstPartArray.length] = secondPartArray[i];
+        }  
+    };
+    
+    /*
         _cardDradEnded(d)
         Switches the position of the card which was dragged with the one under it's new position
         d is the data of the card which was dragged
@@ -165,6 +207,13 @@ var sidebar = (function() {
             sidebarCard.node().parentNode.insertBefore(sidebarCard.node(), _lastSidebarCardMoved.node());
         else if(_lastSidebarCardMoved !== null)
             sidebarCard.node().parentNode.insertBefore(_lastSidebarCardMoved.node(), sidebarCard.node());
+        
+        //We save the new order
+        var cardsOrderType = (app.getMode() === "hospital") ? "hospitals" : "areas";
+        if(_cardMovement === "up")
+            _insertElementBefore(_cardsOrder[cardsOrderType], _cardsOrder[cardsOrderType].indexOf(id), _cardsOrder[cardsOrderType].indexOf(_lastSidebarCardMoved.datum().id));
+        else
+            _insertElementAfter(_cardsOrder[cardsOrderType], _cardsOrder[cardsOrderType].indexOf(id), _cardsOrder[cardsOrderType].indexOf(_lastSidebarCardMoved.datum().id));
         
         //We reinitialize d.y
         var sidebarCardData = sidebarCard.datum();
@@ -201,17 +250,53 @@ var sidebar = (function() {
                 .style("display", "block");
         }
         
+        var cardsOrderType = (app.getMode() === "hospital") ? "hospitals" : "areas";
+        
+        //We save the original cards' order
+        if(_cardsOrder[cardsOrderType].indexOf(_cardIndex) === -1) { //We assume the whole set of cards change when a new hospital or area is clicked
+            if(app.getMode() === "hospital")
+                _cardsOrder.hospitals.push(_cardIndex);
+            else
+                _cardsOrder.areas.push(_cardIndex);
+        }
+        
         var targetElem = _config.panelElem;
         if(target === "panel") {
             targetElem = _config.comparePanelElem;
             d3.select(targetElem)
                 .style("display", "block");
         }
-            
         
-        var card = d3.select(targetElem)
-            .append("div")
-            .data([{id: _cardIndex, offset: 0, y: 0}])
+        var card;
+        if(_cardsMoved) { //We position the new card in the sidebar according to the saved position
+            if(_cardIndex === 0) { //The first card is inserted as ussual
+                _cardsTmpOrder = [0];
+                card = d3.select(targetElem).append("div");
+            }
+            else { //We determine after which card should be inserted the new one
+                var currentId;
+                for(var i = 0; i < _cardsTmpOrder.length; i++) {
+                    currentId = _cardsTmpOrder[i];
+                    if(_cardsOrder[cardsOrderType].indexOf(_cardIndex) < _cardsOrder[cardsOrderType].indexOf(currentId)) {
+                        _cardsTmpOrder.push(_cardIndex);
+                        _insertElementBefore(_cardsTmpOrder, _cardsTmpOrder.indexOf(_cardIndex), _cardsTmpOrder.indexOf(currentId));
+                        card = document.createElement("div");
+                        card = d3.select(d3.select(targetElem).node().insertBefore(card, d3.selectAll(targetElem+" ."+_config.cardClass).filter(function(d) {return d.id === currentId}).node()));
+                        break;
+                    }
+                }
+                
+                //We insert the card at the end, so as normal
+                if(card === undefined) {
+                    _cardsTmpOrder.push(_cardIndex);
+                    card = d3.select(targetElem).append("div");
+                }
+            }
+        }
+        else
+            card = d3.select(targetElem).append("div");
+
+        card.data([{id: _cardIndex, offset: 0, y: 0}])
             .call(_dragBehavior)
             .classed(_config.cardClass, true)
             .classed("animated fadeInUp", true)
@@ -294,10 +379,6 @@ var sidebar = (function() {
             panelCard.select("i")
                 .classed("fa-toggle-down", !isHidden)
                 .classed("fa-minus", isHidden);
-
-            console.log("id "+id);
-            console.log("_cardIndex "+_cardIndex);
-            console.log("***");
             
             if(id + 1 <= _cardIndex) {
                 panelCard.style("margin-bottom", _config.cardMarginBottom+"px");
