@@ -74,6 +74,10 @@ nav select:focus {
     outline: none;
 }
 
+nav select option {
+    background-color: #3D7399;
+}
+
 /* ----- MESSAGE ----- */
 #message {
     position: absolute;
