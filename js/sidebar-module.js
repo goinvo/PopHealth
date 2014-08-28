@@ -286,7 +286,7 @@ var sidebar = (function() {
                     }
                 }
                 
-                //We insert the card at the end, so as normal
+                //We insert the card at the end, so as usual
                 if(card === undefined) {
                     _cardsTmpOrder.push(_cardIndex);
                     card = d3.select(targetElem).append("div");
@@ -306,9 +306,6 @@ var sidebar = (function() {
                 "-ms-animation-delay": "0s",
                 "animation-delay": "0s"
             });
-        
-        if(_compareMode && _cardIndex - 1 >= 0)
-            _alignCards(_cardIndex - 1);
         
         if(_isCardVisible.hospital[_cardIndex] === undefined)
             _isCardVisible.hospital.push(isOpened);
@@ -331,6 +328,9 @@ var sidebar = (function() {
         card.node()
             .appendChild(node.node());
         
+        if(_compareMode)
+            _alignCards(_cardIndex);
+        
         _cardIndex++;
     };
     
@@ -348,8 +348,8 @@ var sidebar = (function() {
         panelCard.style("margin-bottom", _config.cardMarginBottom+"px");
         
         var topOffset = {
-                sidebarCard: sidebarCard.node().nextSibling.offsetTop,
-                panelCard: panelCard.node().nextSibling.offsetTop
+                sidebarCard: sidebarCard.node().offsetHeight,
+                panelCard: panelCard.node().offsetHeight
             },
             gap = topOffset.sidebarCard - topOffset.panelCard;
 
