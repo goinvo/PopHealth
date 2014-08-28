@@ -80,56 +80,22 @@ var sidebar = (function() {
         var sidebarCardSibling = (d.y < 0) ? d3.select(sidebarCard.node().previousSibling) : d3.select(sidebarCard.node().nextSibling);
         if(_compareMode && !panelCard.empty()) //We also check in the second item has been picked
             var panelCardSibling = (d.y < 0) ? d3.select(panelCard.node().previousSibling) : d3.select(panelCard.node().nextSibling);
-        
+
         while(!sidebarCardSibling.empty()) {
             var cardSiblingPosition = sidebarCardSibling.node().offsetTop;
             var cardSiblingHeight = sidebarCardSibling.node().offsetHeight;
             var cardSiblingMarginBottom = parseInt(sidebarCardSibling.style("margin-bottom"));
             var cardHeight = sidebarCard.node().offsetHeight + parseInt(sidebarCard.style("margin-bottom"));
             
-            if(d.y < 0 && cardPosition + d.y < cardSiblingPosition + (cardSiblingHeight + cardSiblingMarginBottom) / 2) {
-                _lastSidebarCardMoved = sidebarCardSibling;
-                _cardMovement = "up";
+            //The card is initially above the sibling one
+            if(cardPosition < cardSiblingPosition) {
+                //If it is now below the beginning of the sibling
+                if(cardPosition + d.y > cardSiblingPosition) {
+                    _lastSidebarCardMoved = sidebarCardSibling;
+//                    console.log(_lastSidebarCardMoved.node());
+                    _cardMovement = "down";
 
-                sidebarCardSibling
-                    .classed("fadeInUp", false)
-                    .style({
-                        "-webkit-transform": "translateY("+cardHeight+"px)",
-                        "-moz-transform": "translateY("+cardHeight+"px)",
-                        "-ms-transform": "translateY("+cardHeight+"px)",
-                        "transform": "translateY("+cardHeight+"px)"
-                    });
-
-                if(_compareMode && !panelCard.empty()) { //We also check in the second item has been picked
-                    _lastPanelCardMoved = panelCardSibling;
-                    
-                    panelCardSibling
-                        .classed("fadeInUp", false)
-                        .style({
-                            "-webkit-transform": "translateY("+cardHeight+"px)",
-                            "-moz-transform": "translateY("+cardHeight+"px)",
-                            "-ms-transform": "translateY("+cardHeight+"px)",
-                            "transform": "translateY("+cardHeight+"px)"
-                        });
-                }
-            }
-            else if(d.y > 0 && cardPosition + d.y > cardSiblingPosition + (cardSiblingHeight + cardSiblingMarginBottom) / 2) {
-                _lastSidebarCardMoved = sidebarCardSibling;
-                _cardMovement = "down";
-
-                sidebarCardSibling
-                    .classed("fadeInUp", false)
-                    .style({
-                        "-webkit-transform": "translateY(-"+cardHeight+"px)",
-                        "-moz-transform": "translateY(-"+cardHeight+"px)",
-                        "-ms-transform": "translateY(-"+cardHeight+"px)",
-                        "transform": "translateY(-"+cardHeight+"px)"
-                    });
-
-                if(_compareMode && !panelCard.empty()) { //We also check in the second item has been picked
-                    _lastPanelCardMoved = panelCardSibling;
-                    
-                    panelCardSibling
+                    sidebarCardSibling
                         .classed("fadeInUp", false)
                         .style({
                             "-webkit-transform": "translateY(-"+cardHeight+"px)",
@@ -137,6 +103,120 @@ var sidebar = (function() {
                             "-ms-transform": "translateY(-"+cardHeight+"px)",
                             "transform": "translateY(-"+cardHeight+"px)"
                         });
+                    
+                    sidebarCardSibling.datum().translateY = -cardHeight;
+
+                    if(_compareMode && !panelCard.empty()) { //We also check in the second item has been picked
+                        _lastPanelCardMoved = panelCardSibling;
+
+                        panelCardSibling
+                            .classed("fadeInUp", false)
+                            .style({
+                                "-webkit-transform": "translateY(-"+cardHeight+"px)",
+                                "-moz-transform": "translateY(-"+cardHeight+"px)",
+                                "-ms-transform": "translateY(-"+cardHeight+"px)",
+                                "transform": "translateY(-"+cardHeight+"px)"
+                            });
+                        
+                        panelCardSibling.datum().translateY = -cardHeight;
+                    }
+                }
+                
+                //We remove the eventual translate because the dragged card is above the sibling
+                else if(sidebarCardSibling.datum().translateY !== undefined && sidebarCardSibling.datum().translateY !== 0 && cardPosition + d.y < cardSiblingPosition + sidebarCardSibling.datum().translateY + cardSiblingHeight / 2) {
+                    _lastSidebarCardMoved = sidebarCardSibling;
+                    _cardMovement = "up";
+
+                    sidebarCardSibling
+                        .classed("fadeInUp", false)
+                        .style({
+                            "-webkit-transform": "translateY(0px)",
+                            "-moz-transform": "translateY(0px)",
+                            "-ms-transform": "translateY(0px)",
+                            "transform": "translateY(0px)"
+                        });
+                    
+                    sidebarCardSibling.datum().translateY = 0;
+
+                    if(_compareMode && !panelCard.empty()) { //We also check in the second item has been picked
+                        _lastPanelCardMoved = panelCardSibling;
+
+                        panelCardSibling
+                            .classed("fadeInUp", false)
+                            .style({
+                                "-webkit-transform": "translateY(0px)",
+                                "-moz-transform": "translateY(0px)",
+                                "-ms-transform": "translateY(0px)",
+                                "transform": "translateY(0px)"
+                            });
+                        
+                        panelCardSibling.datum().translateY = 0;
+                    }
+                }
+            }
+            else {
+                //If it is now above the beginning of the sibling
+                if(cardPosition + d.y < cardSiblingPosition + cardSiblingHeight / 2) {
+                    _lastSidebarCardMoved = sidebarCardSibling;
+                    _cardMovement = "up";
+
+                    sidebarCardSibling
+                        .classed("fadeInUp", false)
+                        .style({
+                            "-webkit-transform": "translateY("+cardHeight+"px)",
+                            "-moz-transform": "translateY("+cardHeight+"px)",
+                            "-ms-transform": "translateY("+cardHeight+"px)",
+                            "transform": "translateY("+cardHeight+"px)"
+                        });
+                    
+                    sidebarCardSibling.datum().translateY = cardHeight;
+
+                    if(_compareMode && !panelCard.empty()) { //We also check in the second item has been picked
+                        _lastPanelCardMoved = panelCardSibling;
+
+                        panelCardSibling
+                            .classed("fadeInUp", false)
+                            .style({
+                                "-webkit-transform": "translateY("+cardHeight+"px)",
+                                "-moz-transform": "translateY("+cardHeight+"px)",
+                                "-ms-transform": "translateY("+cardHeight+"px)",
+                                "transform": "translateY("+cardHeight+"px)"
+                            });
+                        
+                        panelCardSibling.datum().translateY = cardHeight;
+                    }
+                }
+                
+                //We remove the eventual translate because the dragged card is below the sibling
+                else if(sidebarCardSibling.datum().translateY !== undefined && sidebarCardSibling.datum().translateY !== 0 && cardPosition + d.y > cardSiblingPosition + cardSiblingHeight / 2) {
+                    _lastSidebarCardMoved = sidebarCardSibling;
+                    _cardMovement = "down";
+
+                    sidebarCardSibling
+                        .classed("fadeInUp", false)
+                        .style({
+                            "-webkit-transform": "translateY(0px)",
+                            "-moz-transform": "translateY(0px)",
+                            "-ms-transform": "translateY(0px)",
+                            "transform": "translateY(0px)"
+                        });
+                    
+                    sidebarCardSibling.datum().translateY = 0;
+
+                    if(_compareMode && !panelCard.empty()) { //We also check in the second item has been picked
+                        _lastPanelCardMoved = panelCardSibling;
+
+                        panelCardSibling
+                            .classed("fadeInUp", false)
+                            .style({
+                                "-webkit-transform": "translateY(0px)",
+                                "-moz-transform": "translateY(0px)",
+                                "-ms-transform": "translateY(0px)",
+                                "transform": "translateY(0px)"
+                            });
+                        
+                        panelCardSibling.datum().translateY = 0;
+                    }
                 }
             }
             
@@ -206,13 +286,13 @@ var sidebar = (function() {
         if(_cardMovement === "up")
             sidebarCard.node().parentNode.insertBefore(sidebarCard.node(), _lastSidebarCardMoved.node());
         else if(_lastSidebarCardMoved !== null)
-            sidebarCard.node().parentNode.insertBefore(_lastSidebarCardMoved.node(), sidebarCard.node());
+            sidebarCard.node().parentNode.insertBefore(sidebarCard.node(), _lastSidebarCardMoved.node().nextSibling); //Acts like an insertAfter
         
         //We save the new order
         var cardsOrderType = (app.getMode() === "hospital") ? "hospitals" : "areas";
         if(_cardMovement === "up")
             _insertElementBefore(_cardsOrder[cardsOrderType], _cardsOrder[cardsOrderType].indexOf(id), _cardsOrder[cardsOrderType].indexOf(_lastSidebarCardMoved.datum().id));
-        else
+        else if(_lastSidebarCardMoved !== null)
             _insertElementAfter(_cardsOrder[cardsOrderType], _cardsOrder[cardsOrderType].indexOf(id), _cardsOrder[cardsOrderType].indexOf(_lastSidebarCardMoved.datum().id));
         
         //We reinitialize d.y
@@ -228,7 +308,7 @@ var sidebar = (function() {
             if(_cardMovement === "up")
                 panelCard.node().parentNode.insertBefore(panelCard.node(), _lastPanelCardMoved.node());
             else if(_lastPanelCardMoved !== null)
-                panelCard.node().parentNode.insertBefore(_lastPanelCardMoved.node(), panelCard.node());
+                panelCard.node().parentNode.insertBefore(panelCard.node(), _lastPanelCardMoved.node().nextSibling); //Acts like an insertAfter
             
             //We reinitialize d.y
             var panelCardData = panelCard.datum();
