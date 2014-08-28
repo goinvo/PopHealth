@@ -443,7 +443,7 @@ var sidebar = (function() {
     var resetCardsOffset = function() {
         d3.selectAll(_config.panelElem+" ."+_config.cardClass)
             .filter(function(d) {return d.id !== 0;})
-            .style("margin-top", _config.cardMarginTop+"px");
+            .style("margin-bottom", _config.cardMarginBottom+"px");
     };
     
     /*
