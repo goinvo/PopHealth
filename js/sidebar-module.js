@@ -66,7 +66,7 @@ var sidebar = (function() {
             .style("-ms-transform", function(d) {d.y = d3.event.y; return "translateY("+d.y+"px)";})
             .style("transform", function(d) {d.y = d3.event.y; return "translateY("+d.y+"px)";});
                 
-        if(_compareMode) {
+        if(_compareMode && !panelCard.empty()) { //We also check in the second item has been picked
             panelCard
                 .classed("fadeInUp", false) //Needed to remove the animate.css effect
                 .classed("dragged", true)
@@ -78,7 +78,7 @@ var sidebar = (function() {
         
         var cardPosition = sidebarCard.node().offsetTop;
         var sidebarCardSibling = (d.y < 0) ? d3.select(sidebarCard.node().previousSibling) : d3.select(sidebarCard.node().nextSibling);
-        if(_compareMode)
+        if(_compareMode && !panelCard.empty()) //We also check in the second item has been picked
             var panelCardSibling = (d.y < 0) ? d3.select(panelCard.node().previousSibling) : d3.select(panelCard.node().nextSibling);
         
         while(!sidebarCardSibling.empty()) {
@@ -100,7 +100,7 @@ var sidebar = (function() {
                         "transform": "translateY("+cardHeight+"px)"
                     });
 
-                if(_compareMode) {
+                if(_compareMode && !panelCard.empty()) { //We also check in the second item has been picked
                     _lastPanelCardMoved = panelCardSibling;
                     
                     panelCardSibling
@@ -126,7 +126,7 @@ var sidebar = (function() {
                         "transform": "translateY(-"+cardHeight+"px)"
                     });
 
-                if(_compareMode) {
+                if(_compareMode && !panelCard.empty()) { //We also check in the second item has been picked
                     _lastPanelCardMoved = panelCardSibling;
                     
                     panelCardSibling
@@ -141,7 +141,7 @@ var sidebar = (function() {
             }
             
             sidebarCardSibling = (d.y < 0) ? d3.select(sidebarCardSibling.node().previousSibling) : d3.select(sidebarCardSibling.node().nextSibling);
-            if(_compareMode)
+            if(_compareMode && !panelCard.empty()) //We also check in the second item has been picked
                 panelCardSibling = (d.y < 0) ? d3.select(panelCardSibling.node().previousSibling) : d3.select(panelCardSibling.node().nextSibling);
         }
     };
@@ -220,10 +220,8 @@ var sidebar = (function() {
         sidebarCardData.y = 0;
         sidebarCard.datum(sidebarCardData);
         
-        if(_compareMode) {
-            var panelCard = d3.selectAll(_config.comparePanelElem+" ."+_config.cardClass)
-                .filter(function(d) {return d.id === id;});
-
+        var panelCard = d3.selectAll(_config.comparePanelElem+" ."+_config.cardClass).filter(function(d) {return d.id === id;});
+        if(_compareMode && !panelCard.empty()) { //We also check in the second item has been picked
             panelCard
                 .classed("dragged", false);     
             
