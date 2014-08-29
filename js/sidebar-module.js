@@ -323,8 +323,8 @@ var sidebar = (function() {
     */
     var addcard = function(node, isOpened, target) {
         if(!_sidebarDisplayed) {
-            d3.select(_config.sidebarElem+" "+_config.toolbarElem)
-                .style("display", "block");
+            d3.select(_config.sidebarElem+" "+_config.toolbarElem).style("display", "block");
+            _sidebarDisplayed= true;
         }
         
         var cardsOrderType = (app.getMode() === "hospital") ? "hospitals" : "areas";
@@ -485,6 +485,9 @@ var sidebar = (function() {
         Tells the application the compare mode is or isn't active and reinitializes the sidebar
     */
     var compare = function() {
+        if(!_sidebarDisplayed)
+            return;
+        
         _compareMode = !_compareMode;
         
         d3.select(_config.toolbarElem+" a")
@@ -500,13 +503,14 @@ var sidebar = (function() {
             offset = 17;
         
         if(_compareMode) {
-            sidebar.style("width", (_config.sidebarInitialWidth * 2 + offset)+"px");
-            sidebar.select(_config.panelElem).style("width", _config.sidebarInitialWidth+"px");
-            setTimeout(function() {app.displayMessage("Pick up another "+app.getMode()+".");}, 500);
+            sidebar.style("right", offset+"px");
+            d3.select(_config.toolbarElem).style("width", (2 * _config.sidebarInitialWidth)+"px");
+            app.displayMessage("Pick up another "+app.getMode()+".");
         }
         else {
             app.hideMessage();
-            sidebar.style("width", (_config.sidebarInitialWidth + offset)+"px");
+            sidebar.style("right", (-_config.sidebarInitialWidth + offset)+"px");
+            d3.select(_config.toolbarElem).style("width", (_config.sidebarInitialWidth)+"px");
             
             reset("panel");
             resetCardsOffset();

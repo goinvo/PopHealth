@@ -620,6 +620,14 @@ var app = (function() {
         }
     };
     
+    /*
+        isCompareModeActive
+        Returns true is the compare mode is active
+    */
+    var isCompareModeActive = function() {
+        return _compareMode;  
+    };
+    
     return {
         init: init,
         getUrbanArea: getUrbanArea,
@@ -629,6 +637,7 @@ var app = (function() {
         displayMessage: displayMessage,
         hideMessage: hideMessage,
         getMode: getMode,
-        compareMode: compareMode
+        compareMode: compareMode,
+        isCompareModeActive: isCompareModeActive
     };
 })();

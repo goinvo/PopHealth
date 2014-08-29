@@ -77,6 +77,10 @@ var markers = (function() {
                 _closeBubble();
             })
             .on("click", function(d) {
+                //If the Ctrl or Cmd key is pressed, we lauch the compare mode
+                if(!app.isCompareModeActive() && (d3.event.ctrlKey || d3.event.metaKey))
+                    sidebar.compare();
+                
                 app.hospitalClicked(d, this);
                 _markersSelected.push(this);
             });

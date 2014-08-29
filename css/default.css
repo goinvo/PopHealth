@@ -102,21 +102,22 @@ nav select option {
 aside {
     position: absolute;
     top: 60px;
-    right: 0;
+    right: -350px;
     z-index: 200;
     overflow-y: scroll;
-    width: 350px;
+    width: 700px;
     height: calc(100% - 60px);
     background-color: rgba(238, 241, 244, .9);
     font-family: "PT Sans", sans-serif;
     border-left: 1px solid rgba(0, 0, 0, .2);
-    -webkit-transition: width .5s;
-    -moz-transition: width .5s;
-    transition: width .5s;
+    -webkit-transition: right .5s;
+    -moz-transition: right .5s;
+    transition: right .5s;
 }
 
 .panel, .compare-panel {
     float: left;
+    width: 350px;
 }
 
 .compare-panel {
@@ -128,13 +129,17 @@ aside {
 aside .toolbar {
     position: fixed;
     height: 35px;
-    width: inherit;
+    width: 350px;
+    right: 0;
     z-index: 230;
     display: none;
     background-color: #fff;
     -webkit-box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, .1);
     -moz-box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, .1);
     box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, .1);
+    -webkit-transition: width .5s;
+    -moz-transition: width .5s;
+    transition: width .5s;
 }
 
 aside .toolbar i {
