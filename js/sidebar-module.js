@@ -34,16 +34,6 @@ var sidebar = (function() {
             .origin(function(d) {return {x: 0, y: d.y};})
             .on("drag", _cardDragged)
             .on("dragend", _cardDragEnded);
-        
-        //We apply specific styles to avoid the issues with the scrollbars
-        if(navigator.appVersion.indexOf("Win") !== -1) {
-            if(window.mozInnerScreenX === undefined) //All browsers except FF
-                d3.select(_config.sidebarElem).style("width", (parseInt(d3.select(_config.sidebarElem).style("width")) + 2 * 17)+"px");
-            else //Firefox
-                d3.select(_config.sidebarElem).style("width", (parseInt(d3.select(_config.sidebarElem).style("width")) + 17)+"px");
-            
-            d3.select(_config.sidebarElem+" "+_config.toolbarElem+" a").style("right", (parseInt(d3.select(_config.sidebarElem+" "+_config.toolbarElem+" a").style("right")) + 17)+"px");
-        }
     };
     
     /*
@@ -503,14 +493,31 @@ var sidebar = (function() {
             offset = 17;
         
         if(_compareMode) {
-            sidebar.style("right", offset+"px");
+            sidebar.style("right", "0px");
             d3.select(_config.toolbarElem).style("width", (2 * _config.sidebarInitialWidth)+"px");
             app.displayMessage("Pick up another "+app.getMode()+".");
+            
+            //We apply specific styles to avoid the issues with the scrollbars
+            if(navigator.appVersion.indexOf("Win") !== -1) {
+                if(window.mozInnerScreenX === undefined) //All browsers except FF
+                    d3.select(_config.sidebarElem).style("width", (parseInt(d3.select(_config.sidebarElem).style("width")) + 2 * 17)+"px");
+                else //Firefox
+                    d3.select(_config.sidebarElem).style("width", (parseInt(d3.select(_config.sidebarElem).style("width")) + 17)+"px");
+
+                d3.select(_config.sidebarElem+" "+_config.toolbarElem).style("width", (2 * _config.sidebarInitialWidth + 17)+"px");
+                d3.select(_config.sidebarElem+" "+_config.toolbarElem+" a").style("right", (parseInt(d3.select(_config.sidebarElem+" "+_config.toolbarElem+" a").style("right")) + 17)+"px");
+            }
         }
         else {
             app.hideMessage();
-            sidebar.style("right", (-_config.sidebarInitialWidth + offset)+"px");
+            sidebar.style("right", (-_config.sidebarInitialWidth)+"px");
             d3.select(_config.toolbarElem).style("width", (_config.sidebarInitialWidth)+"px");
+            
+             //We apply specific styles to avoid the issues with the scrollbars
+            if(navigator.appVersion.indexOf("Win") !== -1) {
+                d3.select(_config.sidebarElem).style("width", null);
+                d3.select(_config.sidebarElem+" "+_config.toolbarElem+" a").style("right", null);
+            }
             
             reset("panel");
             resetCardsOffset();
