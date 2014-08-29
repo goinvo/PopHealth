@@ -11,7 +11,19 @@ var app = (function() {
         _elementPicked, //Contains "hospital" or "community" depending on what has been clicked on the map
         _idElementPicked, //Contains the id of the chosen element
         _compareMode = false, //Indicates if the compare mode is active
-        _borderCommunities = [1,8,28,30,31,37,47,50,53,55,63,65,66,75,86,101,102,104,107,109,115,116,132,138,142,150,157,167,168,169,170,181,183,185,198,199,210,216,230,240,241,245,256,257,259,261,263,272,276,281,285,297,302,304,307,309,315,322,330,336,340,342,343,343,366,367];
+        _borderCommunities = [1,8,28,30,31,37,47,50,53,55,63,65,66,75,86,101,102,104,107,109,115,116,132,138,142,150,157,167,168,169,170,181,183,185,198,199,210,216,230,240,241,245,256,257,259,261,263,272,276,281,285,297,302,304,307,309,315,322,330,336,340,342,343,343,366,367],
+        _savedState = { //Contains information about the state before the compare mode was active in order to restore it
+            hospital: { //The labels correspond to _elementPicked
+                areasToReset: [],
+                areasToRestore: [],
+                markerToRestore: null
+            },
+            community: {
+                linesToDelete: [],
+                areasToReset: [],
+                markerToReset: []
+            }
+        };
     
     /*
         init
@@ -88,6 +100,20 @@ var app = (function() {
     };
     
     /*
+        _indexAreasToRestore(id, type)
+        Returns the position of the object whose id is id from the array _savedState.[type].areasToRestore if exists, otherwise returns -1
+        type should be "hospital" or "community"
+    */
+    var _indexAreasToRestore = function(id, type) {
+        for(var i = 0; i < _savedState[type].areasToRestore.length; i++) {
+            if(_savedState[type].areasToRestore[i].id === id) {
+                return i;
+            }
+        }
+        return -1;
+    };
+    
+    /*
         hospitalClicked(d, marker)
         Displays all the cards related to the selected hospital, and display a heat map based on patients' origin
         d is the data of the selected hospital, and marker the one which was clicked
@@ -107,10 +133,30 @@ var app = (function() {
         _elementPicked = "hospital";
         _idElementPicked = d.id;
         
-        urbanAreaModule.reset();
-        markerModule.reset();
+        if(!_compareMode) {
+            urbanAreaModule.reset();
+            _savedState.hospital.areasToRestore = [];
+            _savedState.hospital.markerToRestore = d.id;
+        }
+        else {
+            //We reset some areas
+            urbanAreaModule.reset(_savedState.hospital.areasToReset);
+            
+            //We restore some others
+            for(var i = 0; i < _savedState.hospital.areasToRestore.length; i++) {
+                urbanAreaModule
+                    .setAreaStyle(_savedState.hospital.areasToRestore[i].id, {
+                        fillColor: _savedState.hospital.areasToRestore[i].fillColor,
+                        fillOpacity: .8
+                    });
+            }
+        }
+        
+        _savedState.hospital.areasToReset = [];
         
         //We highlight the marker
+        markerModule.reset();
+        markerModule.highlightMarker(_savedState.hospital.markerToRestore);
         markerModule.highlightMarker(d.id);
         
         //We delete the lines
@@ -174,12 +220,21 @@ var app = (function() {
                 .classed("number", true)
                 .text((percentage !== "–") ? percentage+"%" : percentage);
             
+            if(_compareMode && _savedState.hospital.areasToRestore.indexOf(topCommunity.id_town) === -1)
+                _savedState.hospital.areasToReset.push(topCommunity.id_town);
+            
+            if(!_compareMode)
+                _savedState.hospital.areasToRestore.push({id: topCommunity.id_town, fillColor: _heatmapColor(topCommunity.patients / totalPatients)});
+            
             //We're displaying the heat map
-            urbanAreaModule
-                .setAreaStyle(topCommunity.id_town, {
-                    fillColor: _heatmapColor(topCommunity.patients / totalPatients),
-                    fillOpacity: .8
-                });
+            var indexAreasToRestore = _indexAreasToRestore(topCommunity.id_town, "hospital");
+            if(!_compareMode || indexAreasToRestore === -1 || _config.heatmapColorSchmeme.indexOf(_savedState.hospital.areasToRestore[indexAreasToRestore].fillColor) > _config.heatmapColorSchmeme.indexOf(_heatmapColor(topCommunity.patients / totalPatients))) {
+                urbanAreaModule
+                    .setAreaStyle(topCommunity.id_town, {
+                        fillColor: _heatmapColor(topCommunity.patients / totalPatients),
+                        fillOpacity: .8
+                    });
+            }
         });
         
         //No data for the hospital
@@ -473,6 +528,28 @@ var app = (function() {
     */
     var compareMode = function(isActivated) {
         _compareMode = isActivated;
+        
+        if(isActivated === false) {
+            if(_elementPicked === "hospital") {
+                //We reset some areas
+                urbanAreaModule.reset(_savedState.hospital.areasToReset);
+
+                //We restore some others
+                for(var i = 0; i < _savedState.hospital.areasToRestore.length; i++) {
+                    urbanAreaModule
+                        .setAreaStyle(_savedState.hospital.areasToRestore[i].id, {
+                            fillColor: _savedState.hospital.areasToRestore[i].fillColor,
+                            fillOpacity: .8
+                        });
+                }
+                
+                _savedState.hospital.areasToReset = [];
+        
+                //We highlight the marker
+                markerModule.reset();
+                markerModule.highlightMarker(_savedState.hospital.markerToRestore);
+            }
+        }
     };
     
     return {

@@ -343,7 +343,7 @@ var markerModule = (function() {
     var highlightMarker = function(id) {
          d3.selectAll("."+_config.markerClass)
             .filter(function(d) {return d.id === id;})
-            .attr("xlink:href", _config.iconHovered)
+            .attr("xlink:href", _config.iconHovered);
     };
     
     return {

@@ -92,7 +92,6 @@ var sidebar = (function() {
                 //If it is now below the beginning of the sibling
                 if(cardPosition + d.y > cardSiblingPosition) {
                     _lastSidebarCardMoved = sidebarCardSibling;
-//                    console.log(_lastSidebarCardMoved.node());
                     _cardMovement = "down";
 
                     sidebarCardSibling

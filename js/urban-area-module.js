@@ -223,25 +223,49 @@ var urbanAreaModule = (function() {
     };
     
     /*
-        reset
-        Resets the style of the layers to _config.style and removes the event listenners
+        reset(ids)
+        If ids is undefined, resets the style of all the layers to _config.style and removes the event listenners
+        Else, resets the style of the layers whose ids are inside the array ids to _config.style and removes their event listenners
     */
-    var reset = function() {
-        _feature.getLayers().forEach(function(layer) {
-            layer.setStyle(_config.style);
-            layer["dataId"] = null;
-            layer.removeEventListener("mouseover");
-            layer.removeEventListener("mouseout");
-            
-            if(layer._path !== undefined)
-                d3.select(layer._path).classed("hovered", false);
-            else {
-                var layers = layer._layers;
-                for(var key in layers) {
-                    d3.select(layers[key]._path).classed("hovered", false);
+    var reset = function(ids) {
+        if(ids === undefined) {
+            _feature.getLayers().forEach(function(layer) {
+                layer.setStyle(_config.style);
+                layer["dataId"] = null;
+                layer.removeEventListener("mouseover");
+                layer.removeEventListener("mouseout");
+
+                if(layer._path !== undefined)
+                    d3.select(layer._path).classed("hovered", false);
+                else {
+                    var layers = layer._layers;
+                    for(var key in layers) {
+                        d3.select(layers[key]._path).classed("hovered", false);
+                    }
                 }
+            });
+        }
+        else {
+            for(var i = 0; i < ids.length; i++) {
+                _feature.getLayers().forEach(function(layer) {
+                    if(layer.feature.properties.id === ids[i]) {
+                        layer.setStyle(_config.style);
+                        layer["dataId"] = null;
+                        layer.removeEventListener("mouseover");
+                        layer.removeEventListener("mouseout");
+
+                        if(layer._path !== undefined)
+                            d3.select(layer._path).classed("hovered", false);
+                        else {
+                            var layers = layer._layers;
+                            for(var key in layers) {
+                                d3.select(layers[key]._path).classed("hovered", false);
+                            }
+                        }
+                    }
+                });
             }
-        });
+        }
     };
     
     /*
