@@ -333,7 +333,15 @@ var markerModule = (function() {
         Adds the marker to the one selected so they won't react to the mouseover/mouseout events
     */
     var addSelectedMarker = function(marker) {
-        _markersSelected.push(marker);  
+        if(typeof marker !== "number")
+            _markersSelected.push(marker);
+        else {
+            var domElement = d3.selectAll("."+_config.markerClass)
+                .filter(function(d) {return d.id === marker})
+                .node();
+            
+            _markersSelected.push(domElement);
+        }
     };
     
     /*

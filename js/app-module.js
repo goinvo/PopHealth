@@ -20,8 +20,8 @@ var app = (function() {
             },
             community: {
                 linesToDelete: [],
-                areasToReset: [],
-                markerToReset: []
+                areaToRestore: null,
+                markersToRestore: []
             }
         };
     
@@ -320,13 +320,45 @@ var app = (function() {
         _idElementPicked = layerClicked.id;
         
         urbanAreaModule.reset();
+                
         markerModule.reset();
         
         //We hide all the markers
         markerModule.hideMarkers();
         
-        //We delete all the lines
-        urbanAreaModule.deleteLines();
+        if(!_compareMode) {
+            //We delete all the lines
+            urbanAreaModule.deleteLines();
+            
+            //We save the sate of the first clicked area
+            _savedState.community.areaToRestore= layerClicked.id;
+            
+            //We reset the saved markers
+            _savedState.community.markersToRestore = [];
+        }
+        else {
+            //We delete the lines
+            for(var i = 0; i < _savedState.community.linesToDelete.length; i++) {
+                _savedState.community.linesToDelete[i].remove();
+            }
+            
+            //We restore the first clicked area
+            if(urbanAreaModule.getAreaById(_savedState.community.areaToRestore)._path !== undefined)
+                d3.select(urbanAreaModule.getAreaById(_savedState.community.areaToRestore)._path).classed("hovered", true);
+            else {
+                var layers = urbanAreaModule.getAreaById(_savedState.community.areaToRestore)._layers;
+                for(var key in layers) {
+                    d3.select(layers[key]._path).classed("hovered", true);
+                }
+            }
+            
+            //We restore the markers
+            for(var i = 0; i < _savedState.community.markersToRestore.length; i++) {
+                markerModule.addSelectedMarker(_savedState.community.markersToRestore[i]);
+                markerModule.restoreSelectedMarkers();
+                markerModule.highlightMarker(_savedState.community.markersToRestore[i]);
+            }
+        }
             
         _displayGeneralCard(layerClicked, target);
                 
@@ -412,11 +444,15 @@ var app = (function() {
             markerModule.addSelectedMarker(marker);
             markerModule.highlightMarker(topHospital.id_hospital);
             
+            //We save the markers linked to the first clicked area
+            if(!_compareMode)
+                _savedState.community.markersToRestore.push(topHospital.id_hospital);
+            
             //We add the line
             var originCoords = mapModule.getMap().latLngToLayerPoint([center.lat, center.lng]);
             var destinationCoords = mapModule.getMap().latLngToLayerPoint([getHospital(topHospital.id_hospital).latitude, getHospital(topHospital.id_hospital).longitude]);
             
-            d3.select(_config.svgContainer+" ."+_config.linesContainerClass)
+            var line = d3.select(_config.svgContainer+" ."+_config.linesContainerClass)
                 .data([{
                     id: topHospital.id_hospital,
                     origin: {
@@ -460,6 +496,9 @@ var app = (function() {
                 .attr("y1", originCoords.y)
                 .attr("x2", destinationCoords.x)
                 .attr("y2", destinationCoords.y);
+            
+            if(_compareMode)
+                _savedState.community.linesToDelete.push(line);
         });
         
         //No data for the community
@@ -548,6 +587,35 @@ var app = (function() {
                 //We highlight the marker
                 markerModule.reset();
                 markerModule.highlightMarker(_savedState.hospital.markerToRestore);
+            }
+            else {
+                urbanAreaModule.reset();
+                markerModule.reset();
+
+                //We hide all the markers
+                markerModule.hideMarkers();
+                
+                //We delete the lines
+                for(var i = 0; i < _savedState.community.linesToDelete.length; i++) {
+                    _savedState.community.linesToDelete[i].remove();
+                }
+
+                //We restore the first clicked area
+                if(urbanAreaModule.getAreaById(_savedState.community.areaToRestore)._path !== undefined)
+                    d3.select(urbanAreaModule.getAreaById(_savedState.community.areaToRestore)._path).classed("hovered", true);
+                else {
+                    var layers = urbanAreaModule.getAreaById(_savedState.community.areaToRestore)._layers;
+                    for(var key in layers) {
+                        d3.select(layers[key]._path).classed("hovered", true);
+                    }
+                }
+
+                //We restore the markers
+                for(var i = 0; i < _savedState.community.markersToRestore.length; i++) {
+                    markerModule.addSelectedMarker(_savedState.community.markersToRestore[i]);
+                    markerModule.restoreSelectedMarkers();
+                    markerModule.highlightMarker(_savedState.community.markersToRestore[i]);
+                }
             }
         }
     };
