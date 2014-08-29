@@ -69,7 +69,7 @@ var app = (function() {
         Returns the record which id is id from the _urbanAreaData object
     */
     var getUrbanArea = function(id) {
-            return _urbanAreaData.features[id];  
+            return _urbanAreasData.features[id];  
     };
 
     /*
@@ -77,7 +77,7 @@ var app = (function() {
         Returns the record which id is id from the _hospitalData object
     */
     var getHospital = function(id) {
-            return _hospitalData.hospitals[id];  
+            return _hospitalsData.hospitals[id];  
     };
     
     /*
@@ -134,17 +134,17 @@ var app = (function() {
         _idElementPicked = d.id;
         
         if(!_compareMode) {
-            urbanAreaModule.reset();
+            urbanAreas.reset();
             _savedState.hospital.areasToRestore = [];
             _savedState.hospital.markerToRestore = d.id;
         }
         else {
             //We reset some areas
-            urbanAreaModule.reset(_savedState.hospital.areasToReset);
+            urbanAreas.reset(_savedState.hospital.areasToReset);
             
             //We restore some others
             for(var i = 0; i < _savedState.hospital.areasToRestore.length; i++) {
-                urbanAreaModule
+                urbanAreas
                     .setAreaStyle(_savedState.hospital.areasToRestore[i].id, {
                         fillColor: _savedState.hospital.areasToRestore[i].fillColor,
                         fillOpacity: .8
@@ -155,12 +155,12 @@ var app = (function() {
         _savedState.hospital.areasToReset = [];
         
         //We highlight the marker
-        markerModule.reset();
-        markerModule.highlightMarker(_savedState.hospital.markerToRestore);
-        markerModule.highlightMarker(d.id);
+        markers.reset();
+        markers.highlightMarker(_savedState.hospital.markerToRestore);
+        markers.highlightMarker(d.id);
         
         //We delete the lines
-        urbanAreaModule.deleteLines();
+        urbanAreas.deleteLines();
         
         //We change the opacity of the markers
         d3.selectAll("."+_config.markerClass)
@@ -196,19 +196,19 @@ var app = (function() {
         });
         
         d.topCommunities.forEach(function(topCommunity) {
-            var defaultStyle = urbanAreaModule.getDefaultStyle();
+            var defaultStyle = urbanAreas.getDefaultStyle();
             var percentage = (topCommunity.percentage === null) ? "–" : ((topCommunity.percentage * 100 <= 1) ? "<1" : Math.round(topCommunity.percentage * 100));
 
             currentRow = table.append("tr")
                 .data([{id: topCommunity.id_town}])
                 .on("mouseover", function() {
                     var color = _heatmapColor(topCommunity.patients / totalPatients);
-                    d3.select(urbanAreaModule.getAreaById(topCommunity.id_town)._path).classed("hovered", true);
+                    d3.select(urbanAreas.getAreaById(topCommunity.id_town)._path).classed("hovered", true);
                     d3.select(this).classed("hovered", true);
                 })
                 .on("mouseout", function() {
-                    urbanAreaModule.setFillOpacity(1);
-                    d3.select(urbanAreaModule.getAreaById(topCommunity.id_town)._path).classed("hovered", false);
+                    urbanAreas.setFillOpacity(1);
+                    d3.select(urbanAreas.getAreaById(topCommunity.id_town)._path).classed("hovered", false);
                     d3.select(this).classed("hovered", false);
                 });
             currentRow.append("td")
@@ -229,7 +229,7 @@ var app = (function() {
             //We're displaying the heat map
             var indexAreasToRestore = _indexAreasToRestore(topCommunity.id_town, "hospital");
             if(!_compareMode || indexAreasToRestore === -1 || _config.heatmapColorSchmeme.indexOf(_savedState.hospital.areasToRestore[indexAreasToRestore].fillColor) > _config.heatmapColorSchmeme.indexOf(_heatmapColor(topCommunity.patients / totalPatients))) {
-                urbanAreaModule
+                urbanAreas
                     .setAreaStyle(topCommunity.id_town, {
                         fillColor: _heatmapColor(topCommunity.patients / totalPatients),
                         fillOpacity: .8
@@ -319,16 +319,16 @@ var app = (function() {
         _elementPicked = "community";
         _idElementPicked = layerClicked.id;
         
-        urbanAreaModule.reset();
+        urbanAreas.reset();
                 
-        markerModule.reset();
+        markers.reset();
         
         //We hide all the markers
-        markerModule.hideMarkers();
+        markers.hideMarkers();
         
         if(!_compareMode) {
             //We delete all the lines
-            urbanAreaModule.deleteLines();
+            urbanAreas.deleteLines();
             
             //We save the sate of the first clicked area
             _savedState.community.areaToRestore= layerClicked.id;
@@ -343,10 +343,10 @@ var app = (function() {
             }
             
             //We restore the first clicked area
-            if(urbanAreaModule.getAreaById(_savedState.community.areaToRestore)._path !== undefined)
-                d3.select(urbanAreaModule.getAreaById(_savedState.community.areaToRestore)._path).classed("hovered", true);
+            if(urbanAreas.getAreaById(_savedState.community.areaToRestore)._path !== undefined)
+                d3.select(urbanAreas.getAreaById(_savedState.community.areaToRestore)._path).classed("hovered", true);
             else {
-                var layers = urbanAreaModule.getAreaById(_savedState.community.areaToRestore)._layers;
+                var layers = urbanAreas.getAreaById(_savedState.community.areaToRestore)._layers;
                 for(var key in layers) {
                     d3.select(layers[key]._path).classed("hovered", true);
                 }
@@ -354,9 +354,9 @@ var app = (function() {
             
             //We restore the markers
             for(var i = 0; i < _savedState.community.markersToRestore.length; i++) {
-                markerModule.addSelectedMarker(_savedState.community.markersToRestore[i]);
-                markerModule.restoreSelectedMarkers();
-                markerModule.highlightMarker(_savedState.community.markersToRestore[i]);
+                markers.addSelectedMarker(_savedState.community.markersToRestore[i]);
+                markers.restoreSelectedMarkers();
+                markers.highlightMarker(_savedState.community.markersToRestore[i]);
             }
         }
             
@@ -388,10 +388,10 @@ var app = (function() {
         });
         
         //We highlight the community
-        if(urbanAreaModule.getAreaById(layerClicked.id)._path !== undefined)
-            d3.select(urbanAreaModule.getAreaById(layerClicked.id)._path).classed("hovered", true);
+        if(urbanAreas.getAreaById(layerClicked.id)._path !== undefined)
+            d3.select(urbanAreas.getAreaById(layerClicked.id)._path).classed("hovered", true);
         else {
-            var layers = urbanAreaModule.getAreaById(layerClicked.id)._layers;
+            var layers = urbanAreas.getAreaById(layerClicked.id)._layers;
             for(var key in layers) {
                 d3.select(layers[key]._path).classed("hovered", true);
             }
@@ -404,8 +404,8 @@ var app = (function() {
             currentRow = table.append("tr")
                 .data([{id: topHospital.id_hospital}])
                 .on("mouseover", function(d) {
-                    markerModule.hideMarkers();
-                    d3.select(markerModule.getMarker(d.id))
+                    markers.hideMarkers();
+                    d3.select(markers.getMarker(d.id))
                         .style("opacity", 1);
                     
                     var id = d.id;
@@ -420,7 +420,7 @@ var app = (function() {
                         .classed("hovered", true);
                 })
                 .on("mouseout", function() {
-                    markerModule.restoreSelectedMarkers();
+                    markers.restoreSelectedMarkers();
                     
                     d3.select(this)
                         .classed("hovered", false);
@@ -438,11 +438,11 @@ var app = (function() {
                 .text((percentage !== "–") ? percentage+"%" : percentage);
             
             //We highlight the marker of the current hospital
-            var marker = markerModule.getMarker(topHospital.id_hospital);
+            var marker = markers.getMarker(topHospital.id_hospital);
             d3.select(marker)
                 .style("opacity", 1);
-            markerModule.addSelectedMarker(marker);
-            markerModule.highlightMarker(topHospital.id_hospital);
+            markers.addSelectedMarker(marker);
+            markers.highlightMarker(topHospital.id_hospital);
             
             //We save the markers linked to the first clicked area
             if(!_compareMode)
@@ -571,11 +571,11 @@ var app = (function() {
         if(isActivated === false) {
             if(_elementPicked === "hospital") {
                 //We reset some areas
-                urbanAreaModule.reset(_savedState.hospital.areasToReset);
+                urbanAreas.reset(_savedState.hospital.areasToReset);
 
                 //We restore some others
                 for(var i = 0; i < _savedState.hospital.areasToRestore.length; i++) {
-                    urbanAreaModule
+                    urbanAreas
                         .setAreaStyle(_savedState.hospital.areasToRestore[i].id, {
                             fillColor: _savedState.hospital.areasToRestore[i].fillColor,
                             fillOpacity: .8
@@ -585,15 +585,15 @@ var app = (function() {
                 _savedState.hospital.areasToReset = [];
         
                 //We highlight the marker
-                markerModule.reset();
-                markerModule.highlightMarker(_savedState.hospital.markerToRestore);
+                markers.reset();
+                markers.highlightMarker(_savedState.hospital.markerToRestore);
             }
             else {
-                urbanAreaModule.reset();
-                markerModule.reset();
+                urbanAreas.reset();
+                markers.reset();
 
                 //We hide all the markers
-                markerModule.hideMarkers();
+                markers.hideMarkers();
                 
                 //We delete the lines
                 for(var i = 0; i < _savedState.community.linesToDelete.length; i++) {
@@ -601,10 +601,10 @@ var app = (function() {
                 }
 
                 //We restore the first clicked area
-                if(urbanAreaModule.getAreaById(_savedState.community.areaToRestore)._path !== undefined)
-                    d3.select(urbanAreaModule.getAreaById(_savedState.community.areaToRestore)._path).classed("hovered", true);
+                if(urbanAreas.getAreaById(_savedState.community.areaToRestore)._path !== undefined)
+                    d3.select(urbanAreas.getAreaById(_savedState.community.areaToRestore)._path).classed("hovered", true);
                 else {
-                    var layers = urbanAreaModule.getAreaById(_savedState.community.areaToRestore)._layers;
+                    var layers = urbanAreas.getAreaById(_savedState.community.areaToRestore)._layers;
                     for(var key in layers) {
                         d3.select(layers[key]._path).classed("hovered", true);
                     }
@@ -612,9 +612,9 @@ var app = (function() {
 
                 //We restore the markers
                 for(var i = 0; i < _savedState.community.markersToRestore.length; i++) {
-                    markerModule.addSelectedMarker(_savedState.community.markersToRestore[i]);
-                    markerModule.restoreSelectedMarkers();
-                    markerModule.highlightMarker(_savedState.community.markersToRestore[i]);
+                    markers.addSelectedMarker(_savedState.community.markersToRestore[i]);
+                    markers.restoreSelectedMarkers();
+                    markers.highlightMarker(_savedState.community.markersToRestore[i]);
                 }
             }
         }

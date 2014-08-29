@@ -40,41 +40,38 @@
         <script src="js/app-module.js"></script>
         <script src="js/sidebar-module.js"></script>
         <script src="js/map-module.js"></script>
-        <script src="js/marker-module.js"></script>
-        <script src="js/menu-module.js"></script>
-        <script src="js/urban-area-module.js"></script>
+        <script src="js/markers-module.js"></script>
+        <script src="js/urban-areas-module.js"></script>
         <script>
-            var _urbanAreaData = {},
-                _hospitalData = {};
+            var _urbanAreasData = {},
+                _hospitalsData = {};
             
             var getUrbanArea = function(id) {
                     return _urbanAreaData.features[id];  
             };
             
             var getHospital = function(id) {
-                    return _hospitalData.hospitals[id];  
+                    return _hospitalsData.hospitals[id];  
             };
             
             app.init();
             
             //We load the data
-            d3.json("data/urban_areas.json", function(error, urbanAreaData) { //TODO in case of error
-                _urbanAreaData = urbanAreaData;
+            d3.json("data/urban_areas.json", function(error, urbanAreasData) { //TODO in case of error
+                _urbanAreasData = urbanAreasData;
                 
                 //We load the hospitals' data
-                d3.json("data/hospitals.json", function(error, hospitalData) {
-                    _hospitalData = hospitalData;
+                d3.json("data/hospitals.json", function(error, hospitalsData) {
+                    _hospitalsData = hospitalsData;
                     
                     mapModule.init()
-                    urbanAreaModule.init();
-                    menuModule.init();
-                    markerModule.init();
+                    urbanAreas.init();
+                    markers.init();
                 });
             });
             
             d3.select(window).on("resize", function() {
                 mapModule.update();
-                menuModule.update();
             });
         </script>
     </body>
