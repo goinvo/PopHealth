@@ -10,7 +10,8 @@ var markers = (function() {
     
     var _markers,
         _markersSelected = [],
-        _popup = null;
+        _popup = null,
+        _previousOpacity = 1; //Initial opacity of the hovered marker
     
     /*
         _getMarkerSize
@@ -66,15 +67,13 @@ var markers = (function() {
             .attr("class", _config.markerClass)
             .attr("xlink:href", _config.icon)
             .on("mouseover", function(d) {
+                _previousOpacity = d3.select(this).style("opacity");
                 d3.select(this)
                     .style("opacity", 1);
                 _displayBubble(d);
             })
             .on("mouseout", function() {
-                if(_markersSelected.indexOf(this) === -1) {
-                    d3.select(this)
-                        .style("opacity", _config.hiddenMarkerOpacity);
-                }
+                d3.select(this).style("opacity", _previousOpacity);
                 _closeBubble();
             })
             .on("click", function(d) {
