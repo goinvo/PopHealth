@@ -9,7 +9,7 @@ var app = (function() {
         markerClass: "marker" //Class of the markers on the map
     },
         _elementPicked, //Contains "hospital" or "community" depending on what has been clicked on the map
-        _idElementPicked, //Contains the id of the chosen element
+        _idElementPicked = [], //Contains the ids of the chosen elements
         _compareMode = false, //Indicates if the compare mode is active
         _borderCommunities = [1,8,28,30,31,37,47,50,53,55,63,65,66,75,86,101,102,104,107,109,115,116,132,138,142,150,157,167,168,169,170,181,183,185,198,199,210,216,230,240,241,245,256,257,259,261,263,272,276,281,285,297,302,304,307,309,315,322,330,336,340,342,343,343,366,367],
         _savedState = { //Contains information about the state before the compare mode was active in order to restore it
@@ -121,17 +121,23 @@ var app = (function() {
     var hospitalClicked = function(d, marker) {
         var target = "sidebar";
         if(_compareMode) {
-            if(_elementPicked !== "hospital" || d.id === _idElementPicked)
+            if(_elementPicked !== "hospital" || _idElementPicked.indexOf(d.id) != -1)
                 return;
             hideMessage();
             target = "panel";
             
             //We reset the margin-top of the sidebar's cards
             sidebar.resetCardsOffset();
+            
+            //We remove the last element selected from the array of the selected elements
+            if(_idElementPicked.length !== 1)
+                _idElementPicked.pop();
         }
+        else
+            _idElementPicked = []; //We reset the elements chosen
         
         _elementPicked = "hospital";
-        _idElementPicked = d.id;
+        _idElementPicked.push(d.id);
         
         if(!_compareMode) {
             urbanAreas.reset();
@@ -307,17 +313,23 @@ var app = (function() {
     var areaClicked = function(layerClicked, center) {
         var target = "sidebar";
         if(_compareMode) {
-            if(_elementPicked !== "community" || layerClicked.id === _idElementPicked)
+            if(_elementPicked !== "community" || _idElementPicked.indexOf(layerClicked.id) !== -1)
                 return;
             hideMessage();
             target = "panel";
             
             //We reset the margin-top of the sidebar's cards
             sidebar.resetCardsOffset();
+            
+            //We remove the last element selected from the array of the selected elements
+            if(_idElementPicked.length !== 1)
+                _idElementPicked.pop();
         }
+        else
+            _idElementPicked = []; //We reset the chosen elements
         
         _elementPicked = "community";
-        _idElementPicked = layerClicked.id;
+        _idElementPicked.push(layerClicked.id);
         
         urbanAreas.reset();
                 
