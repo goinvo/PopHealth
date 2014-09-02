@@ -32,8 +32,18 @@ var sidebar = (function() {
     var init = function() {
         _dragBehavior = d3.behavior.drag()
             .origin(function(d) {return {x: 0, y: d.y};})
+            .on("dragstart", _cardDragStarted)
             .on("drag", _cardDragged)
             .on("dragend", _cardDragEnded);
+    };
+    
+    /*
+        _cardDragStarted
+        Resets _lastSidebarCardMoved and _lastPanelCardMoved
+    */
+    var _cardDragStarted = function() {
+        _lastPanelCardMoved = null;
+        _lastSidebarCardMoved = null;
     };
     
     /*
@@ -265,44 +275,48 @@ var sidebar = (function() {
                 "transform": "translateY(0px)"
             });
         
+        d3.selectAll("."+_config.cardClass).datum().translateY = 0;
+        
         var sidebarCard = d3.selectAll(_config.panelElem+" ."+_config.cardClass)
             .filter(function(d) {return d.id === id;});
         
         sidebarCard
             .classed("dragged", false);
         
-        //We move the card to the final position in the DOM
-        if(_cardMovement === "up")
-            sidebarCard.node().parentNode.insertBefore(sidebarCard.node(), _lastSidebarCardMoved.node());
-        else if(_lastSidebarCardMoved !== null)
-            sidebarCard.node().parentNode.insertBefore(sidebarCard.node(), _lastSidebarCardMoved.node().nextSibling); //Acts like an insertAfter
-        
-        //We save the new order
-        var cardsOrderType = (app.getMode() === "hospital") ? "hospitals" : "areas";
-        if(_cardMovement === "up")
-            _insertElementBefore(_cardsOrder[cardsOrderType], _cardsOrder[cardsOrderType].indexOf(id), _cardsOrder[cardsOrderType].indexOf(_lastSidebarCardMoved.datum().id));
-        else if(_lastSidebarCardMoved !== null)
-            _insertElementAfter(_cardsOrder[cardsOrderType], _cardsOrder[cardsOrderType].indexOf(id), _cardsOrder[cardsOrderType].indexOf(_lastSidebarCardMoved.datum().id));
-        
         //We reinitialize d.y
-        var sidebarCardData = sidebarCard.datum();
-        sidebarCardData.y = 0;
-        sidebarCard.datum(sidebarCardData);
+        sidebarCard.datum().y = 0;
+        
+        //We check if a card moved
+        if(_lastSidebarCardMoved !== null) {
+            //We move the card to the final position in the DOM
+            if(_cardMovement === "up")
+                sidebarCard.node().parentNode.insertBefore(sidebarCard.node(), _lastSidebarCardMoved.node());
+            else if(_lastSidebarCardMoved !== null)
+                sidebarCard.node().parentNode.insertBefore(sidebarCard.node(), _lastSidebarCardMoved.node().nextSibling); //Acts like an insertAfter
+
+            //We save the new order
+            var cardsOrderType = (app.getMode() === "hospital") ? "hospitals" : "areas";
+            if(_cardMovement === "up")
+                _insertElementBefore(_cardsOrder[cardsOrderType], _cardsOrder[cardsOrderType].indexOf(id), _cardsOrder[cardsOrderType].indexOf(_lastSidebarCardMoved.datum().id));
+            else if(_lastSidebarCardMoved !== null)
+                _insertElementAfter(_cardsOrder[cardsOrderType], _cardsOrder[cardsOrderType].indexOf(id), _cardsOrder[cardsOrderType].indexOf(_lastSidebarCardMoved.datum().id));
+        }
         
         var panelCard = d3.selectAll(_config.comparePanelElem+" ."+_config.cardClass).filter(function(d) {return d.id === id;});
         if(_compareMode && !panelCard.empty()) { //We also check in the second item has been picked
             panelCard
                 .classed("dragged", false);     
             
-            if(_cardMovement === "up")
-                panelCard.node().parentNode.insertBefore(panelCard.node(), _lastPanelCardMoved.node());
-            else if(_lastPanelCardMoved !== null)
-                panelCard.node().parentNode.insertBefore(panelCard.node(), _lastPanelCardMoved.node().nextSibling); //Acts like an insertAfter
-            
             //We reinitialize d.y
-            var panelCardData = panelCard.datum();
-            panelCardData.y = 0;
-            panelCard.datum(panelCardData);
+            panelCard.datum().y = 0;
+            
+            //We check if a card moved
+            if(_lastPanelCardMoved !== null) {
+                if(_cardMovement === "up")
+                    panelCard.node().parentNode.insertBefore(panelCard.node(), _lastPanelCardMoved.node());
+                else if(_lastPanelCardMoved !== null)
+                    panelCard.node().parentNode.insertBefore(panelCard.node(), _lastPanelCardMoved.node().nextSibling); //Acts like an insertAfter
+            }
         }
     };
     
