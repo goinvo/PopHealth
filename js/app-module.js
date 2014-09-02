@@ -32,6 +32,28 @@ var app = (function() {
     var init = function() {
         sidebar.init();
     };
+    
+    /*
+        toDollar(number)
+        Converts a number to the US currency format ie 130868 to $130,868
+        Doesn't take the decimals into account
+    */
+    var _toDollar = function(number) {
+        var res = "";
+        var stringifyNb = String(number);
+        var mod = stringifyNb.length % 3;
+        
+        for(var i = 0; i < stringifyNb.length; i++) {
+            if(stringifyNb.length > 3 && i + 1 === mod)
+                res = stringifyNb.slice(0, (i + 1 <= stringifyNb.length) ? i + 1 : undefined)+",";
+            else if(stringifyNb.length > 3 && i !== stringifyNb.length - 1 && (i + 1 - mod) % 3 === 0)
+                res = res+stringifyNb[i]+",";
+            else
+                res = res+stringifyNb[i];
+        }
+        
+        return "$"+res;
+    };
 
     /*
         _displayGeneralCard(d, target)
@@ -44,24 +66,74 @@ var app = (function() {
         node.data([{id: 0}]);
         
         if(_elementPicked === "hospital") {
+            var beds = (d.staffedBeds !== null) ? d.staffedBeds : "–";
+            var occupancy = (Math.round(d.occupancy * 100) > 1) ? Math.round(d.occupancy * 100)+"%" : "<1%";
+            var revenue = d.revenues.fy12;
+            
             node.append("h1").html(d.name+" <a href='#' target='_blank'><i class='fa fa-external-link'></i></a>");
             node.append("div")
                 .classed("two-columns", true)
-                .html("Staffed bed<br/>Total occupancy<br/>Total revenue<br/><span>0</span><br/><span>0%</span><br/><span>$0</span>");
+                .html("Staffed bed<sup>1</sup><br/>Total occupancy<sup>1</sup><br/>Total revenue<sup>1</sup><br/><span>"+beds+"</span><br/><span>"+occupancy+"</span><br/><span>"+_toDollar(revenue)+"</span>");
+            
+            node.append("div").classed("chart", true);
+            
+            node.append("div")
+                .classed("footnote", true)
+                .html("<sup>1</sup> For the 2012 fiscal year<br/>Data from the <a href=\"http://www.mass.gov/chia/researcher/hcf-data-resources/massachusetts-hospital-profiles/overiew-and-current-reports.html\" target=\"_blank\">Center for Health Information and Analysis <i class='fa fa-external-link'></i></a>");
+            
+            sidebar.reset(target);
+            sidebar.addcard(node, true, target);
+            
+            //We add the chart
+            var chart = c3.generate({
+                bindto: ".chart",
+                data: {
+                    x: "x",
+                    columns: [
+                        ["data", d.revenues.fy08, d.revenues.fy09, d.revenues.fy10, d.revenues.fy11, d.revenues.fy12],
+                        ["x", 2008, 2009, 2010, 2011, 2012]
+                    ]
+                },
+                axis: {
+                    y: {
+                        tick: {
+                            culling: {
+                                max: 4  
+                            },
+                            format: function(d) {return _toDollar(Math.round(d / 1000000))+"m";}
+                        },
+                        ticks: 4
+                    }
+                },
+                legend: {
+                    show: false
+                },
+                interaction: {
+                    enabled: false
+                },
+                size: {
+                    width: 310,
+                    height: 150
+                },
+                padding: {
+                    top: 10,
+                    left: (revenue > 999999999) ? 49 : ((revenue > 99999999) ? 41 : 35)
+                }
+            });
         }
         else {
             node.append("h1").html(d.town);
             node.append("div")
                 .classed("two-columns", true)
                 .html("Some stuffs here<br/><span>...</span>");
+            
+            node.append("div")
+                .classed("footnote", true)
+                .html("Data from the <a href=\"http://www.mass.gov/chia/researcher/hcf-data-resources/massachusetts-hospital-profiles/overiew-and-current-reports.html\" target=\"_blank\">Center for Health Information and Analysis <i class='fa fa-external-link'></i></a>");
+            
+            sidebar.reset(target);
+            sidebar.addcard(node, true, target);
         }
-        
-        node.append("div")
-            .classed("footnote", true)
-            .html("Data from the <a href=\"http://www.mass.gov/chia/researcher/hcf-data-resources/massachusetts-hospital-profiles/overiew-and-current-reports.html\" target=\"_blank\">Center for Health Information and Analysis <i class='fa fa-external-link'></i></a>");
-        
-        sidebar.reset(target);
-        sidebar.addcard(node, true, target);
     };
     
     /*

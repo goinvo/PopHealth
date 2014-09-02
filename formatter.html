@@ -202,27 +202,63 @@
 //        });        
         
         //Import the top DRGs
-        d3.json("data/excel.json", function(error, excel) {
+//        d3.json("data/excel.json", function(error, excel) {
+//            d3.json("data/hospitals.json", function(error, hospitals) {
+//                var newHospitals = [];
+//                excel.hospitals.forEach(function(row) {
+//                    var topDRGs = [];
+//                    row.topDRGs.forEach(function(drg) {
+//                        var element = {};
+//                        element.name = drg.name;
+//                        element.patients = drg.patients;
+//                        element.percentage = drg.percentage;
+//
+//                        topDRGs.push(JSON.parse(JSON.stringify(element)));
+//                    });
+//
+//                    hospitals.hospitals[row.id].topDRGs = JSON.parse(JSON.stringify(topDRGs));
+//                    newHospitals.push(JSON.parse(JSON.stringify(hospitals.hospitals[row.id])));
+//                });
+//                
+//                var newObject = {};
+//                newObject.hospitals = newHospitals;
+//                document.body.appendChild(document.createElement('pre')).innerHTML = JSON.stringify(newObject, undefined, 4);
+//            });
+//        });
+        
+        //Import the beds
+//        d3.json("data/appendix-b.json", function(error, excel) {
+//            d3.json("data/hospitals.json", function(error, hospitals) {
+//                excel.hospitals.forEach(function(row) {
+//                    hospitals.hospitals.forEach(function(hospital) {
+//                        if(hospital.id === row.id) {
+//                            hospital.staffedBed = row.FY1226;
+//                            hospital.occupancy = row.FY1227;
+//                        }
+//                    });
+//                });
+//                document.body.appendChild(document.createElement('pre')).innerHTML = JSON.stringify(hospitals, undefined, 4);
+//            });
+//        });     
+        
+        //Import the revenues
+        d3.json("data/appendix-f.json", function(error, excel) {
             d3.json("data/hospitals.json", function(error, hospitals) {
-                var newHospitals = [];
                 excel.hospitals.forEach(function(row) {
-                    var topDRGs = [];
-                    row.topDRGs.forEach(function(drg) {
-                        var element = {};
-                        element.name = drg.name;
-                        element.patients = drg.patients;
-                        element.percentage = drg.percentage;
+                    var revenues = {};
+                    revenues.fy08 = row.fy08;
+                    revenues.fy09 = row.fy09;
+                    revenues.fy10 = row.fy10;
+                    revenues.fy11 = row.fy11;
+                    revenues.fy12 = row.fy12;
 
-                        topDRGs.push(JSON.parse(JSON.stringify(element)));
+                    hospitals.hospitals.forEach(function(hospital) {
+                        if(hospital.id === row.id) {
+                            hospital.revenues = revenues;
+                        }
                     });
-
-                    hospitals.hospitals[row.id].topDRGs = JSON.parse(JSON.stringify(topDRGs));
-                    newHospitals.push(JSON.parse(JSON.stringify(hospitals.hospitals[row.id])));
                 });
-                
-                var newObject = {};
-                newObject.hospitals = newHospitals;
-                document.body.appendChild(document.createElement('pre')).innerHTML = JSON.stringify(newObject, undefined, 4);
+                document.body.appendChild(document.createElement('pre')).innerHTML = JSON.stringify(hospitals, undefined, 4);
             });
         });
         

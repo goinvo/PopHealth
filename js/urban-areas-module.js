@@ -64,7 +64,6 @@ var urbanAreas = (function() {
         mapModule.getMap()._initPathRoot();
         _feature = L.geoJson(_urbanAreasData, {style: _config.style, onEachFeature: function(feature, layer) {
                 layer.on("click", function(e) {
-                    console.log(e);
                     //If the Ctrl or Cmd key is pressed, we lauch the compare mode
                     if(!app.isCompareModeActive() && (e.originalEvent.ctrlKey || e.originalEvent.metaKey))
                         sidebar.compare();
