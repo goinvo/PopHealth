@@ -63,6 +63,8 @@ var app = (function() {
     var _displayGeneralCard = function(d, target) {
         var node = d3.select(document.createElement("div"));
         
+        console.log(target);
+        
         node.data([{id: 0}]);
         
         if(_elementPicked === "hospital") {
@@ -75,7 +77,7 @@ var app = (function() {
                 .classed("two-columns", true)
                 .html("Staffed bed<sup>1</sup><br/>Total occupancy<sup>1</sup><br/>Total revenue<sup>1</sup><br/><span>"+beds+"</span><br/><span>"+occupancy+"</span><br/><span>"+_toDollar(revenue)+"</span>");
             
-            node.append("div").classed("chart", true);
+            node.append("div").classed("chart-"+target, true).style("height", "150px");
             
             node.append("div")
                 .classed("footnote", true)
@@ -86,7 +88,7 @@ var app = (function() {
             
             //We add the chart
             var chart = c3.generate({
-                bindto: ".chart",
+                bindto: ".chart-"+target,
                 data: {
                     x: "x",
                     columns: [
