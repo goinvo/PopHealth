@@ -113,7 +113,7 @@ nav select option {
     animation-duration: .5s;
 }
 
-/* ----- SIDEBAR & COMPARE PANEL ----- */
+/* ----- SIDEBAR, COMPARE PANEL & AUTOCOMPLETE BOX ----- */
 aside {
     position: absolute;
     top: 60px;
@@ -133,6 +133,7 @@ aside {
 .panel, .compare-panel {
     float: left;
     width: 350px;
+    z-index: 210;
 }
 
 .compare-panel {
@@ -207,6 +208,29 @@ aside .toolbar ::-webkit-input-placeholder {
 aside .toolbar ::-moz-placeholder {
     color: #848484;
 }
+
+.autocomplete {
+    position: absolute;
+    top: 35px;
+    left: 0;
+    z-index: 220;
+    width: calc(100%);
+}
+
+.autocomplete li {
+    padding: 0 10px;
+    font-size: 17px;
+    color: #848484;
+    line-height: 40px;
+    border-bottom: 1px solid rgba(0, 0, 0, .2);
+    background: #fff;
+}
+
+.autocomplete span {
+    color: #454545;
+}
+
+/* ----- CARD ----- */
 
 .card {
     position: relative;

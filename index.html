@@ -35,9 +35,10 @@
         <div id="map"></div>
         <aside>
             <div class="toolbar">
-                <i class="fa fa-search"></i><input type="text" placeholder="" />
+                <i class="fa fa-search"></i><input type="text" placeholder="" oninput="sidebar.searchValueChanged(this.value)" />
                 <a onclick="sidebar.compare()">Compare</a>
             </div>
+            <ul class="autocomplete"></ul>
             <div class="panel"></div>
             <div class="compare-panel"></div>
         </aside>
@@ -71,6 +72,16 @@
                     }
                 });
                 return (res === null) ? -1 : res;
+            };
+            
+            var getZipCodesStartingWith = function(str) {
+                var res = [];
+                _zipCodeData.zipCodes.forEach(function(row) {
+                    if(row.zipCode.slice(0, str.length) == str) {
+                        res.push(row.zipCode);
+                    }
+                });
+                return res;
             };
             
             //We load the data

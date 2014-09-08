@@ -6,7 +6,8 @@ var sidebar = (function() {
         cardClass: "card",
         toolbarElem: ".toolbar", //The toolbar which contains the search field and compare button
         cardMarginBottom: 15, //The default margin at the bottom of the cards
-        sidebarInitialWidth: 350
+        sidebarInitialWidth: 350,
+        autocompleteElem: ".autocomplete" //The box that contains the results of the autocomplete feature
     },
         _isCardVisible = { //Contains the card visible
             hospital: []
@@ -23,7 +24,8 @@ var sidebar = (function() {
             areas: []
         },
         _cardsTmpOrder = [], //Temporary cards' order
-        _cardsMoved = false;
+        _cardsMoved = false,
+        _autocompleteHidden = true;
     
     /*
         init
@@ -567,6 +569,34 @@ var sidebar = (function() {
             .attr("placeholder", text);
     };
     
+    /*
+        searchValueChanged(value)
+        Calls the current view's handler for that interaction
+        value is the value of the search box
+    */
+    var searchValueChanged = function(value) {
+        app.view().searchValueChanged(value);  
+    };
+    
+    /*
+        resetAutocomplete
+        Removes the content of the autocomplete box
+    */
+    var resetAutocomplete = function() {
+        var autocompleteElem = d3.selectAll(_config.autocompleteElem+" li").remove();
+    };
+    
+    /*
+        addAutocomplete(content)
+        Add an element to the autocomplete results
+        content is HTML content
+    */
+    var addAutocomplete = function(content) {
+        d3.select(_config.autocompleteElem)
+            .append("li")
+            .html(content);
+    };
+    
     return {
         init: init,
         reset: reset,
@@ -574,6 +604,9 @@ var sidebar = (function() {
         compare: compare,
         resetCardsOffset: resetCardsOffset,
         getSidebarWidth: getSidebarWidth,
-        searchPlaceholder: searchPlaceholder
+        searchPlaceholder: searchPlaceholder,
+        searchValueChanged: searchValueChanged,
+        resetAutocomplete: resetAutocomplete,
+        addAutocomplete: addAutocomplete
     };
 })();

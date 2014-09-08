@@ -71,6 +71,26 @@ var views = (function() {
         };
         
         /*
+            searchValueChanged(value)
+            Searches the postal code or the hospital name and offers an autocomplete form
+        */
+        var searchValueChanged = function(value) {
+            if(value === "")
+                return sidebar.resetAutocomplete();
+            
+            var zipCodes = getZipCodesStartingWith(value);
+            sidebar.resetAutocomplete();
+            zipCodes.forEach(function(zipCode) {
+                try {
+                    var urbanArea = getUrbanArea(getUrbanAreaIdByZipCode(zipCode));
+                    var urbanAreaCity = urbanArea.properties.town;
+                    var urbanAreaState = urbanArea.properties.state;
+                    sidebar.addAutocomplete("<span>"+value+"</span>"+((value.length - zipCode.length !== 0) ? zipCode.slice(value.length - zipCode.length) : "")+" "+urbanAreaCity+", "+urbanAreaState);
+                } catch(e) {}
+            });
+        };
+        
+        /*
             hospitalClicked(d, marker)
             Displays a heat map based on patients' origin
             d is the data of the selected hospital, and marker the one which was clicked
@@ -470,6 +490,7 @@ var views = (function() {
         
         return {
             init: init,
+            searchValueChanged: searchValueChanged,
             hospitalClicked: hospitalClicked,
             areaClicked: areaClicked
         };
