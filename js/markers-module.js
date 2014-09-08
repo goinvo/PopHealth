@@ -80,8 +80,8 @@ var markers = (function() {
                 //If the Ctrl or Cmd key is pressed, we lauch the compare mode
                 if(!app.isCompareModeActive() && (d3.event.ctrlKey || d3.event.metaKey))
                     sidebar.compare();
-                
-                app.hospitalClicked(d, this);
+            
+                app.view().hospitalClicked(d, this);
                 _markersSelected.push(this);
             });
         

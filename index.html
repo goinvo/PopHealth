@@ -16,7 +16,9 @@
     <body>
         <nav>
             <select>
+                <option>Choose the view here</option>
                 <option>What hospitals do your neighbors go to?</option>
+<!--
                 <option>What are the safest hospitals?</option>
                 <option>What are the most accident prone?</option>
                 <option>Where do most seniors get treated?</option>
@@ -24,13 +26,16 @@
                 <option>Where is the least healthcare access?</option>
                 <option>Where is the least expensive healthcare?</option>
                 <option>Where are the most complex care plans?</option>
+-->
             </select>
         </nav>
+        <div id="overlay">
+        </div>
         <div id="message" class="animated" style="visibility: hidden"></div>
         <div id="map"></div>
         <aside>
             <div class="toolbar">
-                <i class="fa fa-search"></i><input type="text" placeholder="obesity, drg, ..." />
+                <i class="fa fa-search"></i><input type="text" placeholder="" />
                 <a onclick="sidebar.compare()">Compare</a>
             </div>
             <div class="panel"></div>
@@ -44,20 +49,29 @@
         <script src="js/map-module.js"></script>
         <script src="js/markers-module.js"></script>
         <script src="js/urban-areas-module.js"></script>
-        <script src="js/charts-module.js"></script>
+        <script src="js/views-module.js"></script>
         <script>
             var _urbanAreasData = {},
-                _hospitalsData = {};
+                _hospitalsData = {},
+                _zipCodeData = {};
             
             var getUrbanArea = function(id) {
-                    return _urbanAreaData.features[id];  
+                    return _urbanAreasData.features[id];  
             };
             
             var getHospital = function(id) {
                     return _hospitalsData.hospitals[id];  
             };
             
-            app.init();
+            var getUrbanAreaIdByZipCode = function(zipCode) {
+                var res = null;
+                _zipCodeData.zipCodes.forEach(function(row) {
+                    if(row.zipCode === zipCode) {
+                        res = row.id;
+                    }
+                });
+                return (res === null) ? -1 : res;
+            };
             
             //We load the data
             d3.json("data/urban_areas.json", function(error, urbanAreasData) { //TODO in case of error
@@ -67,9 +81,15 @@
                 d3.json("data/hospitals.json", function(error, hospitalsData) {
                     _hospitalsData = hospitalsData;
                     
-                    mapModule.init()
-                    urbanAreas.init();
-                    markers.init();
+                    //We load the ZIP code / urban area table
+                    d3.json("data/zip_codes.json", function(error, zipCodeData) {
+                        _zipCodeData = zipCodeData;
+
+                        app.init();
+                        mapModule.init()
+                        urbanAreas.init();
+                        markers.init(); 
+                    });
                 });
             });
             

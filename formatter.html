@@ -242,27 +242,109 @@
 //        });     
         
         //Import the revenues
-        d3.json("data/appendix-f.json", function(error, excel) {
-            d3.json("data/hospitals.json", function(error, hospitals) {
-                excel.hospitals.forEach(function(row) {
-                    var revenues = {};
-                    revenues.fy08 = row.fy08;
-                    revenues.fy09 = row.fy09;
-                    revenues.fy10 = row.fy10;
-                    revenues.fy11 = row.fy11;
-                    revenues.fy12 = row.fy12;
-
-                    hospitals.hospitals.forEach(function(hospital) {
-                        if(hospital.id === row.id) {
-                            hospital.revenues = revenues;
+//        d3.json("data/appendix-f.json", function(error, excel) {
+//            d3.json("data/hospitals.json", function(error, hospitals) {
+//                excel.hospitals.forEach(function(row) {
+//                    var revenues = {};
+//                    revenues.fy08 = row.fy08;
+//                    revenues.fy09 = row.fy09;
+//                    revenues.fy10 = row.fy10;
+//                    revenues.fy11 = row.fy11;
+//                    revenues.fy12 = row.fy12;
+//
+//                    hospitals.hospitals.forEach(function(hospital) {
+//                        if(hospital.id === row.id) {
+//                            hospital.revenues = revenues;
+//                        }
+//                    });
+//                });
+//                document.body.appendChild(document.createElement('pre')).innerHTML = JSON.stringify(hospitals, undefined, 4);
+//            });
+//        });
+        
+        //Create the table zip code - ids
+        var unfound = [];
+        var res = {};
+        var count = 0;
+        var areasGlobal = {};
+        var excelGlobal = {};
+        var index = 0;
+        var delay = 0;
+        d3.json("data/appendix-g.json", function(error, excel) {
+            d3.json("data/urban_areas.json", function(error, areas) {
+                areasGlobal = areas;
+                excelGlobal = excel;
+                
+                excelGlobal.zipCodes.forEach(function(row) {
+                    var found = false;
+                    
+                    areasGlobal.features.forEach(function(area) {
+                        if(area.properties.town.toLowerCase().trim() === row.name.toLowerCase().trim()) {
+                            row.id = area.properties.id;
+                            found = true;
                         }
                     });
+                    
+                    if(!found) {
+                        unfound.push(row.zipCode+"+"+row.name.replace(" ", "+")+",+MA");
+                        count++;
+                    }
+                    
+                    delete row.name;
                 });
-                document.body.appendChild(document.createElement('pre')).innerHTML = JSON.stringify(hospitals, undefined, 4);
+                
+                findCity();
             });
         });
         
-        
+        function findCity() {
+            if(index === unfound.length) {
+                displayRes();
+                return;
+            }
+            
+            document.body.innerHTML = Math.round(index / (unfound.length - 1) * 100)+"%";
+            
+            d3.json("http://nominatim.openstreetmap.org/search?q="+unfound[index]+"&format=json&addressdetails=1&limit=1", function(error, data) {
+                if(index === unfound.length - 1)
+                    window.alert("Done");
+
+                if(data === undefined || data[0] === undefined || data[0].address === undefined) {
+                    console.log(console.log("Not found 1: "+unfound[index]));
+                }
+                else {
+                    var name = data[0].address.city;
+                    if(name === undefined)
+                        name = data[0].address.town;
+                    if(name === undefined) {
+                        console.log("Not found 2: "+unfound[index]);
+                    }
+                    else {
+                        areasGlobal.features.forEach(function(area) {
+                            if(area.properties.town.toLowerCase().trim() === name.toLowerCase().trim()) {
+                                excelGlobal.zipCodes.forEach(function(row) {
+                                    if(unfound[index].indexOf(row.zipCode) !== -1) {
+                                        row.id = area.properties.id;
+                                        found = true;
+                                    }
+                                });
+                            }
+                        });
+
+                        if(!found) {
+                            console.log(console.log("Not found 3: "+unfound[index]));
+                        }
+                    }
+                }
+                index++;
+                setTimeout(findCity, 500);
+            });
+        }
+
+        function displayRes() {
+            document.body.appendChild(document.createElement('pre')).innerHTML = JSON.stringify(excelGlobal, undefined, 4);
+        }
+
 //        d3.json("data/hospitals.json", function(error, hospitals) {
 //            hospitals.hospitals.forEach(function(hospital) {
 //                hospital.id = hospital.id - 1; 

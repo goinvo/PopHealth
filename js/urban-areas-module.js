@@ -12,7 +12,8 @@ var urbanAreas = (function() {
         linesContainerClass: "lines",
         svgContainer: "#map svg",
         hiddenLineOpacity: .2
-    };
+    },
+    _borderCommunities =  [1, 8, 28, 30, 31, 37, 47, 50, 53, 55, 63, 65, 66, 75, 86, 101, 102, 104, 107, 109, 115, 116, 132, 138, 142, 150, 157, 167, 168, 169, 170, 181, 183, 185, 198, 199, 210, 216, 230, 240, 241, 245, 256, 257, 259, 261, 263, 272, 276, 281, 285, 297, 302, 304, 307, 309, 315, 322, 330, 336, 340, 342, 343, 343, 366, 367];
     
     var _feature; //Contains the mapbox object for the urban areas
     
@@ -68,7 +69,7 @@ var urbanAreas = (function() {
                     if(!app.isCompareModeActive() && (e.originalEvent.ctrlKey || e.originalEvent.metaKey))
                         sidebar.compare();
                     
-                    app.areaClicked(e.target.feature.properties, this.getBounds().getCenter());
+                    app.view().areaClicked(e.target.feature.properties, this.getBounds().getCenter());
                 });
             }})
             .addTo(mapModule.getMap());
@@ -237,6 +238,15 @@ var urbanAreas = (function() {
         return urbanArea.feature.properties.id;
     };
     
+    /*
+        isBorderCommunity(id)
+        Returns true is the community is a at the border of another state, false otherwise
+        id is the community id
+    */
+    var isBorderCommunity = function(id) {
+        return (_borderCommunities.indexOf(id) === -1);
+    };
+    
     return {
         init: init,
         reset: reset,
@@ -248,6 +258,7 @@ var urbanAreas = (function() {
         getAreaData: getAreaData,
         getId: getId,
         deleteLines: deleteLines,
-        getAreaById: getAreaById
+        getAreaById: getAreaById,
+        isBorderCommunity: isBorderCommunity
     };
 })();

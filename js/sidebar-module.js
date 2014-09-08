@@ -558,12 +558,22 @@ var sidebar = (function() {
         return parseInt(d3.select(_config.sidebarElem).style("width"));
     }
     
+    /*
+        searchPlaceholder(text)
+        Replaces the text of the search box's placeholder by the argument
+    */
+    var searchPlaceholder = function(text) {
+        d3.select(_config.toolbarElem).select("input")
+            .attr("placeholder", text);
+    };
+    
     return {
         init: init,
         reset: reset,
         addcard: addcard,
         compare: compare,
         resetCardsOffset: resetCardsOffset,
-        getSidebarWidth: getSidebarWidth
+        getSidebarWidth: getSidebarWidth,
+        searchPlaceholder: searchPlaceholder
     };
 })();

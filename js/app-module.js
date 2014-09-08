@@ -1,17 +1,17 @@
 var app = (function() {
     var _config = {
         messageElem: "#message", //The container of the message below the questions' div (at the top of the window)
-        heatmapColorSchmeme: ["#565756", "#777877", "#999999", "#B8B8B8", "#D6D6D6"], //Color of the heat map, the strongest is the first one
-        heatlineColorSchmeme: ["#141414", "#3D3D3D", "#5E5E5E", "#808080", "#999999"], //Color of the heat map, the strongest is the first one
-        hiddenLineOpacity: .2, //Opacity of the lines when hidden
-        linesContainerClass: "lines", //Container of the lines displayed when a community is clicked
-        svgContainer: "#map svg",
-        markerClass: "marker" //Class of the markers on the map
+        overlayElem: "#overlay"
     },
+        _questionSelect = {
+            domElem: "nav select",
+            currentIndex: 0  
+        },
+        _currentView = {}, //Contains the methods of the current view
         _elementPicked, //Contains "hospital" or "community" depending on what has been clicked on the map
         _idElementPicked = [], //Contains the ids of the chosen elements
         _compareMode = false, //Indicates if the compare mode is active
-        _borderCommunities = [1,8,28,30,31,37,47,50,53,55,63,65,66,75,86,101,102,104,107,109,115,116,132,138,142,150,157,167,168,169,170,181,183,185,198,199,210,216,230,240,241,245,256,257,259,261,263,272,276,281,285,297,302,304,307,309,315,322,330,336,340,342,343,343,366,367],
+        _tourMode = true,
         _savedState = { //Contains information about the state before the compare mode was active in order to restore it
             hospital: { //The labels correspond to _elementPicked
                 areasToReset: [],
@@ -31,10 +31,70 @@ var app = (function() {
     */
     var init = function() {
         sidebar.init();
+        
+        if(_tourMode)
+            _tourStart();
+        
+        d3.select(_questionSelect.domElem).on("click", function() {
+            _changeView();
+        });
     };
     
     /*
-        toDollar(number)
+        _changeView
+        Changes the view of the application
+    */
+    var _changeView = function() {
+        var select = d3.select(_questionSelect.domElem);
+        var index = select.node().selectedIndex;
+        
+        if(index === 0)
+            return;
+        
+        switch(index) {
+            case 1:
+                _currentView = views.neighbors();
+                break;
+        }
+        
+        _currentView.init();
+
+        if(_tourMode) {
+            _tourExit();
+            //We remove the option "Choose the view"
+            select.node().firstElementChild.remove();
+        }
+    };
+    
+    /*
+        getView
+        Returns the object _currentView
+    */
+    var getView = function() {
+        return _currentView;  
+    };
+    
+    /*
+        _tourStart
+        Starts the application tour
+    */
+    var _tourStart = function() {
+        var overlay = d3.select(_config.overlayElem).style("display", "block");
+    };
+    
+    /*
+        _tourExit
+        Exit the application tour
+    */
+    var _tourExit = function() {
+        d3.select(_config.overlayElem).classed("animated fadeOut", true);
+        setTimeout(function() {
+            d3.select(_config.overlayElem).style("display", "none");
+        }, 550);
+    };
+    
+    /*
+        _toDollar(number)
         Converts a number to the US currency format ie 130868 to $130,868
         Doesn't take the decimals into account
     */
@@ -56,15 +116,12 @@ var app = (function() {
     };
 
     /*
-        _displayGeneralCard(d, target)
+        displayGeneralCard(d, target)
         Displays the top card which contains general information about the element clicked
         d contains the data to display and target the column in which the card will be
     */
-    var _displayGeneralCard = function(d, target) {
+    var displayGeneralCard = function(d, target) {
         var node = d3.select(document.createElement("div"));
-        
-        console.log(target);
-        
         node.data([{id: 0}]);
         
         if(_elementPicked === "hospital") {
@@ -143,7 +200,7 @@ var app = (function() {
         Returns the record which id is id from the _urbanAreaData object
     */
     var getUrbanArea = function(id) {
-            return _urbanAreasData.features[id];  
+        return _urbanAreasData.features[id];  
     };
 
     /*
@@ -151,36 +208,16 @@ var app = (function() {
         Returns the record which id is id from the _hospitalData object
     */
     var getHospital = function(id) {
-            return _hospitalsData.hospitals[id];  
+        return _hospitalsData.hospitals[id];  
     };
     
     /*
-        _heatmapColor(ratio)
-        Returns the heatmap color for the ratio given as argument
+        getAreasToRestoreIndex(id)
+        Returns the position of the object whose id is id from the array _savedState.["hospital"].areasToRestore if exists, otherwise returns -1
     */
-    var _heatmapColor = function(ratio) {
-        var color;
-        if(ratio > .6)
-            color = _config.heatmapColorSchmeme[0];
-        else if(ratio > .5)
-            color = _config.heatmapColorSchmeme[1];
-        else if(ratio > .3)
-            color = _config.heatmapColorSchmeme[2];
-        else if(ratio > .1)
-            color = _config.heatmapColorSchmeme[3];
-        else
-            color = _config.heatmapColorSchmeme[4];
-        return color;
-    };
-    
-    /*
-        _indexAreasToRestore(id, type)
-        Returns the position of the object whose id is id from the array _savedState.[type].areasToRestore if exists, otherwise returns -1
-        type should be "hospital" or "community"
-    */
-    var _indexAreasToRestore = function(id, type) {
-        for(var i = 0; i < _savedState[type].areasToRestore.length; i++) {
-            if(_savedState[type].areasToRestore[i].id === id) {
+    var getAreasToRestoreIndex = function(id) {
+        for(var i = 0; i < _savedState["hospital"].areasToRestore.length; i++) {
+            if(_savedState["hospital"].areasToRestore[i].id === id) {
                 return i;
             }
         }
@@ -380,230 +417,6 @@ var app = (function() {
     };
     
     /*
-        areaClicked(layerClicked, center)
-        Displays all the cards related to the selected community, and display a lines based on the patients' destination hospitals
-        layerClicked is the data of the selected community, and center is the calculated center of the community
-    */
-    var areaClicked = function(layerClicked, center) {
-        var target = "sidebar";
-        if(_compareMode) {
-            if(_elementPicked !== "community" || _idElementPicked.indexOf(layerClicked.id) !== -1)
-                return;
-            hideMessage();
-            target = "panel";
-            
-            //We reset the margin-top of the sidebar's cards
-            sidebar.resetCardsOffset();
-            
-            //We remove the last element selected from the array of the selected elements
-            if(_idElementPicked.length !== 1)
-                _idElementPicked.pop();
-        }
-        else
-            _idElementPicked = []; //We reset the chosen elements
-        
-        _elementPicked = "community";
-        _idElementPicked.push(layerClicked.id);
-        
-        urbanAreas.reset();
-                
-        markers.reset();
-        
-        //We hide all the markers
-        markers.hideMarkers();
-        
-        if(!_compareMode) {
-            //We delete all the lines
-            urbanAreas.deleteLines();
-            
-            //We save the sate of the first clicked area
-            _savedState.community.areaToRestore= layerClicked.id;
-            
-            //We reset the saved markers
-            _savedState.community.markersToRestore = [];
-        }
-        else {
-            //We delete the lines
-            for(var i = 0; i < _savedState.community.linesToDelete.length; i++) {
-                _savedState.community.linesToDelete[i].remove();
-            }
-            
-            //We restore the first clicked area
-            if(urbanAreas.getAreaById(_savedState.community.areaToRestore)._path !== undefined)
-                d3.select(urbanAreas.getAreaById(_savedState.community.areaToRestore)._path).classed("hovered", true);
-            else {
-                var layers = urbanAreas.getAreaById(_savedState.community.areaToRestore)._layers;
-                for(var key in layers) {
-                    d3.select(layers[key]._path).classed("hovered", true);
-                }
-            }
-            
-            //We restore the markers
-            for(var i = 0; i < _savedState.community.markersToRestore.length; i++) {
-                markers.addSelectedMarker(_savedState.community.markersToRestore[i]);
-                markers.restoreSelectedMarkers();
-                markers.highlightMarker(_savedState.community.markersToRestore[i]);
-            }
-        }
-            
-        _displayGeneralCard(layerClicked, target);
-                
-        var isBorderCommunity = (_borderCommunities.indexOf(layerClicked.id) !== -1) ? true : false;
-        
-        /* Patients' origin */
-        var node = d3.select(document.createElement("div"));
-        node.append("h1")
-            .text("Patients' destination hospitals");
-        var table = node.append("table")
-        
-        var currentRow = table.append("tr");
-        currentRow.append("th")
-            .classed("w50", true)
-            .html("Hospital<sup>1</sup>"+((isBorderCommunity) ? "<sup>2</sup>" : ""));
-        currentRow.append("th")
-            .classed("w25", true)
-            .style("text-align", "center")
-            .text("Patients");
-        currentRow.append("th")
-            .style("text-align", "center")
-            .text("% of patients /hospital");
-        
-        var totalPatients = 0;
-        layerClicked.topHospitals.forEach(function(topHospital) {
-            totalPatients += topHospital.patients;
-        });
-        
-        //We highlight the community
-        if(urbanAreas.getAreaById(layerClicked.id)._path !== undefined)
-            d3.select(urbanAreas.getAreaById(layerClicked.id)._path).classed("hovered", true);
-        else {
-            var layers = urbanAreas.getAreaById(layerClicked.id)._layers;
-            for(var key in layers) {
-                d3.select(layers[key]._path).classed("hovered", true);
-            }
-        }
-        
-        layerClicked.topHospitals.forEach(function(topHospital) {
-            var percentage = (topHospital.percentage === null) ? "–" : ((topHospital.percentage * 100 <= 1) ? "<1" : Math.round(topHospital.percentage * 100));
-            var hospital = getHospital(topHospital.id_hospital);
-
-            currentRow = table.append("tr")
-                .data([{id: topHospital.id_hospital}])
-                .on("mouseover", function(d) {
-                    markers.hideMarkers();
-                    d3.select(markers.getMarker(d.id))
-                        .style("opacity", 1);
-                    
-                    var id = d.id;
-                    d3.selectAll(_config.svgContainer+" ."+_config.linesContainerClass+" line")
-                        .style("opacity", function(d) {
-                            if(d.id != id)
-                                return _config.hiddenLineOpacity;
-                            return 1;
-                        });
-
-                    d3.select(this)
-                        .classed("hovered", true);
-                })
-                .on("mouseout", function() {
-                    markers.restoreSelectedMarkers();
-                    
-                    d3.select(this)
-                        .classed("hovered", false);
-                    
-                    d3.selectAll(_config.svgContainer+" ."+_config.linesContainerClass+" line")
-                        .style("opacity", 1);
-                });
-            currentRow.append("td")
-                .text(hospital.name);
-            currentRow.append("td")
-                .classed("number", true)
-                .text(topHospital.patients);
-            currentRow.append("td")
-                .classed("number", true)
-                .text((percentage !== "–") ? percentage+"%" : percentage);
-            
-            //We highlight the marker of the current hospital
-            var marker = markers.getMarker(topHospital.id_hospital);
-            d3.select(marker)
-                .style("opacity", 1);
-            markers.addSelectedMarker(marker);
-            markers.highlightMarker(topHospital.id_hospital);
-            
-            //We save the markers linked to the first clicked area
-            if(!_compareMode)
-                _savedState.community.markersToRestore.push(topHospital.id_hospital);
-            
-            //We add the line
-            var originCoords = mapModule.getMap().latLngToLayerPoint([center.lat, center.lng]);
-            var destinationCoords = mapModule.getMap().latLngToLayerPoint([getHospital(topHospital.id_hospital).latitude, getHospital(topHospital.id_hospital).longitude]);
-            
-            var line = d3.select(_config.svgContainer+" ."+_config.linesContainerClass)
-                .data([{
-                    id: topHospital.id_hospital,
-                    origin: {
-                        latitude: center.lat,
-                        longitude: center.lng
-                    },
-                    destination: {
-                        latitude: getHospital(topHospital.id_hospital).latitude,
-                        longitude: getHospital(topHospital.id_hospital).longitude
-                    }
-                }])
-                .append("line")
-                .style("stroke", function() {
-                    var ratio = topHospital.patients / totalPatients;
-                    if(ratio > .5)
-                        return _config.heatlineColorSchmeme[0];
-                    if(ratio > .5)
-                         return _config.heatlineColorSchmeme[1];
-                    if(ratio > .3)
-                         return _config.heatlineColorSchmeme[2];
-                    if(ratio > .1)
-                         return _config.heatlineColorSchmeme[3];
-                    return _config.heatlineColorSchmeme[4];
-                })
-                .style("stroke-width", function() {
-                    var ratio = topHospital.patients / totalPatients;
-                    var thickness;
-                    if(ratio > .6)
-                        thickness = 7;
-                    else if(ratio > .5)
-                        thickness = 6;
-                    else if(ratio > .3)
-                        thickness = 5;
-                    else if(ratio > .1)
-                        thickness = 4;
-                    else
-                        thickness = 3;
-                    return thickness+"px";
-                })
-                .attr("x1", originCoords.x)
-                .attr("y1", originCoords.y)
-                .attr("x2", destinationCoords.x)
-                .attr("y2", destinationCoords.y);
-            
-            if(_compareMode)
-                _savedState.community.linesToDelete.push(line);
-        });
-        
-        //No data for the community
-        if(node.selectAll("tr").size() == 1) {
-            currentRow = table.append("tr");
-            currentRow.append("td")
-                .text("No data");
-            currentRow.append("td");
-            currentRow.append("td");
-        }
-        
-        node.append("div")
-            .classed("footnote", true)
-            .html("<sup>1</sup> These data only take into account the patients coming from the top 10<sup>-</sup> communities"+((isBorderCommunity) ? "<br/><sup>2</sup> No relevant data for people going to out-of-state hospitals": ""));
-        
-        sidebar.addcard(node, true, target);
-    };
-    
-    /*
         displayMessage
         Displays the html content content below the questions selector, at the top of the window
     */
@@ -618,12 +431,12 @@ var app = (function() {
         
         //We center the message in the available width
         var sidebarWidth = sidebar.getSidebarWidth();
-        d3.select(_config.messageElem).style({"width": "calc(100% - "+sidebarWidth+"px)", "padding-right": sidebarWidth+"px"});
+//        d3.select(_config.messageElem).style({"width": "calc(100% - "+sidebarWidth+"px)", "padding-right": sidebarWidth+"px"});
         
-//        if(_compareMode)
-//            d3.select(_config.messageElem).style({"width": "calc(100% - 700px)", "padding-right": "700px"});
-//        else
-//            d3.select(_config.messageElem).style({"width": "calc(100% - 350px)", "padding-right": "350px"});
+        if(_compareMode)
+            d3.select(_config.messageElem).style({"width": "calc(100% - 700px)", "padding-right": "700px"});
+        else
+            d3.select(_config.messageElem).style({"width": "calc(100% - 350px)", "padding-right": "350px"});
     };
     
     /*
@@ -714,16 +527,111 @@ var app = (function() {
         return _compareMode;  
     };
     
+    /*
+        getSelection
+        Returns the map's selected elements type and ids
+        type is "hospital" or community, and ids an array
+    */
+    var getSelection = function() {
+        return {
+            ids: _idElementPicked,
+            type: _elementPicked
+        };  
+    };
+    
+    /*
+        resetSelectedIds
+        Empties the array _idElementPicked
+    */
+    var resetSelectedIds = function() {
+        _idElementPicked = [];  
+    };
+    
+    /*
+        popSelectedIds
+        Applies the method pop on the array _idElementPicked
+    */
+    var popSelectedIds = function() {
+        _idElementPicked.pop();  
+    };
+    
+    /*
+        pushSelectedIds(id)
+        Applies the push method on the array _idElementPicked with the argument id
+    */
+    var pushSelectedIds = function(id) {
+        _idElementPicked.push(id);  
+    };
+    
+    /*
+        setSelectedType(type)
+        Sets the value of _elementPicked to type
+        type must be "hospital" or "community"
+    */
+    var setSelectedType = function(type) {
+        if(type === "hospital" || type === "community")
+            _elementPicked = type;
+        else
+            console.log("app module: argument should be \"hospital\" or \"community\"");
+    };
+    
+    /*
+        saveState(selection, values)
+        Saves the state of the application in order to exit the compare mode without loosing the
+        map features displayed previously its activation
+        If selection is "hospital", values is an object with the following properties:
+            * areasToReset: array of objects containing the properties:
+                * id: the area's id
+                *  fillColor: the original color of the area
+            * areasToRestore: the same
+            * markerToRestore: hospital's id
+        Otherwise, if it's "community", the possible properties are:
+            * areasToRestore: array of the areas' ids
+            * linesToDelete: d3 line element
+            * markersToRestore: array of the hopital's id
+    */
+    var saveState = function(selection, values) {
+        if(selection === "hospital") {
+            _savedState.hospital.areasToReset    = values.areasToReset    || _savedState.hospital.areasToReset;
+            _savedState.hospital.areasToRestore  = values.areasToRestore  || _savedState.hospital.areasToRestore;
+            _savedState.hospital.markerToRestore = values.markerToRestore || _savedState.hospital.markerToRestore;
+        }
+        else if(selection === "community") {
+            _savedState.community.areaToRestore    = values.areaToRestore   || _savedState.community.areaToRestore;
+            _savedState.community.linesToDelete    = values.linesToDelete    || _savedState.community.linesToDelete;
+            _savedState.community.markersToRestore = values.markersToRestore || _savedState.community.markersToRestore;
+        }
+        else //error
+            console.log("app module: first argument should be \"hospital\" or \"community\"");
+    };
+    
+    /*
+        getSavedState
+        Returns the object _savedState
+    */
+    var getSavedState = function() {
+        return _savedState;
+    };
+    
     return {
         init: init,
         getUrbanArea: getUrbanArea,
         getHospital: getHospital,
         hospitalClicked: hospitalClicked,
-        areaClicked: areaClicked,
         displayMessage: displayMessage,
         hideMessage: hideMessage,
         getMode: getMode,
         compareMode: compareMode,
-        isCompareModeActive: isCompareModeActive
+        isCompareModeActive: isCompareModeActive,
+        view: getView,
+        getSelection: getSelection,
+        resetSelectedIds: resetSelectedIds,
+        popSelectedIds: popSelectedIds,
+        pushSelectedIds: pushSelectedIds,
+        setSelectedType: setSelectedType,
+        saveState: saveState,
+        getSavedState: getSavedState,
+        displayGeneralCard: displayGeneralCard,
+        getAreasToRestoreIndex: getAreasToRestoreIndex
     };
 })();
