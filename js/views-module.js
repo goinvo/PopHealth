@@ -39,48 +39,35 @@ var views = (function() {
         var init = function() {
             sidebar.searchPlaceholder("ZIP code, umass, ...");
             
-            //We try to locate the user
-            if(navigator.geolocation) {
-                app.displayMessage("Retrieving your position...");
-                navigator.geolocation.getCurrentPosition(function(position) {
-                    var latlngPoint = new L.LatLng(position.coords.latitude, position.coords.longitude);
-                    d3.json("http://nominatim.openstreetmap.org/reverse?format=json&lat="+position.coords.latitude+"&lon="+position.coords.longitude+"&addressdetails=0",function(error, data) {
-                        var postalCode = data.display_name.match(/[0-9]{5}/);
+            if(!navigator.geolocation)
+                return;
 
-                        //We can't retrieve the postal code
-                        if(postalCode === null) {
-                            app.displayMessage("Your position couldn't be determined. Enter you ZIP code in the sidebar's search box.");
-                            setTimeout(function() {app.hideMessage()}, 8000);
+            //We locate the user inside a community
+            app.displayMessage("Retrieving your position...");
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var latlngPoint = new L.LatLng(position.coords.latitude, position.coords.longitude);
+                d3.json("http://nominatim.openstreetmap.org/reverse?format=json&lat="+position.coords.latitude+"&lon="+position.coords.longitude+"&addressdetails=0",function(error, data) {
+                    try {
+                        if(error) throw error;
+                        app.hideMessage();
+                        var postalCode = data.display_name.match(/[0-9]{5}/)[0];
+                        var urbanAreaId = getUrbanAreaIdByZipCode(postalCode);
+                        var mapboxObject = urbanAreas.getAreaById(urbanAreaId);
+                        var dataObject = urbanAreas.getAreaData(urbanAreas.getAreaById(urbanAreaId));
+                        app.view().areaClicked(dataObject, mapboxObject.getBounds().getCenter());
+                    }
+                    catch(e) {
+                        app.displayMessage("Your position couldn't be determined. Enter you ZIP code in the sidebar's search box.");
+                        setTimeout(function() {app.hideMessage()}, 8000);
+                        if(!(e instanceof TypeError)) {
+                            console.log("views module: the call to Nominatim returned an error");
+                            console.log(error);
                         }
-                        else {
-                            postalCode = postalCode[0];
-
-                            //The user isn't inside MA
-                            if(data.display_name.indexOf("Massachusetts") === -1){
-                                app.displayMessage("The feature works only inside Massachusetts.");
-                                setTimeout(function() {app.hideMessage()}, 8000);
-                            }
-                            else { //Everything's ok here. We now search the area's ID
-                                app.hideMessage();
-                                var urbanAreaId = getUrbanAreaIdByZipCode(postalCode);
-                                    
-                                if(urbanAreaId === -1) {
-                                    app.displayMessage("Your position couldn't be determined. Enter you ZIP code in the sidebar's search box.");
-                                    setTimeout(function() {app.hideMessage()}, 8000);
-                                }
-                                else { //Congrats, we found the user's location!
-                                    app.hideMessage();
-                                    var mapboxObject = urbanAreas.getAreaById(urbanAreaId);
-                                    var dataObject = urbanAreas.getAreaData(urbanAreas.getAreaById(urbanAreaId));
-                                    app.view().areaClicked(dataObject, mapboxObject.getBounds().getCenter());
-                                }
-                            }
-                        }
-                    });
-                }, function() {
-                    app.hideMessage();
+                    }
                 });
-            }
+            }, function() {
+                app.hideMessage();
+            });
         };
         
         /*
