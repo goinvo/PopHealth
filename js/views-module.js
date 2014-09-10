@@ -39,6 +39,7 @@ var views = (function() {
         */
         var init = function() {
             sidebar.searchPlaceholder("ZIP code, umass, ...");
+            sidebar.focusOnSearch();
             
             if(!navigator.geolocation)
                 return;
@@ -73,7 +74,7 @@ var views = (function() {
         
         /*
             searchValueChanged(value)
-            Searches the postal code or the hospital name and offers an autocomplete form
+            Searches the postal code and offers an autocomplete form
         */
         var searchValueChanged = function(value) {
             if(value === "")
@@ -86,9 +87,35 @@ var views = (function() {
                     var urbanArea = getUrbanArea(getUrbanAreaIdByZipCode(zipCode));
                     var urbanAreaCity = urbanArea.properties.town;
                     var urbanAreaState = urbanArea.properties.state;
-                    sidebar.addAutocomplete("<span>"+value+"</span>"+((value.length - zipCode.length !== 0) ? zipCode.slice(value.length - zipCode.length) : "")+" "+urbanAreaCity+", "+urbanAreaState);
+                    var content = "<span>"+value+"</span>"+((value.length - zipCode.length !== 0) ? zipCode.slice(value.length - zipCode.length) : "")+" "+urbanAreaCity+", "+urbanAreaState;
+                    
+                    sidebar.addAutocomplete(content, zipCode, {
+                        onclick: function() {
+                            app.view().areaClicked(urbanArea.properties, urbanAreas.getAreaById(getUrbanAreaIdByZipCode(zipCode)).getBounds().getCenter());
+                            sidebar.resetAutocomplete();
+                            sidebar.searchValue("");
+                        }
+                    });
                 } catch(e) {}
             });
+        };
+        
+        /*
+            searchValueSelected(value)
+            Using the value as an id for an hospital (hospital's id) or an area (community's id or postal code), launches the corresponding handler
+        */
+        var searchValueSelected = function(value) {
+            try {
+                var urbanAreaId = getUrbanAreaIdByZipCode(value);
+                var urbanArea = getUrbanArea(urbanAreaId);
+                app.view().areaClicked(urbanArea.properties, urbanAreas.getAreaById(urbanAreaId).getBounds().getCenter());
+                sidebar.resetAutocomplete();
+                sidebar.searchValue("");
+            }
+            catch(e) {
+                console.log("views module: the value doesn't match any id");
+                console.log(error);
+            }
         };
         
         /*
@@ -500,6 +527,9 @@ var views = (function() {
 
             sidebar.addcard(node, true, target);
             
+            if(chartData.length === 0)
+                return node.select(".chart-destination-"+target).remove();
+            
             //We add the chart
             var chart = c3.generate({
                 bindto: ".chart-destination-"+target,
@@ -540,6 +570,7 @@ var views = (function() {
         return {
             init: init,
             searchValueChanged: searchValueChanged,
+            searchValueSelected: searchValueSelected,
             hospitalClicked: hospitalClicked,
             areaClicked: areaClicked
         };

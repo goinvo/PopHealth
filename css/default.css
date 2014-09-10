@@ -224,6 +224,11 @@ aside .toolbar ::-moz-placeholder {
     line-height: 40px;
     border-bottom: 1px solid rgba(0, 0, 0, .2);
     background: #fff;
+    cursor: pointer;
+}
+
+.autocomplete li:hover, .autocomplete li.hovered {
+    background-color: rgba(198, 198, 198, .15);
 }
 
 .autocomplete span {

@@ -25,11 +25,12 @@ var sidebar = (function() {
         },
         _cardsTmpOrder = [], //Temporary cards' order
         _cardsMoved = false,
-        _autocompleteHidden = true;
+        _autocompleteHidden = true,
+        _searchSelectedItem = null; //Contains the current selected item (d3 object) in the autocomplete list
     
     /*
         init
-        Creates the d3 function responsible of the drag feature
+        Creates the d3 function responsible of the drag feature, initializes th search box
     */
     var init = function() {
         _dragBehavior = d3.behavior.drag()
@@ -37,6 +38,37 @@ var sidebar = (function() {
             .on("dragstart", _cardDragStarted)
             .on("drag", _cardDragged)
             .on("dragend", _cardDragEnded);
+        
+        d3.select(_config.toolbarElem+" input")
+            .on("keyup",function() {
+                switch(d3.event.keyCode) {
+                        case 13:
+                            if(_searchSelectedItem !== null)
+                                app.view().searchValueSelected(_searchSelectedItem.datum().id);
+                            else if(d3.selectAll(_config.autocompleteElem+" li").size() === 1)
+                                app.view().searchValueSelected(d3.select(_config.autocompleteElem+" li").datum().id);
+                            break;
+                        case 38:
+                            if(_searchSelectedItem !== null && _searchSelectedItem.node().previousElementSibling !== null) {
+                                _searchSelectedItem.classed("hovered", false);
+                                _searchSelectedItem = d3.select(_searchSelectedItem.node().previousElementSibling);
+                                _searchSelectedItem.classed("hovered", true);
+                            }
+                            break;
+                        case 40:
+                            if(_searchSelectedItem === null) {
+                                var currentItem = d3.select(_config.autocompleteElem+" li");
+                                currentItem.classed("hovered", true);
+                                _searchSelectedItem = currentItem;
+                            }
+                            else {
+                                _searchSelectedItem.classed("hovered", false);
+                                _searchSelectedItem = d3.select(_searchSelectedItem.node().nextElementSibling);
+                                _searchSelectedItem.classed("hovered", true);
+                            }
+                            break;
+                }
+            });
     };
     
     /*
@@ -562,11 +594,20 @@ var sidebar = (function() {
     
     /*
         searchPlaceholder(text)
-        Replaces the text of the search box's placeholder by the argument
+        Replaces the text of the search box placeholder by the argument
     */
     var searchPlaceholder = function(text) {
         d3.select(_config.toolbarElem).select("input")
             .attr("placeholder", text);
+    };
+    
+    /*
+        searchValue(text)
+        Replaces the value of the search box by the argument
+    */
+    var searchValue = function(text) {
+        d3.select(_config.toolbarElem).select("input")
+            .node().value = text;
     };
     
     /*
@@ -575,7 +616,16 @@ var sidebar = (function() {
         value is the value of the search box
     */
     var searchValueChanged = function(value) {
-        app.view().searchValueChanged(value);  
+        app.view().searchValueChanged(value);
+        d3.selectAll("."+_config.cardClass).style("display", (value !== "") ? "none" : "block");
+    };
+    
+    /*
+        focusOnSearch
+        Gives the focus to the search box
+    */
+    var focusOnSearch = function() {
+        d3.select(_config.toolbarElem+" input").node().focus();
     };
     
     /*
@@ -584,16 +634,26 @@ var sidebar = (function() {
     */
     var resetAutocomplete = function() {
         var autocompleteElem = d3.selectAll(_config.autocompleteElem+" li").remove();
+        d3.selectAll("."+_config.cardClass).style("display", "block");
     };
     
     /*
-        addAutocomplete(content)
+        addAutocomplete(content, id, options)
         Add an element to the autocomplete results
         content is HTML content
+        id is a unique id that can be used to tell the view to select this element
+        options is an object that can contains the following properties:
+            * onclick: contains the function that will be called when the event is fired
+            * onmouseover: same
+            * onmouseout: same
     */
-    var addAutocomplete = function(content) {
+    var addAutocomplete = function(content, id, options) {
         d3.select(_config.autocompleteElem)
             .append("li")
+            .datum({id: id})
+            .on("click",     options.onclick     || null)
+            .on("mouseover", options.onmouseover || null)
+            .on("mouseout",  options.onmouseout  || null)
             .html(content);
     };
     
@@ -605,7 +665,9 @@ var sidebar = (function() {
         resetCardsOffset: resetCardsOffset,
         getSidebarWidth: getSidebarWidth,
         searchPlaceholder: searchPlaceholder,
+        searchValue: searchValue,
         searchValueChanged: searchValueChanged,
+        focusOnSearch: focusOnSearch,
         resetAutocomplete: resetAutocomplete,
         addAutocomplete: addAutocomplete
     };

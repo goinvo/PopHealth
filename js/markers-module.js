@@ -82,6 +82,8 @@ var markers = (function() {
                     sidebar.compare();
             
                 app.view().hospitalClicked(d, this);
+                sidebar.resetAutocomplete();
+                sidebar.searchValue("");
                 _markersSelected.push(this);
             });
         

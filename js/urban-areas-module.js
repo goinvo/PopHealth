@@ -70,6 +70,8 @@ var urbanAreas = (function() {
                         sidebar.compare();
                     
                     app.view().areaClicked(e.target.feature.properties, this.getBounds().getCenter());
+                    sidebar.resetAutocomplete();
+                    sidebar.searchValue("");
                 });
             }})
             .addTo(mapModule.getMap());
