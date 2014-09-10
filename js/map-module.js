@@ -1,7 +1,7 @@
 var mapModule = (function() {
     var _config = {
         mapElement: "#map",
-        mapName: "clementp.ipg3giee",
+        mapName: "juhan.jd76mnn6",
         defaultLatitude: 42.2,
         defaultLongitude: -71.7,
         defaultZoom: 9

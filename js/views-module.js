@@ -6,7 +6,8 @@ var views = (function() {
         linesContainerClass: "lines", //Container of the lines displayed when a community is clicked
         svgContainer: "#map svg",
         markerClass: "marker" //Class of the markers on the map
-    };
+    },
+        _chartColorPattern = ["#3D7399", "#FF5F40", "#3D998E", "#FF4094", "#994C3D", "#8DCC14"];
     
     /*
         _heatmapColor(ratio)
@@ -343,6 +344,7 @@ var views = (function() {
             /* Patients' origin */
             var node = d3.select(document.createElement("div"));
             node.append("h1").text("Patients' destination hospitals");
+            node.append("div").classed("chart-destination-"+target, true).style("height", "150px");
             var table = node.append("table")
             var currentRow = table.append("tr");
             currentRow.append("th").classed("w50", true).html("Hospital<sup>1</sup>"+((isBorderCommunity) ? "<sup>2</sup>" : ""));
@@ -363,10 +365,13 @@ var views = (function() {
                     d3.select(layers[key]._path).classed("hovered", true);
                 }
             }
+            
+            var chartData = [];
 
             layerClicked.topHospitals.forEach(function(topHospital) {
                 var percentage = (topHospital.percentage === null) ? "–" : ((topHospital.percentage * 100 <= 1) ? "<1" : Math.round(topHospital.percentage * 100));
                 var hospital = getHospital(topHospital.id_hospital);
+                chartData.push([hospital.name, topHospital.patients]);
 
                 currentRow = table.append("tr")
                     .data([{id: topHospital.id_hospital}])
@@ -383,16 +388,24 @@ var views = (function() {
                             });
 
                         d3.select(this).classed("hovered", true);
+                        d3.select(this).selectAll("td").each(function() {d3.select(this).style('background-color', chart.color(hospital.name));});
+                    
+                        //We highlight the data in the chart
+                        chart.focus(hospital.name);
                     })
                     .on("mouseout", function() {
                         markers.restoreSelectedMarkers();
 
                         d3.select(this).classed("hovered", false);
+                        d3.select(this).selectAll("td").style("background-color", null);
 
                         d3.selectAll(_config.svgContainer+" ."+_config.linesContainerClass+" line")
                             .style("opacity", 1);
+                    
+                        //We un-highlight the data in the chart
+                        chart.revert();
                     });
-                currentRow.append("td").text(hospital.name);
+                currentRow.append("td").classed("legend", true).html("<span data-id=\""+hospital.name+"\"></span>"+hospital.name);
                 currentRow.append("td").classed("number", true).text(topHospital.patients);
                 currentRow.append("td").classed("number", true).text((percentage !== "–") ? percentage+"%" : percentage);
 
@@ -486,6 +499,42 @@ var views = (function() {
                 .html("<sup>1</sup> These data only take into account the patients coming from the top 10<sup>-</sup> communities"+((isBorderCommunity) ? "<br/><sup>2</sup> No relevant data for people going to out-of-state hospitals": ""));
 
             sidebar.addcard(node, true, target);
+            
+            //We add the chart
+            var chart = c3.generate({
+                bindto: ".chart-destination-"+target,
+                data: {
+                    columns: chartData,
+                    type : 'pie'
+                },
+                pie: {
+                    label: {
+                        show: false
+                    },
+                    
+                },
+                legend: {
+                    show: false
+                },
+                size: {
+                    width: 310,
+                    height: 150
+                },
+                padding: {
+                    top: 10,
+                    left: 35
+                },
+                color: {
+                    pattern: _chartColorPattern
+                }
+            });
+            
+                        
+            //We give the colors to the squares in the table
+            node.selectAll('tr span').each(function () {
+                var id = d3.select(this).attr('data-id');
+                d3.select(this).style('background-color', chart.color(id));
+            });
         };
         
         return {

@@ -336,6 +336,22 @@ aside .toolbar ::-moz-placeholder {
     text-align: right;
 }
 
+
+.card td.legend {
+    position: relative;
+    padding-left: 15px;
+}
+
+.card td.legend span {
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 10px;
+    height: 10px;
+    margin-top: -5px;
+}
+
 /*
 .card tr:hover, .card tr.active {
     background-color: #2b83ba;
