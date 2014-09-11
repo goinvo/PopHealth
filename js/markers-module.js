@@ -14,10 +14,10 @@ var markers = (function() {
         _previousOpacity = 1; //Initial opacity of the hovered marker
     
     /*
-        _getMarkerSize
+        getMarkerSize
         Returns the size of the markers
     */
-    var _getMarkerSize = function() {
+    var getMarkerSize = function() {
         return Math.round(mapModule.getMap().getZoom() * 30 / (12 + (9 - mapModule.getMap().getZoom())));
     };
     
@@ -31,7 +31,7 @@ var markers = (function() {
             .setContent(data.name)
             .openOn(mapModule.getMap());
         
-        var markerSize = _getMarkerSize();
+        var markerSize = getMarkerSize();
         d3.select(".leaflet-popup-pane")
             .style("transform", "translateY(-"+markerSize+"px)")
             .style("-webkit-transform", "translateY(-"+markerSize+"px)")
@@ -107,7 +107,7 @@ var markers = (function() {
         Updates the size and the position of each of the markers depending on the zoom of the map
     */
     var updateMarkers = function() {
-        var markerSize = _getMarkerSize();
+        var markerSize = getMarkerSize();
         _markers
             .attr("width", markerSize)
             .attr("height", markerSize)
@@ -176,6 +176,7 @@ var markers = (function() {
     return {
         init: init,
         reset: reset,
+        getMarkerSize: getMarkerSize,
         updateMarkers: updateMarkers,
         getMarker: getMarker,
         hideMarkers: hideMarkers,

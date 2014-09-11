@@ -395,6 +395,7 @@ var views = (function() {
             }
             
             var chartData = [];
+            var originCoords = mapModule.getMap().latLngToLayerPoint([center.lat, center.lng]);
 
             layerClicked.topHospitals.forEach(function(topHospital) {
                 var percentage = (topHospital.percentage === null) ? "–" : ((topHospital.percentage * 100 <= 1) ? "<1" : Math.round(topHospital.percentage * 100));
@@ -455,7 +456,6 @@ var views = (function() {
                 }
 
                 //We add the line
-                var originCoords = mapModule.getMap().latLngToLayerPoint([center.lat, center.lng]);
                 var destinationCoords = mapModule.getMap().latLngToLayerPoint([app.getHospital(topHospital.id_hospital).latitude, app.getHospital(topHospital.id_hospital).longitude]);
 
                 var line = d3.select(_config.svgContainer+" ."+_config.linesContainerClass)
@@ -470,7 +470,7 @@ var views = (function() {
                             longitude: app.getHospital(topHospital.id_hospital).longitude
                         }
                     }])
-                    .append("line")
+                    .append("path")
                     .style("stroke", function() {
                         var ratio = topHospital.patients / totalPatients;
                         if(ratio > .5)
@@ -498,10 +498,17 @@ var views = (function() {
                             thickness = 3;
                         return thickness+"px";
                     })
-                    .attr("x1", originCoords.x)
-                    .attr("y1", originCoords.y)
-                    .attr("x2", destinationCoords.x)
-                    .attr("y2", destinationCoords.y);
+                    .attr("d", function(d) {
+                        var dx = destinationCoords.x - originCoords.x,
+                            dy = destinationCoords.y - originCoords.y,
+                            dr = Math.sqrt(dx * dx + dy * dy);
+                        
+                        return "M"+originCoords.x+","+originCoords.y+"A"+dr+","+dr+" 0 0,1 "+destinationCoords.x+","+destinationCoords.y;
+                    });
+//                    .attr("x1", originCoords.x)
+//                    .attr("y1", originCoords.y)
+//                    .attr("x2", destinationCoords.x)
+//                    .attr("y2", destinationCoords.y);
 
                 if(app.isCompareModeActive()) {
                     (function() {
@@ -513,6 +520,20 @@ var views = (function() {
                     })();
                 }
             });
+            
+            //We add a circle in the center
+            var circle = d3.select(_config.svgContainer+" ."+_config.linesContainerClass)
+                .append("circle")
+                .data([{
+                    origin: {
+                        latitude: center.lat,
+                        longitude: center.lng
+                    }
+                }])
+                .classed("highlighted", true)
+                .attr("cx", originCoords.x)
+                .attr("cy", originCoords.y)
+                .attr("r", (markers.getMarkerSize() / 2)+"px");
 
             //No data for the community
             if(node.selectAll("tr").size() == 1) {

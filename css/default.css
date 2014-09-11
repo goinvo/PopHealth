@@ -32,14 +32,20 @@ image.marker {
     cursor: pointer;
 }
 
-svg .lines line {
+svg .lines path {
     stroke: #dc254f;
+    stroke-linecap: round;
+    fill: none;
 }
 
 path.hovered {
     stroke: #CC1714;
-    stroke-width: 3;
+    stroke-width: 2;
     stroke-opacity: 1;
+}
+
+circle.highlighted {
+    fill: #CC1714;
 }
 
 /* ----- NAV BAR ----- */

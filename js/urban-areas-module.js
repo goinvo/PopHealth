@@ -50,10 +50,13 @@ var urbanAreas = (function() {
         
     /*
         deleteLines
-        Deletes all the lines
+        Deletes all the lines and the circle
     */
     var deleteLines = function() {
-        d3.selectAll(_config.svgContainer+" ."+_config.linesContainerClass+" line")
+        d3.selectAll(_config.svgContainer+" ."+_config.linesContainerClass+" path")
+            .remove();
+        
+        d3.select(_config.svgContainer+" ."+_config.linesContainerClass+" circle")
             .remove();
     };
     
@@ -130,22 +133,29 @@ var urbanAreas = (function() {
     
     /*
         update
-        Updates the lines' position when the zoom changes
+        Updates the position of the lines and of the circles when the zoom changes
     */
     var update = function() {
-       d3.selectAll(_config.svgContainer+" ."+_config.linesContainerClass+" line")
-            .attr("x1", function(d) {
+       d3.selectAll(_config.svgContainer+" ."+_config.linesContainerClass+" path")
+            .attr("d", function(d) {
+                var originCoords = mapModule.getMap().latLngToLayerPoint([d.origin.latitude, d.origin.longitude]),
+                    destinationCoords = mapModule.getMap().latLngToLayerPoint([d.destination.latitude, d.destination.longitude]);
+           
+                var dx = destinationCoords.x - originCoords.x,
+                    dy = destinationCoords.y - originCoords.y,
+                    dr = Math.sqrt(dx * dx + dy * dy);
+
+                return "M"+originCoords.x+","+originCoords.y+"A"+dr+","+dr+" 0 0,1 "+destinationCoords.x+","+destinationCoords.y;
+            });  
+        
+         d3.select(_config.svgContainer+" ."+_config.linesContainerClass+" circle")
+            .attr("cx", function(d) {
                 return mapModule.getMap().latLngToLayerPoint([d.origin.latitude, d.origin.longitude]).x;
             })
-            .attr("y1", function(d) {
+            .attr("cy", function(d) {
                 return mapModule.getMap().latLngToLayerPoint([d.origin.latitude, d.origin.longitude]).y;
             })
-            .attr("x2", function(d) {
-                return mapModule.getMap().latLngToLayerPoint([d.destination.latitude, d.destination.longitude]).x;
-            })
-            .attr("y2", function(d) {
-                return mapModule.getMap().latLngToLayerPoint([d.destination.latitude, d.destination.longitude]).y;
-            });  
+            .attr("r", (markers.getMarkerSize() / 2)+"px");
     };
     
     /*
