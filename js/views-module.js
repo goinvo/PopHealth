@@ -38,14 +38,15 @@ var views = (function() {
             Initializes the view
         */
         var init = function() {
-            sidebar.searchPlaceholder("ZIP code, umass, ...");
+            sidebar.searchPlaceholder("ZIP code");
             sidebar.focusOnSearch();
             
             if(!navigator.geolocation)
                 return;
 
             //We locate the user inside a community
-            app.displayMessage("Retrieving your position...");
+            if(window.mozInnerScreenX === undefined)
+                app.displayMessage("Retrieving your position...");
             navigator.geolocation.getCurrentPosition(function(position) {
                 var latlngPoint = new L.LatLng(position.coords.latitude, position.coords.longitude);
                 d3.json("http://nominatim.openstreetmap.org/reverse?format=json&lat="+position.coords.latitude+"&lon="+position.coords.longitude+"&addressdetails=0",function(error, data) {
