@@ -155,7 +155,7 @@ var urbanAreas = (function() {
             .attr("cy", function(d) {
                 return mapModule.getMap().latLngToLayerPoint([d.origin.latitude, d.origin.longitude]).y;
             })
-            .attr("r", (markers.getMarkerSize() / 2)+"px");
+            .attr("r", "7px");
     };
     
     /*

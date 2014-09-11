@@ -533,7 +533,7 @@ var views = (function() {
                 .classed("highlighted", true)
                 .attr("cx", originCoords.x)
                 .attr("cy", originCoords.y)
-                .attr("r", (markers.getMarkerSize() / 2)+"px");
+                .attr("r", "7px");
 
             //No data for the community
             if(node.selectAll("tr").size() == 1) {
