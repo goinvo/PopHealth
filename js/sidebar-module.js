@@ -42,26 +42,26 @@ var sidebar = (function() {
         d3.select(_config.toolbarElem+" input")
             .on("keyup",function() {
                 switch(d3.event.keyCode) {
-                        case 13:
+                        case 13: //Enter
                             if(_searchSelectedItem !== null)
                                 app.view().searchValueSelected(_searchSelectedItem.datum().id);
                             else if(d3.selectAll(_config.autocompleteElem+" li").size() === 1)
                                 app.view().searchValueSelected(d3.select(_config.autocompleteElem+" li").datum().id);
                             break;
-                        case 38:
+                        case 38: //Up
                             if(_searchSelectedItem !== null && _searchSelectedItem.node().previousElementSibling !== null) {
                                 _searchSelectedItem.classed("hovered", false);
                                 _searchSelectedItem = d3.select(_searchSelectedItem.node().previousElementSibling);
                                 _searchSelectedItem.classed("hovered", true);
                             }
                             break;
-                        case 40:
+                        case 40: //Down
                             if(_searchSelectedItem === null) {
                                 var currentItem = d3.select(_config.autocompleteElem+" li");
                                 currentItem.classed("hovered", true);
                                 _searchSelectedItem = currentItem;
                             }
-                            else {
+                            else if(_searchSelectedItem.node().nextElementSibling !== null) {
                                 _searchSelectedItem.classed("hovered", false);
                                 _searchSelectedItem = d3.select(_searchSelectedItem.node().nextElementSibling);
                                 _searchSelectedItem.classed("hovered", true);
@@ -528,8 +528,13 @@ var sidebar = (function() {
         
         _compareMode = !_compareMode;
         
-        d3.select(_config.toolbarElem+" a")
+        var compareButton = d3.select(_config.toolbarElem+" a")
             .classed("selected", _compareMode);
+        
+        if(_compareMode)
+            compareButton.text("View "+app.getSelection().type);
+        else
+            compareButton.text("Compare");
         
         app.compareMode(_compareMode);
         
@@ -635,6 +640,7 @@ var sidebar = (function() {
     var resetAutocomplete = function() {
         var autocompleteElem = d3.selectAll(_config.autocompleteElem+" li").remove();
         d3.selectAll("."+_config.cardClass).style("display", "block");
+        _searchSelectedItem = null;
     };
     
     /*

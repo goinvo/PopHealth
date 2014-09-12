@@ -121,7 +121,6 @@ var views = (function() {
                 var urbanArea = getUrbanArea(value);
                 app.view().areaClicked(urbanArea.properties, urbanAreas.getAreaById(value).getBounds().getCenter());
                 sidebar.resetAutocomplete();
-                sidebar.searchValue("");
             }
             catch(e) {
                 console.log("views module: the value doesn't match any id");
