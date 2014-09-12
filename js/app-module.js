@@ -1,7 +1,8 @@
 var app = (function() {
     var _config = {
         messageElem: "#message", //The container of the message below the questions' div (at the top of the window)
-        overlayElem: "#overlay"
+        overlayElem: "#overlay",
+        fullscreenButton: "nav .fullscreen"
     },
         _questionSelect = {
             domElem: "nav select",
@@ -37,6 +38,25 @@ var app = (function() {
         
         d3.select(_questionSelect.domElem).on("click", function() {
             _changeView();
+        });
+        
+        d3.select(_config.fullscreenButton).on("click", function() {
+            if(screenfull.enabled) {
+                screenfull.toggle();
+            }
+        });
+        
+        d3.select(document).on(screenfull.raw.fullscreenchange, function() {
+            if(screenfull.isFullscreen) {
+                    d3.select(_config.fullscreenButton)
+                        .attr("style", "background-image: url('icons/exit-fullscreen.svg')")
+                        .attr("title", "Exit fullscreen");
+                }
+                else {
+                    d3.select(_config.fullscreenButton)
+                        .attr("style", "background-image: url('icons/enter-fullscreen.svg')")
+                        .attr("title", "Go fullscreen");
+                }
         });
     };
     

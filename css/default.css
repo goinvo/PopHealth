@@ -3,6 +3,9 @@
 * {
     margin: 0;
     padding: 0;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 html {
@@ -81,6 +84,17 @@ nav select:focus {
 
 nav select option {
     background-color: #3D7399;
+}
+
+nav .fullscreen {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    height: 24px;
+    width: 24px;
+    cursor: pointer;
+    background: url(../icons/enter-fullscreen.svg);
+    background-size: contain;
 }
 
 /* ----- MESSAGE ----- */
