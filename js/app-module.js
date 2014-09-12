@@ -181,7 +181,8 @@ var app = (function() {
             });
         }
         else {
-            node.append("h1").html(d.town);
+            var zipCodes = (getAreaZipCode(d.id).length <= 4) ? getAreaZipCode(d.id).join(", ") : getAreaZipCode(d.id).slice(0, 5).join(", ")+"...";
+            node.append("h1").html(d.town+" <span>"+zipCodes+"</span>");
             node.append("div")
                 .classed("two-columns", true)
                 .html("Some stuffs here<br/><span>...</span>");

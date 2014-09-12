@@ -55,6 +55,10 @@ var views = (function() {
                         app.hideMessage();
                         var postalCode = data.display_name.match(/[0-9]{5}/)[0];
                         var urbanAreaId = getUrbanAreaIdByZipCode(postalCode);
+                        if(urbanAreaId.length === 0 || urbanAreaId.length > 1)
+                            throw "Error";
+                        else
+                            urbanAreaId = urbanAreaId[0];
                         var mapboxObject = urbanAreas.getAreaById(urbanAreaId);
                         var dataObject = urbanAreas.getAreaData(urbanAreas.getAreaById(urbanAreaId));
                         app.view().areaClicked(dataObject, mapboxObject.getBounds().getCenter());
@@ -83,39 +87,45 @@ var views = (function() {
             
             var zipCodes = getZipCodesStartingWith(value);
             sidebar.resetAutocomplete();
+            var alreadyDisplayedZipCodes = [];
             zipCodes.forEach(function(zipCode) {
                 try {
-                    var urbanArea = getUrbanArea(getUrbanAreaIdByZipCode(zipCode));
-                    var urbanAreaCity = urbanArea.properties.town;
-                    var urbanAreaState = urbanArea.properties.state;
-                    var content = "<span>"+value+"</span>"+((value.length - zipCode.length !== 0) ? zipCode.slice(value.length - zipCode.length) : "")+" "+urbanAreaCity+", "+urbanAreaState;
-                    
-                    sidebar.addAutocomplete(content, zipCode, {
-                        onclick: function() {
-                            app.view().areaClicked(urbanArea.properties, urbanAreas.getAreaById(getUrbanAreaIdByZipCode(zipCode)).getBounds().getCenter());
-                            sidebar.resetAutocomplete();
-                            sidebar.searchValue("");
-                        }
-                    });
+                    if(alreadyDisplayedZipCodes.indexOf(zipCode) === -1) {
+                        alreadyDisplayedZipCodes.push(zipCode);
+                        var urbanAreaIds = getUrbanAreaIdByZipCode(zipCode);
+                        urbanAreaIds.forEach(function(urbanAreaId) {
+                            var urbanArea = getUrbanArea(urbanAreaId);
+                            var urbanAreaCity = urbanArea.properties.town;
+                            var urbanAreaState = urbanArea.properties.state;
+                            var content = "<span>"+value+"</span>"+((value.length - zipCode.length !== 0) ? zipCode.slice(value.length - zipCode.length) : "")+" "+urbanAreaCity+", "+urbanAreaState;
+
+                            sidebar.addAutocomplete(content, urbanAreaId, {
+                                onclick: function() {
+                                    app.view().areaClicked(urbanArea.properties, urbanAreas.getAreaById(urbanAreaId).getBounds().getCenter());
+                                    sidebar.resetAutocomplete();
+                                    sidebar.searchValue("");
+                                }
+                            });
+                        });
+                    }
                 } catch(e) {}
             });
         };
         
         /*
             searchValueSelected(value)
-            Using the value as an id for an hospital (hospital's id) or an area (community's id or postal code), launches the corresponding handler
+            Using value as a community's id, launches the corresponding handler
         */
         var searchValueSelected = function(value) {
             try {
-                var urbanAreaId = getUrbanAreaIdByZipCode(value);
-                var urbanArea = getUrbanArea(urbanAreaId);
-                app.view().areaClicked(urbanArea.properties, urbanAreas.getAreaById(urbanAreaId).getBounds().getCenter());
+                var urbanArea = getUrbanArea(value);
+                app.view().areaClicked(urbanArea.properties, urbanAreas.getAreaById(value).getBounds().getCenter());
                 sidebar.resetAutocomplete();
                 sidebar.searchValue("");
             }
             catch(e) {
                 console.log("views module: the value doesn't match any id");
-                console.log(error);
+                console.log(e);
             }
         };
         
@@ -396,6 +406,7 @@ var views = (function() {
             
             var chartData = [];
             var originCoords = mapModule.getMap().latLngToLayerPoint([center.lat, center.lng]);
+            var maxThickness = 0;
 
             layerClicked.topHospitals.forEach(function(topHospital) {
                 var percentage = (topHospital.percentage === null) ? "–" : ((topHospital.percentage * 100 <= 1) ? "<1" : Math.round(topHospital.percentage * 100));
@@ -496,6 +507,10 @@ var views = (function() {
                             thickness = 4;
                         else
                             thickness = 3;
+                        
+                        if(thickness > maxThickness)
+                            maxThickness = thickness;
+                        
                         return thickness+"px";
                     })
                     .attr("d", function(d) {
@@ -533,7 +548,7 @@ var views = (function() {
                 .classed("highlighted", true)
                 .attr("cx", originCoords.x)
                 .attr("cy", originCoords.y)
-                .attr("r", "7px");
+                .attr("r", maxThickness+"px");
 
             //No data for the community
             if(node.selectAll("tr").size() == 1) {

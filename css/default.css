@@ -283,6 +283,11 @@ aside .toolbar ::-moz-placeholder {
     font-size: 12px;
 }
 
+.card h1 span {
+    font-size: 12px;
+    color: #848484;
+}
+
 .card .control {
     position: absolute;
     top: 10px;
