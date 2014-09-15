@@ -114,11 +114,11 @@ var app = (function() {
     };
     
     /*
-        _toDollar(number)
-        Converts a number to the US currency format ie 130868 to $130,868
+        _toNumber(number)
+        Converts a number/string to a string with the US number format ie 130868 to 130,868
         Doesn't take the decimals into account
     */
-    var _toDollar = function(number) {
+    var _toNumber = function(number) {
         var res = "";
         var stringifyNb = String(number);
         var mod = stringifyNb.length % 3;
@@ -131,7 +131,16 @@ var app = (function() {
             else
                 res = res+stringifyNb[i];
         }
-        
+        return res;
+    };
+    
+    /*
+        _toDollar(number)
+        Converts a number/string to a string with the US currency format ie 130868 to $130,868
+        Doesn't take the decimals into account
+    */
+    var _toDollar = function(number) {
+        var res = _toNumber(number);
         return "$"+res;
     };
 
@@ -205,14 +214,27 @@ var app = (function() {
             node.append("h1").html(d.town+" <span>"+zipCodes+"</span>");
             node.append("div")
                 .classed("two-columns", true)
-                .html("Some stuffs here<br/><span>...</span>");
+                .html("Population<br/><span id=\"js-population\" style=\"padding-top: 0\">–</span>");
             
             node.append("div")
                 .classed("footnote", true)
-                .html("Data from the <a href=\"http://www.mass.gov/chia/researcher/hcf-data-resources/massachusetts-hospital-profiles/overiew-and-current-reports.html\" target=\"_blank\">Center for Health Information and Analysis <i class='fa fa-external-link'></i></a>");
+                .html("Data from the <a href=\"http://www.mass.gov/chia/researcher/hcf-data-resources/massachusetts-hospital-profiles/overiew-and-current-reports.html\" target=\"_blank\">Center for Health Information and Analysis <i class='fa fa-external-link'></i></a> and <a href=\"http://en.wikipedia.org/\" target=\"_blank\">Wikipedia <i class='fa fa-external-link'></i></a>");
             
             sidebar.reset(target);
             sidebar.addcard(node, true, target);
+            
+            d3.json("http://en.wikipedia.org/w/api.php?action=query&prop=revisions&format=json&rvprop=content&rvlimit=1&rvsection=0&titles="+d.town+"%2C%20"+d.state+"&redirects=", function(error, data) {
+                try {
+                    for(var revision in data.query.pages) {
+                        var content = data.query.pages[revision].revisions[0]["*"];
+                        var regexRes = content.match(/population_total(\s)*=\s(([0-9]|,)*)/);
+                        var population = regexRes[regexRes.length - 2].replace(",", "");
+                        d3.select("#js-population").text(_toNumber(population));
+                        break;
+                    }
+                }
+                catch(e) {}
+            });
         }
     };
     
