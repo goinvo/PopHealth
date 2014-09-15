@@ -33,12 +33,12 @@ var app = (function() {
     var init = function() {
         sidebar.init();
         
-        if(_tourMode)
-            _tourStart();
+//        if(_tourMode)
+//            _tourStart();
         
-        d3.select(_questionSelect.domElem).on("click", function() {
+//        d3.select(_questionSelect.domElem).on("click", function() {
             _changeView();
-        });
+//        });
         
         d3.select(_config.fullscreenButton).on("click", function() {
             if(screenfull.enabled) {
