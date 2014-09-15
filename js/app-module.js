@@ -223,7 +223,7 @@ var app = (function() {
             sidebar.reset(target);
             sidebar.addcard(node, true, target);
             
-            d3.json("http://en.wikipedia.org/w/api.php?action=query&prop=revisions&format=json&rvprop=content&rvlimit=1&rvsection=0&titles="+d.town+"%2C%20"+d.state+"&redirects=", function(error, data) {
+            d3.jsonp("http://en.wikipedia.org/w/api.php?action=query&prop=revisions&format=json&rvprop=content&rvlimit=1&rvsection=0&titles="+d.town+"%2C%20"+d.state+"&redirects=&callback=d3.jsonp.population", function(data) {
                 try {
                     for(var revision in data.query.pages) {
                         var content = data.query.pages[revision].revisions[0]["*"];
