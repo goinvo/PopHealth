@@ -93,7 +93,7 @@ var sidebar = (function() {
         _cardsMoved = true;
         
         sidebarCard
-            .classed("fadeInUp", false) //Needed to remove the animate.css effect
+            .classed("fadeIn", false) //Needed to remove the animate.css effect
             .classed("dragged", true)
             .style("-webkit-transform", function(d) {d.y = d3.event.y; return "translateY("+d.y+"px)";})
             .style("-moz-transform", function(d) {d.y = d3.event.y; return "translateY("+d.y+"px)";})
@@ -102,7 +102,7 @@ var sidebar = (function() {
                 
         if(_compareMode && !panelCard.empty()) { //We also check in the second item has been picked
             panelCard
-                .classed("fadeInUp", false) //Needed to remove the animate.css effect
+                .classed("fadeIn", false) //Needed to remove the animate.css effect
                 .classed("dragged", true)
                 .style("-webkit-transform", function(d) {d.y = d3.event.y; return "translateY("+d.y+"px)";})
                 .style("-moz-transform", function(d) {d.y = d3.event.y; return "translateY("+d.y+"px)";})
@@ -129,7 +129,7 @@ var sidebar = (function() {
                     _cardMovement = "down";
 
                     sidebarCardSibling
-                        .classed("fadeInUp", false)
+                        .classed("fadeIn", false)
                         .style({
                             "-webkit-transform": "translateY(-"+cardHeight+"px)",
                             "-moz-transform": "translateY(-"+cardHeight+"px)",
@@ -143,7 +143,7 @@ var sidebar = (function() {
                         _lastPanelCardMoved = panelCardSibling;
 
                         panelCardSibling
-                            .classed("fadeInUp", false)
+                            .classed("fadeIn", false)
                             .style({
                                 "-webkit-transform": "translateY(-"+cardHeight+"px)",
                                 "-moz-transform": "translateY(-"+cardHeight+"px)",
@@ -161,7 +161,7 @@ var sidebar = (function() {
                     _cardMovement = "up";
 
                     sidebarCardSibling
-                        .classed("fadeInUp", false)
+                        .classed("fadeIn", false)
                         .style({
                             "-webkit-transform": "translateY(0px)",
                             "-moz-transform": "translateY(0px)",
@@ -175,7 +175,7 @@ var sidebar = (function() {
                         _lastPanelCardMoved = panelCardSibling;
 
                         panelCardSibling
-                            .classed("fadeInUp", false)
+                            .classed("fadeIn", false)
                             .style({
                                 "-webkit-transform": "translateY(0px)",
                                 "-moz-transform": "translateY(0px)",
@@ -194,7 +194,7 @@ var sidebar = (function() {
                     _cardMovement = "up";
 
                     sidebarCardSibling
-                        .classed("fadeInUp", false)
+                        .classed("fadeIn", false)
                         .style({
                             "-webkit-transform": "translateY("+cardHeight+"px)",
                             "-moz-transform": "translateY("+cardHeight+"px)",
@@ -208,7 +208,7 @@ var sidebar = (function() {
                         _lastPanelCardMoved = panelCardSibling;
 
                         panelCardSibling
-                            .classed("fadeInUp", false)
+                            .classed("fadeIn", false)
                             .style({
                                 "-webkit-transform": "translateY("+cardHeight+"px)",
                                 "-moz-transform": "translateY("+cardHeight+"px)",
@@ -226,7 +226,7 @@ var sidebar = (function() {
                     _cardMovement = "down";
 
                     sidebarCardSibling
-                        .classed("fadeInUp", false)
+                        .classed("fadeIn", false)
                         .style({
                             "-webkit-transform": "translateY(0px)",
                             "-moz-transform": "translateY(0px)",
@@ -240,7 +240,7 @@ var sidebar = (function() {
                         _lastPanelCardMoved = panelCardSibling;
 
                         panelCardSibling
-                            .classed("fadeInUp", false)
+                            .classed("fadeIn", false)
                             .style({
                                 "-webkit-transform": "translateY(0px)",
                                 "-moz-transform": "translateY(0px)",
@@ -414,7 +414,7 @@ var sidebar = (function() {
         card.data([{id: _cardIndex, offset: 0, y: 0}])
             .call(_dragBehavior)
             .classed(_config.cardClass, true)
-            .classed("animated fadeInUp", true)
+            .classed("animated fadeIn", true)
             .style({
                 "-webkit-animation-delay": "0s",
                 "-moz-animation-delay": "0s",
