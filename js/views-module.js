@@ -54,7 +54,7 @@ var views = (function() {
                         if(error) throw error;
                         app.hideMessage();
                         var postalCode = data.display_name.match(/[0-9]{5}/)[0];
-                        var urbanAreaId = getUrbanAreaIdByZipCode(postalCode);
+                        var urbanAreaId = app.getUrbanAreaIdByZipCode(postalCode);
                         if(urbanAreaId.length === 0 || urbanAreaId.length > 1)
                             throw "Error";
                         else
@@ -85,16 +85,16 @@ var views = (function() {
             if(value === "")
                 return sidebar.resetAutocomplete();
             
-            var zipCodes = getZipCodesStartingWith(value);
+            var zipCodes = app.getZipCodesStartingWith(value);
             sidebar.resetAutocomplete();
             var alreadyDisplayedZipCodes = [];
             zipCodes.forEach(function(zipCode) {
                 try {
                     if(alreadyDisplayedZipCodes.indexOf(zipCode) === -1) {
                         alreadyDisplayedZipCodes.push(zipCode);
-                        var urbanAreaIds = getUrbanAreaIdByZipCode(zipCode);
+                        var urbanAreaIds = app.getUrbanAreaIdByZipCode(zipCode);
                         urbanAreaIds.forEach(function(urbanAreaId) {
-                            var urbanArea = getUrbanArea(urbanAreaId);
+                            var urbanArea = app.getUrbanArea(urbanAreaId);
                             var urbanAreaCity = urbanArea.properties.town;
                             var urbanAreaState = urbanArea.properties.state;
                             var content = "<span>"+value+"</span>"+((value.length - zipCode.length !== 0) ? zipCode.slice(value.length - zipCode.length) : "")+" "+urbanAreaCity+", "+urbanAreaState;
@@ -118,7 +118,7 @@ var views = (function() {
         */
         var searchValueSelected = function(value) {
             try {
-                var urbanArea = getUrbanArea(value);
+                var urbanArea = app.getUrbanArea(value);
                 app.view().areaClicked(urbanArea.properties, urbanAreas.getAreaById(value).getBounds().getCenter());
                 sidebar.resetAutocomplete();
             }
@@ -226,7 +226,7 @@ var views = (function() {
                         d3.select(urbanAreas.getAreaById(topCommunity.id_town)._path).classed("hovered", false);
                         d3.select(this).classed("hovered", false);
                     });
-                currentRow.append("td").text(getUrbanArea(topCommunity.id_town).properties.town);
+                currentRow.append("td").text(app.getUrbanArea(topCommunity.id_town).properties.town);
                 currentRow.append("td").classed("number", true).text(topCommunity.patients);
                 currentRow.append("td")
                     .classed("number", true)
@@ -409,7 +409,7 @@ var views = (function() {
 
             layerClicked.topHospitals.forEach(function(topHospital) {
                 var percentage = (topHospital.percentage === null) ? "–" : ((topHospital.percentage * 100 <= 1) ? "<1" : Math.round(topHospital.percentage * 100));
-                var hospital = getHospital(topHospital.id_hospital);
+                var hospital = app.getHospital(topHospital.id_hospital);
                 chartData.push([hospital.name, topHospital.patients]);
 
                 currentRow = table.append("tr")

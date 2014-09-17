@@ -59,51 +59,6 @@
                 _hospitalsData = {},
                 _zipCodeData = {};
             
-            var getUrbanArea = function(id) {
-                    return _urbanAreasData.features[id];  
-            };
-            
-            var getHospital = function(id) {
-                    return _hospitalsData.hospitals[id];  
-            };
-            
-            var getUrbanAreaIdByZipCode = function(zipCode) {
-                var res = [];
-                _zipCodeData.zipCodes.forEach(function(row) {
-                    if(row.zipCode === zipCode) {
-                        res.push(row.id);
-                    }
-                });
-                return res;
-            };
-            
-            var getZipCodesStartingWith = function(str) {
-                var res = [];
-                _zipCodeData.zipCodes.forEach(function(row) {
-                    if(row.zipCode.slice(0, str.length) === str) {
-                        res.push(row.zipCode);
-                    }
-                });
-                return res;
-            };
-            
-            var getAreaZipCode = function(id) {
-                var res = [];
-                _zipCodeData.zipCodes.forEach(function(row) {
-                    if(row.id === id) {
-                        res.push(row.zipCode);
-                    }
-                });
-                return res;
-            };
-            
-            var test = function() {
-                for(var i = 0; i < 368; i++) {
-                    if(getAreaZipCode(i).length === 0)
-                        console.log(i+" "+getUrbanArea(i).properties.town);
-                }  
-            };
-            
             //We load the data
             d3.json("data/urban_areas.json", function(error, urbanAreasData) { //TODO in case of error
                 _urbanAreasData = urbanAreasData;

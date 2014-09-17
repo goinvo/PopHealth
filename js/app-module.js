@@ -655,6 +655,48 @@ var app = (function() {
     var getSavedState = function() {
         return _savedState;
     };
+
+    /*
+        getUrbanAreaIdByZipCode
+        Returns an array of the urban areas that matches the ZIP code
+    */
+    var getUrbanAreaIdByZipCode = function(zipCode) {
+        var res = [];
+        _zipCodeData.zipCodes.forEach(function(row) {
+            if(row.zipCode === zipCode) {
+                res.push(row.id);
+            }
+        });
+        return res;
+    };
+
+    /*
+        getZipCodesStartingWith
+        Returns an array containing the ZIP codes that start with the string argument
+    */
+    var getZipCodesStartingWith = function(str) {
+        var res = [];
+        _zipCodeData.zipCodes.forEach(function(row) {
+            if(row.zipCode.slice(0, str.length) === str) {
+                res.push(row.zipCode);
+            }
+        });
+        return res;
+    };
+
+    /*
+        getAreaZipCode
+        Returns an array with the ZIP codes matching the urban area id
+    */
+    var getAreaZipCode = function(id) {
+        var res = [];
+        _zipCodeData.zipCodes.forEach(function(row) {
+            if(row.id === id) {
+                res.push(row.zipCode);
+            }
+        });
+        return res;
+    };
     
     return {
         init: init,
@@ -675,6 +717,10 @@ var app = (function() {
         saveState: saveState,
         getSavedState: getSavedState,
         displayGeneralCard: displayGeneralCard,
-        getAreasToRestoreIndex: getAreasToRestoreIndex
+        getAreasToRestoreIndex: getAreasToRestoreIndex,
+        getUrbanAreaIdByZipCode: getUrbanAreaIdByZipCode,
+        getZipCodesStartingWith: getZipCodesStartingWith,
+        getAreaZipCode: getAreaZipCode
+        
     };
 })();
