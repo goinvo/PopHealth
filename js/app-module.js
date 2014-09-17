@@ -21,6 +21,7 @@ var app = (function() {
             },
             community: {
                 linesToDelete: [],
+                circleToDelete: null,
                 areaToRestore: null,
                 markersToRestore: []
             }
@@ -541,6 +542,8 @@ var app = (function() {
                 for(var i = 0; i < _savedState.community.linesToDelete.length; i++) {
                     _savedState.community.linesToDelete[i].remove();
                 }
+                _savedState.community.circleToDelete.remove();
+                _savedState.community.circleToDelete = null;
 
                 //We restore the first clicked area
                 if(urbanAreas.getAreaById(_savedState.community.areaToRestore)._path !== undefined)
@@ -640,8 +643,9 @@ var app = (function() {
             _savedState.hospital.markerToRestore = values.markerToRestore || _savedState.hospital.markerToRestore;
         }
         else if(selection === "community") {
-            _savedState.community.areaToRestore    = values.areaToRestore   || _savedState.community.areaToRestore;
+            _savedState.community.areaToRestore    = values.areaToRestore    || _savedState.community.areaToRestore;
             _savedState.community.linesToDelete    = values.linesToDelete    || _savedState.community.linesToDelete;
+            _savedState.community.circleToDelete   = values.circleToDelete   || _savedState.community.circleToDelete;
             _savedState.community.markersToRestore = values.markersToRestore || _savedState.community.markersToRestore;
         }
         else //error

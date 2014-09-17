@@ -351,10 +351,12 @@ var views = (function() {
             }
             else {
 
-                //We delete the lines
+                //We delete the lines and the circle
                 for(var i = 0; i < savedState.community.linesToDelete.length; i++) {
                     savedState.community.linesToDelete[i].remove();
                 }
+                if(savedState.community.circleToDelete !== null)
+                    savedState.community.circleToDelete.remove();
 
                 //We restore the first clicked area
                 if(urbanAreas.getAreaById(savedState.community.areaToRestore)._path !== undefined)
@@ -519,10 +521,6 @@ var views = (function() {
                         
                         return "M"+originCoords.x+","+originCoords.y+"A"+dr+","+dr+" 0 0,1 "+destinationCoords.x+","+destinationCoords.y;
                     });
-//                    .attr("x1", originCoords.x)
-//                    .attr("y1", originCoords.y)
-//                    .attr("x2", destinationCoords.x)
-//                    .attr("y2", destinationCoords.y);
 
                 if(app.isCompareModeActive()) {
                     (function() {
@@ -548,6 +546,12 @@ var views = (function() {
                 .attr("cx", originCoords.x)
                 .attr("cy", originCoords.y)
                 .attr("r", maxThickness+"px");
+            
+            if(app.isCompareModeActive()) {
+                app.saveState("community", {
+                    circleToDelete: circle
+                });
+            }
 
             //No data for the community
             if(node.selectAll("tr").size() == 1) {
